@@ -16,6 +16,11 @@
     
     <dependencies>
         <dependency>
+            <groupId>it.unitn.aa1617.webprogramming</groupId>
+            <artifactId>wp-persistence-dao</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
