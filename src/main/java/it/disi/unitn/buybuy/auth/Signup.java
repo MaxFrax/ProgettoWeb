@@ -6,7 +6,6 @@
 package it.disi.unitn.buybuy.auth;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,8 +37,7 @@ public class Signup extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String[]> form = req.getParameterMap();
-        resp.getWriter().print(form);
+        
     }
     
     
