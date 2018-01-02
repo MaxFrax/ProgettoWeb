@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
     
-    public enum Type {REGISTERED, SELLER, ADMINISTRATOR};
+    public enum Type {REGISTERED, SELLER, ADMINISTRATOR, REGISTRATION_PENDING};
     
     private Integer id;
     private String name;

@@ -9,12 +9,9 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOExcept
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
 import it.unitn.disi.buybuy.dao.UserDAO;
+import it.unitn.disi.buybuy.dao.entities.User;
 import it.unitn.disi.buybuy.dao.jdbc.JDBCUserDAO;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -28,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author maxfrax
  */
 public class Signup extends HttpServlet {
-    
+
     private UserDAO userDao;
 
     @Override
@@ -56,17 +53,34 @@ public class Signup extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("signup.html");
-        dispatcher.forward(request, response);
+        request.getRequestDispatcher("signup.html").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            resp.getWriter().print(userDao.getCount());
-        } catch (DAOException ex) {
-            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
-            resp.getWriter().print(ex.getMessage());
+        boolean validInput = true;
+        // Fields validation
+        String email = req.getParameter("email");
+        validInput = validInput && email.contains("@");
+        // Config of User object 
+        if (validInput) {
+            User user = new User();
+            user.setEmail(email);
+            user.setName(req.getParameter("name"));
+            user.setLastname(req.getParameter("surname"));
+            user.setType(User.Type.REGISTRATION_PENDING);
+            user.setUsername(req.getParameter("username"));
+            // TODO encrypt password
+            user.setHashPassword(req.getParameter("pass"));
+            // Check if insert gone okay            
+            try {
+                userDao.insert(user);
+                req.getRequestDispatcher("/BuyBuy").forward(req, resp);
+            } catch (DAOException ex) {
+                Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+                // TODO parametro errore
+                req.getRequestDispatcher("signup.html").forward(req, resp);
+            }
         }
     }
 

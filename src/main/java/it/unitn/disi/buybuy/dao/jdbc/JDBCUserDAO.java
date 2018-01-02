@@ -38,7 +38,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      */
     @Override
     public Long getCount() throws DAOException {
-        try (PreparedStatement stmt = CON.prepareStatement("SELECT COUNT(*) FROM user");) {
+        try (PreparedStatement stmt = CON.prepareStatement("SELECT COUNT(*) FROM app.USER_DETAIL");) {
             ResultSet counter = stmt.executeQuery();
             if (counter.next()) {
                 return counter.getLong(1);
@@ -68,7 +68,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         if (primaryKey == null) {
             throw new DAOException("primaryKey is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM user WHERE id = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM app.USER_DETAIL WHERE id = ?")) {
             stm.setInt(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -107,7 +107,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             throw new DAOException("Username and password are mandatory fields", new NullPointerException("username or password are null"));
         }
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM user WHERE username = ? AND hash_password = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM app.USER_DETAIL WHERE username = ? AND hash_password = ?")) {
             stm.setString(1, username);
             stm.setString(2, hashPassword);
             try (ResultSet rs = stm.executeQuery()) {
@@ -151,7 +151,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
     public List<User> getAll() throws DAOException {
         List<User> users = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM user ORDER BY lastname")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM app.USER_DETAIL ORDER BY lastname")) {
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -189,7 +189,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed user is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE app.user SET username = ?, hash_password = ?, name = ?, lastname = ?, email = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.USER_DETAIL SET username = ?, hash_password = ?, name = ?, lastname = ?, email = ? WHERE id = ?")) {
             std.setString(1, user.getUsername());
             std.setString(2, user.getHashPassword());
             std.setString(3, user.getName());
@@ -218,7 +218,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      */
     @Override
     public Long insert(User user) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER(id,name,lastname,username,email,hash_password,type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(id,name,lastname,username,email,hash_password,type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setInt(1, user.getId());
             ps.setString(2, user.getName());
