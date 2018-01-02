@@ -11,11 +11,15 @@
     <context-param>
         <description>The url of the JDBC persistence system database position</description>
         <param-name>dburl</param-name>
-        <param-value>jdbc:derby:C:\Users\apell\Documents\NetBeansProjects\ProgettoWeb\db</param-value>
+        <param-value>jdbc:derby:/Users/maxfrax/NetBeansProjects/BuyBuy/db</param-value>
     </context-param>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>it.unitn.aa1617.webprogramming.login.listeners.WebAppContextListener</listener-class>
+    </listener>
 </web-app>
