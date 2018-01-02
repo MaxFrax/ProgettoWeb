@@ -20,6 +20,6 @@
     </session-config>
     <listener>
         <description>ServletContextListener</description>
-        <listener-class>it.unitn.aa1617.webprogramming.login.listeners.WebAppContextListener</listener-class>
+        <listener-class>it.unitn.disi.listeners.WebAppContextListener</listener-class>
     </listener>
 </web-app>
