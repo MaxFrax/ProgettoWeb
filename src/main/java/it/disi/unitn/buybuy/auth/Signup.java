@@ -35,6 +35,8 @@ public class Signup extends HttpServlet {
         }
         // Initialize RNG
         this.random = new SecureRandom();
+        // Test
+        test();
     }
 
     @Override
@@ -80,6 +82,7 @@ public class Signup extends HttpServlet {
         user.setType(User.Type.REGISTRATION_PENDING);
         user.setUsername(req.getParameter("username"));
         user.setHashPassword(hashPassword);
+        user.setHashSalt(DatatypeConverter.printHexBinary(salt));
         
         // Insert user into DB
         try {
@@ -126,6 +129,23 @@ public class Signup extends HttpServlet {
         md.update(bytes);
         String hash = DatatypeConverter.printHexBinary(md.digest());
         return hash;
+    }
+    
+    private void test() {
+        // Converti password in byte[] (prendi stringa locale)
+        byte[] input = "salepepe".getBytes();
+        // Anteponi salt in byte[] (prendi stringa dal DB)
+        String saltStr = "619E41CBCC6D3A7E3E5EB89C718A0955F7007A5DEFB76FFAD4BCAF2AC54C781C";
+        input = prependSalt(saltStr.getBytes(), input);
+        String resultHash = null;
+        try {
+            // Calcola hash
+            resultHash = sha256(input);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Confronta hash calcolato con quello nel DB
+        System.err.println(resultHash.equals("939FBF9F1C38941BE9A80D30B2A5744372DBDFA2C09C8A60AE42F391EA04511B"));
     }
 
 }

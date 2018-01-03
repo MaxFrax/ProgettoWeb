@@ -124,6 +124,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setId(rs.getInt("id"));
                     user.setUsername(rs.getString("username"));
                     user.setHashPassword(rs.getString("hash_password"));
+                    user.setHashSalt("hash_salt");
                     user.setName(rs.getString("name"));
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
@@ -161,6 +162,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setId(rs.getInt("id"));
                     user.setUsername(rs.getString("username"));
                     user.setHashPassword(rs.getString("hash_password"));
+                    user.setHashSalt("hash_salt");
                     user.setName(rs.getString("name"));
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
@@ -191,14 +193,15 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed user is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE app.USER_DETAIL SET username = ?, hash_password = ?, name = ?, lastname = ?, email = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.USER_DETAIL SET username = ?, hash_password = ?, hash_salt = ?, name = ?, lastname = ?, email = ?, user_type = ? WHERE id = ?")) {
             std.setString(1, user.getUsername());
             std.setString(2, user.getHashPassword());
-            std.setString(3, user.getName());
-            std.setString(4, user.getLastname());
-            std.setString(5, user.getEmail());
-            std.setString(5, user.getType().name());
-            std.setInt(6, user.getId());
+            std.setString(3, user.getHashSalt());
+            std.setString(4, user.getName());
+            std.setString(5, user.getLastname());
+            std.setString(6, user.getEmail());
+            std.setString(7, user.getType().name());
+            std.setInt(8, user.getId());
             if (std.executeUpdate() == 1) {
                 return user;
             } else {
@@ -220,14 +223,15 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      */
     @Override
     public Long insert(User user) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(name,lastname,username,email,hash_password,user_type) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(name,lastname,username,email,hash_password,hash_salt,user_type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setString(1, user.getName());
             ps.setString(2, user.getLastname());
             ps.setString(3, user.getUsername());
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getHashPassword());
-            ps.setInt(6, user.getType().ordinal());
+            ps.setString(6, user.getHashSalt());
+            ps.setInt(7, user.getType().ordinal());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();

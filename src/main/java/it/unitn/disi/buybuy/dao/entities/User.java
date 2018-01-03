@@ -20,6 +20,7 @@ public class User implements Serializable{
     private String username;
     private String email;
     private String hashPassword;
+    private String hashSalt;
     private Type type;
 
     /**
@@ -131,6 +132,15 @@ public class User implements Serializable{
     public String getHashPassword() {
         return hashPassword;
     }
+    
+    /**
+     * Returns the hash salt of this user entity.
+     * 
+     * @return the hash salt of this user entity.
+     */
+    public String getHashSalt() {
+        return hashSalt;
+    }
 
     /**
      * Sets the new hash password of this user entity.
@@ -140,6 +150,15 @@ public class User implements Serializable{
      */
     public void setHashPassword(String hashPassword) {
         this.hashPassword = hashPassword;
+    }
+    
+    /**
+     * Sets the new hash password of this user entity.
+     * 
+     * @param hashSalt the new hash password of this user entity.
+     */
+    public void setHashSalt(String hashSalt) {
+        this.hashSalt = hashSalt;
     }
 
     /**
