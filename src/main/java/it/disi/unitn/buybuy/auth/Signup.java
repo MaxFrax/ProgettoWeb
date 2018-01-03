@@ -75,11 +75,11 @@ public class Signup extends HttpServlet {
             // Check if insert gone okay            
             try {
                 userDao.insert(user);
-                req.getRequestDispatcher("/BuyBuy").forward(req, resp);
+                req.getRequestDispatcher("/").forward(req, resp);
             } catch (DAOException ex) {
                 Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
                 // TODO parametro errore
-                req.getRequestDispatcher("signup.html").forward(req, resp);
+                doGet(req, resp);
             }
         }
     }
