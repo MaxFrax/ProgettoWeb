@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The JDBC implementation of the {@link UserDAO} interface.
@@ -218,15 +220,14 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      */
     @Override
     public Long insert(User user) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(id,name,lastname,username,email,hash_password,user_type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(name,lastname,username,email,hash_password,user_type) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             
-            ps.setInt(1, user.getId());
-            ps.setString(2, user.getName());
-            ps.setString(3, user.getLastname());
-            ps.setString(4, user.getUsername());
-            ps.setString(5, user.getEmail());
-            ps.setString(6, user.getHashPassword());
-            ps.setString(7, user.getType().name());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getLastname());
+            ps.setString(3, user.getUsername());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getHashPassword());
+            ps.setInt(6, user.getType().ordinal());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -237,6 +238,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                         CON.rollback();
                     } catch (SQLException ex) {
                         //User: log the exception
+                        Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     throw new DAOException("Impossible to persist the new user");
                 }
@@ -245,6 +247,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     CON.rollback();
                 } catch (SQLException ex) {
                     //User: log the exception
+                    Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 throw new DAOException("Impossible to persist the new user");
             }
@@ -253,6 +256,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 CON.rollback();
             } catch (SQLException ex1) {
                 //User: log the exception
+                Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex1);
             }
             throw new DAOException("Impossible to persist the new user", ex);
         }
