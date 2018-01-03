@@ -75,7 +75,7 @@ public class Signup extends HttpServlet {
             // Check if insert gone okay            
             try {
                 userDao.insert(user);
-                req.getRequestDispatcher("/").forward(req, resp);
+                resp.sendRedirect("/BuyBuy");
             } catch (DAOException ex) {
                 Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
                 // TODO parametro errore
