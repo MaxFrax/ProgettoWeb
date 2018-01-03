@@ -218,7 +218,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      */
     @Override
     public Long insert(User user) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(id,name,lastname,username,email,hash_password,type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(id,name,lastname,username,email,hash_password,user_type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setInt(1, user.getId());
             ps.setString(2, user.getName());
