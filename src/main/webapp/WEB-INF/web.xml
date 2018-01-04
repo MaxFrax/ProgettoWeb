@@ -4,6 +4,10 @@
         <servlet-name>Signup</servlet-name>
         <servlet-class>it.disi.unitn.buybuy.auth.Signup</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>it.disi.unitn.buybuy.auth.Login</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -13,6 +17,10 @@
         <param-name>dburl</param-name>
         <param-value>jdbc:derby:/Users/maxfrax/NetBeansProjects/BuyBuy/db</param-value>
     </context-param>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
