@@ -5,10 +5,14 @@
  */
 package it.disi.unitn.buybuy.auth;
 
+import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
 import it.unitn.disi.buybuy.dao.UserDAO;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +56,33 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.getWriter().println("Nope");
+        String password = request.getParameter("pass");
+        String email = request.getParameter("email");
+
+        try {
+            // Get salt and hash from db to recalculate hash and check if password is correct
+            // ex stefano.chirico@example.com
+            String[] saltAndHash = userDao.getSaltAndHashByEmail(email);
+
+            if (saltAndHash != null) {
+                PasswordEncrypter enc = new PasswordEncrypter(saltAndHash[0], password);
+                if (enc.getEncryptedPassword().equals(saltAndHash[1])) {
+                    // Logged in
+                    response.getWriter().println("Hi sir, logged in");
+                } else {
+                    // Error in login
+                    request.setAttribute("error_message", "Password is wrong");
+                    doGet(request, response);
+                }
+            } else {
+                // Error in login
+                request.setAttribute("error_message", "No users with this email");
+                doGet(request, response);
+            }
+
+        } catch (DAOException | NoSuchAlgorithmException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
