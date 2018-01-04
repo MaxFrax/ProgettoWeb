@@ -78,5 +78,15 @@ public interface UserDAO extends DAO<User,Integer>{
      * @author apello96
      */
     public Long insert(User user) throws DAOException;
+    
+    /**
+     * Gets salt and hashed password by email
+     * @param email string
+     * @return Array of size two. At 0 there's salt and at 1 there's hashed password
+     * @throws DAOException if an error occurred during the persist action.
+     * 
+     * @author MaxFrax
+     */
+    public String[] getSaltAndHashByEmail(String email) throws DAOException;
      
 }
