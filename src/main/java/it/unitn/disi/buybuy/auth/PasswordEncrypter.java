@@ -16,19 +16,19 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class PasswordEncrypter {
 
-    private byte[] _salt;
-    private byte[] _plainPassword;
+    private byte[] salt;
+    private byte[] plainPassword;
 
     private static SecureRandom random = new SecureRandom();
 
     public PasswordEncrypter(String plainPassword) {
-        _salt = getSalt();
-        _plainPassword = plainPassword.getBytes();
+        salt = getSalt();
+        this.plainPassword = plainPassword.getBytes();
     }
 
     public PasswordEncrypter(byte[] salt, String plainPassword) {
-        _salt = salt;
-        _plainPassword = plainPassword.getBytes();
+        this.salt = salt;
+        this.plainPassword = plainPassword.getBytes();
     }
 
     public PasswordEncrypter(String salt, String plainPassword) {
@@ -36,12 +36,12 @@ public class PasswordEncrypter {
     }
 
     public String getEncryptedPassword() throws NoSuchAlgorithmException {
-        byte[] stringToEncrypt = prependSalt(_salt, _plainPassword);
+        byte[] stringToEncrypt = prependSalt(salt, plainPassword);
         return sha256(stringToEncrypt);
     }
 
     public String getSaltString() {
-        return new String(_salt);
+        return new String(salt);
     }
 
     /**
