@@ -30,6 +30,7 @@
         <!-- Form -->
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
+                <%= request.getAttribute("error_message") %>
                 <form action="Login" id="form-login" method="post">
                     <h3 id="h3-login">Accesso</h3>
                     <div class="form-group">
