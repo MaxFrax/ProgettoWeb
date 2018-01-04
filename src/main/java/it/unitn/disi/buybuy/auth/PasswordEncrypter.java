@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.disi.unitn.buybuy.auth;
+package it.unitn.disi.buybuy.auth;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

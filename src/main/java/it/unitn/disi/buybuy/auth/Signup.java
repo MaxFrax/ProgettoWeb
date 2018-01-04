@@ -1,4 +1,4 @@
-package it.disi.unitn.buybuy.auth;
+package it.unitn.disi.buybuy.auth;
 
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
