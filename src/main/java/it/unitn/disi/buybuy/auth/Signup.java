@@ -7,6 +7,7 @@ import it.unitn.disi.buybuy.dao.UserDAO;
 import it.unitn.disi.buybuy.dao.entities.User;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,62 +39,101 @@ public class Signup extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        req.getRequestDispatcher("signup.html").forward(req, res);
+        req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         /* TODO
-            - strip user input
-            - validation feedback (redirect to form with error popup)
+            - validation feedback (redirect to signup.jsp with errors)
             - email confirmation using JavaMail
+            - input length constraints (?)
          */
-        
-        // Trim spaces from input
+        ArrayList<String> errors = new ArrayList<>();
+        req.setAttribute("errors", errors); // Now it's available in JSP by ${errors}
+
+        // Name
         String name = req.getParameter("name").trim();
-        String lastname = req.getParameter("surname").trim();
-        String username = req.getParameter("username").trim();
-        String email = req.getParameter("email").trim();
-        
-        // Validate username and email
-        boolean validInput = isValidUsername(username) && isValidEmail(email);
-        if (validInput) {
-            try {
-                // Check that user is not duplicate
-                boolean duplicateUser = isDuplicateUser(email, username);
-                if (!duplicateUser) {
-                    // Create user
-                    User user = new User();
-                    user.setEmail(email);
-                    user.setName(name);
-                    user.setLastname(lastname);
-                    user.setType(User.Type.REGISTRATION_PENDING);
-                    user.setUsername(username);
-                    // Generate hash from password
-                    String password = req.getParameter("pass");
-                    String salt = passwordHashing.getSalt();
-                    String hashedPassword = passwordHashing.hashPassword(password, salt);
-                    user.setHashPassword(hashedPassword);
-                    user.setHashSalt(salt);
-                    // Insert user into DB
-                    userDao.insert(user);
-                    res.sendRedirect(req.getContextPath() + "/success.jsp");
-                } else {
-                    // TODO redirect to form w/ duplicate user error
-                    System.out.println("Duplicate user");
-                    res.sendRedirect(req.getContextPath() + "/error.jsp");
-                }
-            } catch (DAOException | NoSuchAlgorithmException ex) {
-                // TODO redirect to form w/ generic error
-                System.out.println("Failed to check if user is duplicate");
-                res.sendRedirect(req.getContextPath() + "/error.jsp");
-            }
-        } else {
-            // TODO redirect to form w/ invalid input error
-            System.out.println("Invalid username and/or email");
-            res.sendRedirect(req.getContextPath() + "/error.jsp");
+        if (name == null || name.isEmpty()) {
+            errors.add("Inserisci il tuo nome.");
         }
+
+        // Lastname
+        String lastname = req.getParameter("lastname").trim();
+        if (lastname == null || lastname.isEmpty()) {
+            errors.add("Inserisci il tuo cognome.");
+        }
+
+        // Username
+        String username = req.getParameter("username").trim();
+        if (username == null || username.isEmpty()) {
+            errors.add("Inserisci uno username.");
+        } else if (!isValidUsername(username)) {
+            errors.add("Lo username può essere lungo tra i 3 e i 10 caratteri e può contenere solo lettere, numeri, e i simboli . - _.");
+        } else {
+            try {
+                if (isDuplicateUsername(username)) {
+                    errors.add("Lo username inserito è già in uso.");
+                }
+            } catch (DAOException ex) {
+                errors.clear();
+                errors.add("Errore interno. Riprovare più tardi.");
+                req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
+                return; // Stop executing this servlet.
+            }
+        }
+
+        // Email
+        String email = req.getParameter("email").trim();
+        if (email == null || email.isEmpty()) {
+            errors.add("Inserisci il tuo indirizzo email.");
+        } else if (!isValidEmail(email)) {
+            errors.add("Indirizzo email non corretto.");
+        } else {
+            try {
+                if (isDuplicateEmail(email)) {
+                    errors.add("L'indirizzo email inserito è già in uso.");
+                }
+            } catch (DAOException ex) {
+                errors.clear();
+                errors.add("Errore interno. Riprovare più tardi.");
+                req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
+                return; // Stop executing this servlet.
+            }
+        }
+
+        // Privacy agreement (checkbox)
+        String privacy = req.getParameter("privacy");
+        if (privacy == null) {
+            errors.add("L'accettazione della normativa sulla privacy è obbligatoria.");
+        }
+
+        // If there are errors, forward to JSP with same request
+        // JSP will use "errors" attribute to print <span> with error strings
+        if (!errors.isEmpty()) {
+            req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
+            return; // Stop executing this servlet.
+        }
+
+        // Create user
+        User user = new User();
+        user.setName(name);
+        user.setLastname(lastname);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setType(User.Type.REGISTRATION_PENDING); // Default user type
+        
+        // Calculate password hash
+        String password = req.getParameter("password");
+        String salt = passwordHashing.getSalt();
+        String hashedPassword = passwordHashing.hashPassword(password, salt);
+        user.setHashPassword(hashedPassword);
+        user.setHashSalt(salt);
+        
+        // Insert user into DB
+        userDao.insert(user);
+        res.sendRedirect(req.getContextPath() + "/success.jsp");
 
     }
 
@@ -117,11 +157,14 @@ public class Signup extends HttpServlet {
         return matcher.matches();
     }
 
-    private boolean isDuplicateUser(String email, String username) throws DAOException {
-        boolean isDuplicate = false;
-        User duplEmail = userDao.getByEmail(email);
-        User duplUsername = userDao.getByUsername(username);
-        return !(duplEmail == null && duplUsername == null);
+    private boolean isDuplicateEmail(String email) throws DAOException {
+        User user = userDao.getByEmail(email);
+        return (user != null);
+    }
+
+    private boolean isDuplicateUsername(String username) throws DAOException {
+        User user = userDao.getByUsername(username);
+        return (user != null);
     }
 
 }
