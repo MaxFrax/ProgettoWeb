@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.disi.unitn.buybuy.auth;
+package it.unitn.disi.buybuy.auth;
 
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Login extends HttpServlet {
 
     private UserDAO userDao;
+    private PasswordHashing passwordHashing;
 
     @Override
     public void init() throws ServletException {
@@ -37,6 +38,7 @@ public class Login extends HttpServlet {
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
+        passwordHashing = new PasswordHashing();
     }
 
     @Override
@@ -63,10 +65,9 @@ public class Login extends HttpServlet {
             // Get salt and hash from db to recalculate hash and check if password is correct
             // ex stefano.chirico@example.com
             String[] saltAndHash = userDao.getSaltAndHashByEmail(email);
-
             if (saltAndHash != null) {
-                PasswordEncrypter enc = new PasswordEncrypter(saltAndHash[0], password);
-                if (enc.getEncryptedPassword().equals(saltAndHash[1])) {
+                String hashedPassword = passwordHashing.hashPassword(password, saltAndHash[0]);
+                if (hashedPassword.equals(saltAndHash[1])) {
                     // Logged in
                     response.getWriter().println("Hi sir, logged in");
                 } else {

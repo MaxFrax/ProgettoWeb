@@ -2,11 +2,11 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>Signup</servlet-name>
-        <servlet-class>it.disi.unitn.buybuy.auth.Signup</servlet-class>
+        <servlet-class>it.unitn.disi.buybuy.auth.Signup</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>it.disi.unitn.buybuy.auth.Login</servlet-class>
+        <servlet-class>it.unitn.disi.buybuy.auth.Login</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>

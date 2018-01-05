@@ -1,4 +1,4 @@
-package it.disi.unitn.buybuy.auth;
+package it.unitn.disi.buybuy.auth;
 
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
@@ -7,18 +7,17 @@ import it.unitn.disi.buybuy.dao.UserDAO;
 import it.unitn.disi.buybuy.dao.entities.User;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 
 public class Signup extends HttpServlet {
 
     private UserDAO userDao;
+    private PasswordHashing passwordHashing;
 
     @Override
     public void init() throws ServletException {
@@ -31,8 +30,7 @@ public class Signup extends HttpServlet {
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
-        // Test
-        test();
+        passwordHashing = new PasswordHashing();
     }
 
     @Override
@@ -66,12 +64,12 @@ public class Signup extends HttpServlet {
         user.setUsername(req.getParameter("username"));
 
         // Generate password hash
-        String pass = req.getParameter("pass");
-        PasswordEncrypter enc = new PasswordEncrypter(pass);
+        String password = req.getParameter("pass");
         try {
-            String hashPassword = enc.getEncryptedPassword();
-            user.setHashPassword(hashPassword);
-            user.setHashSalt(enc.getSaltString());
+            String salt = passwordHashing.getSalt();
+            String hashedPassword = passwordHashing.hashPassword(password, salt);
+            user.setHashPassword(hashedPassword);
+            user.setHashSalt(salt);
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
             res.sendRedirect(req.getContextPath() + "/error.jsp");
@@ -87,21 +85,5 @@ public class Signup extends HttpServlet {
         }
 
     }
-
-    private void test() {
-        // Anteponi salt in byte[] (prendi stringa dal DB)
-        String saltStr = "-z���N:���-5��O�@\n" +
-"F)i���r�-�W                                 ";
-        PasswordEncrypter enc = new PasswordEncrypter(saltStr, "pallonegonfiabile");
-        String resultHash = null;
-        try {
-            resultHash = enc.getEncryptedPassword();
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // Confronta hash calcolato con quello nel DB
-        System.err.println(resultHash);
-        System.err.println(resultHash.equals("BE73883A5E52BC18418E18FE53B8C1E5560EE715E25BC8DB235614E17C669001"));
-    }
-
+    
 }
