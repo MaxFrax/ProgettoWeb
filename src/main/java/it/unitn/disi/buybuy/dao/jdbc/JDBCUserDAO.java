@@ -285,4 +285,31 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         }
         return output;
     }
+
+    @Override
+    public User getByEmailAndPassword(String email, String hashedPassword) throws DAOException {
+        User user = null;
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM USER_DETAIL WHERE EMAIL=? AND HASH_PASSWORD=?")) {
+            stm.setString(1, email);
+            stm.setString(2, hashedPassword);
+
+            ResultSet rs = stm.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                // Not added to user because it would be a security issue
+                //user.setHashPassword(rs.getString("hash_password"));
+                //user.setHashSalt("hash_salt");
+                user.setName(rs.getString("name"));
+                user.setLastname(rs.getString("lastname"));
+                user.setEmail(rs.getString("email"));
+                user.setType(User.Type.valueOf(rs.getString("type")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
 }
