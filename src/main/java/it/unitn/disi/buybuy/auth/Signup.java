@@ -39,7 +39,7 @@ public class Signup extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
+        req.getRequestDispatcher("signup.jsp").forward(req, res);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Signup extends HttpServlet {
             } catch (DAOException ex) {
                 errors.clear();
                 errors.add("Errore interno. Riprovare più tardi.");
-                req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
+                req.getRequestDispatcher("signup.jsp").forward(req, res);
                 return; // Stop executing this servlet.
             }
         }
@@ -98,9 +98,15 @@ public class Signup extends HttpServlet {
             } catch (DAOException ex) {
                 errors.clear();
                 errors.add("Errore interno. Riprovare più tardi.");
-                req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
+                req.getRequestDispatcher("signup.jsp").forward(req, res);
                 return; // Stop executing this servlet.
             }
+        }
+        
+        // Password
+        String password = req.getParameter("password");
+        if (password == null || password.isEmpty()) {
+            errors.add("Inserisci una password.");
         }
 
         // Privacy agreement (checkbox)
@@ -112,7 +118,7 @@ public class Signup extends HttpServlet {
         // If there are errors, forward to JSP with same request
         // JSP will use "errors" attribute to print <span> with error strings
         if (!errors.isEmpty()) {
-            req.getRequestDispatcher(req.getContextPath() + "/signup.jsp").forward(req, res);
+            req.getRequestDispatcher("signup.jsp").forward(req, res);
             return; // Stop executing this servlet.
         }
 
@@ -123,17 +129,21 @@ public class Signup extends HttpServlet {
         user.setUsername(username);
         user.setEmail(email);
         user.setType(User.Type.REGISTRATION_PENDING); // Default user type
-        
-        // Calculate password hash
-        String password = req.getParameter("password");
-        String salt = passwordHashing.getSalt();
-        String hashedPassword = passwordHashing.hashPassword(password, salt);
-        user.setHashPassword(hashedPassword);
-        user.setHashSalt(salt);
-        
-        // Insert user into DB
-        userDao.insert(user);
-        res.sendRedirect(req.getContextPath() + "/success.jsp");
+
+        // Add user to DB
+        try {
+            // Calculate password hash
+            String salt = passwordHashing.getSalt();
+            String hashedPassword = passwordHashing.hashPassword(password, salt);
+            user.setHashPassword(hashedPassword);
+            user.setHashSalt(salt);
+            // Insert user into DB
+            userDao.insert(user);
+            req.getRequestDispatcher("success.jsp").forward(req, res);
+        } catch (NoSuchAlgorithmException | DAOException ex) {
+            errors.add("Errore interno. Riprovare più tardi.");
+            req.getRequestDispatcher("signup.jsp").forward(req, res);
+        } 
 
     }
 
