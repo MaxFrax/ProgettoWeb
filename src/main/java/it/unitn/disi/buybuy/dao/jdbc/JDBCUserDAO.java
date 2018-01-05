@@ -167,7 +167,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
                     user.setType(User.Type.valueOf(rs.getString("type")));
-                    
+
                     users.add(user);
                 }
             }
@@ -215,16 +215,17 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
     /**
      * Persists the new {@link User user} passed as parameter to the storage
      * system.
+     *
      * @param user the new {@code user} to persist.
-     * @return the id of the new persisted record. 
+     * @return the id of the new persisted record.
      * @throws DAOException if an error occurred during the persist action.
-     * 
+     *
      * @author apello96
      */
     @Override
     public Long insert(User user) throws DAOException {
         try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(name,lastname,username,email,hash_password,hash_salt,user_type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-            
+
             ps.setString(1, user.getName());
             ps.setString(2, user.getLastname());
             ps.setString(3, user.getUsername());
@@ -264,5 +265,24 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             }
             throw new DAOException("Impossible to persist the new user", ex);
         }
+    }
+
+    @Override
+    public String[] getSaltAndHashByEmail(String email) throws DAOException {
+        String[] output = null;
+        try (PreparedStatement stm = CON.prepareStatement("SELECT HASH_SALT, HASH_PASSWORD FROM USER_DETAIL WHERE EMAIL=?")) {
+            stm.setString(1, email);
+
+            ResultSet results = stm.executeQuery();
+            if (results.next()) {
+                output = new String[2];
+
+                output[0] = results.getString("HASH_SALT");
+                output[1] = results.getString("HASH_PASSWORD");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return output;
     }
 }
