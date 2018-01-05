@@ -63,13 +63,13 @@ public class Login extends HttpServlet {
 
         try {
             // Get salt and hash from db to recalculate hash and check if password is correct
-            // ex stefano.chirico@example.com
             String[] saltAndHash = userDao.getSaltAndHashByEmail(email);
             if (saltAndHash != null) {
                 String hashedPassword = passwordHashing.hashPassword(password, saltAndHash[0]);
                 if (hashedPassword.equals(saltAndHash[1])) {
                     // Logged in
-                    response.getWriter().println("Hi sir, logged in");
+                    request.getSession().setAttribute("user", userDao.getByEmailAndPassword(email, hashedPassword));
+                    response.sendRedirect("/BuyBuy");
                 } else {
                     // Error in login
                     request.setAttribute("error_message", "Password is wrong");
