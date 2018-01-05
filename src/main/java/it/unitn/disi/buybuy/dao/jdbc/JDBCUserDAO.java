@@ -82,7 +82,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setName(rs.getString("name"));
                 user.setLastname(rs.getString("lastname"));
                 user.setEmail(rs.getString("email"));
-                user.setType(User.Type.valueOf(rs.getString("type")));
+                user.setType(User.Type.values()[rs.getInt("user_type")]);
 
                 return user;
             }
@@ -128,7 +128,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setName(rs.getString("name"));
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
-                    user.setType(User.Type.valueOf(rs.getString("type")));
+                    user.setType(User.Type.values()[rs.getInt("user_type")]);
 
                     return user;
                 }
@@ -166,7 +166,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setName(rs.getString("name"));
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
-                    user.setType(User.Type.valueOf(rs.getString("type")));
+                    user.setType(User.Type.values()[rs.getInt("user_type")]);
 
                     users.add(user);
                 }
@@ -200,7 +200,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             std.setString(4, user.getName());
             std.setString(5, user.getLastname());
             std.setString(6, user.getEmail());
-            std.setString(7, user.getType().name());
+            std.setInt(7, user.getType().ordinal());
             std.setInt(8, user.getId());
             if (std.executeUpdate() == 1) {
                 return user;
@@ -305,7 +305,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setName(rs.getString("name"));
                 user.setLastname(rs.getString("lastname"));
                 user.setEmail(rs.getString("email"));
-                user.setType(User.Type.valueOf(rs.getString("type")));
+                user.setType(User.Type.values()[rs.getInt("user_type")]);
             }
         } catch (SQLException ex) {
             Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
