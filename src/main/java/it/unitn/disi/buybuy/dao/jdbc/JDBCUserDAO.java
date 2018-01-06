@@ -82,7 +82,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setName(rs.getString("name"));
                 user.setLastname(rs.getString("lastname"));
                 user.setEmail(rs.getString("email"));
-                user.setType(User.Type.valueOf(rs.getString("type")));
+                user.setType(User.Type.values()[rs.getInt("user_type")]);
 
                 return user;
             }
@@ -128,7 +128,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setName(rs.getString("name"));
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
-                    user.setType(User.Type.valueOf(rs.getString("type")));
+                    user.setType(User.Type.values()[rs.getInt("user_type")]);
 
                     return user;
                 }
@@ -166,7 +166,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setName(rs.getString("name"));
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
-                    user.setType(User.Type.valueOf(rs.getString("type")));
+                    user.setType(User.Type.values()[rs.getInt("user_type")]);
 
                     users.add(user);
                 }
@@ -200,7 +200,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             std.setString(4, user.getName());
             std.setString(5, user.getLastname());
             std.setString(6, user.getEmail());
-            std.setString(7, user.getType().name());
+            std.setInt(7, user.getType().ordinal());
             std.setInt(8, user.getId());
             if (std.executeUpdate() == 1) {
                 return user;
@@ -286,6 +286,34 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         return output;
     }
 
+
+    @Override
+    public User getByEmailAndPassword(String email, String hashedPassword) throws DAOException {
+        User user = null;
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM USER_DETAIL WHERE EMAIL=? AND HASH_PASSWORD=?")) {
+            stm.setString(1, email);
+            stm.setString(2, hashedPassword);
+
+            ResultSet rs = stm.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                // Not added to user because it would be a security issue
+                //user.setHashPassword(rs.getString("hash_password"));
+                //user.setHashSalt("hash_salt");
+                user.setName(rs.getString("name"));
+                user.setLastname(rs.getString("lastname"));
+                user.setEmail(rs.getString("email"));
+                user.setType(User.Type.values()[rs.getInt("user_type")]);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+
     public User getByEmail(String email) throws DAOException {
         String query = "SELECT * FROM USER_DETAIL WHERE EMAIL=?";
         try {
@@ -338,5 +366,4 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         // Return null if there are no results
         return null;
     }
-    
 }

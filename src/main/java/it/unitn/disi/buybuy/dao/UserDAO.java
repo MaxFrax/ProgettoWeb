@@ -43,6 +43,22 @@ public interface UserDAO extends DAO<User,Integer>{
      */
     @Override
     public User getByPrimaryKey(Integer primaryKey) throws DAOException;
+    
+    /**
+     * Returns the {@link User user} with the email and hashed password equals
+     * to the ones passed as parameters
+     *
+     * @param email email of the user
+     * @param hashedPassword hashed password of the user
+     * @return the {@code user} with the id equals to the one passed as
+     * parameter or {@code null} if no entities with that id is not present into
+     * the storage system.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author apello96
+     */
+    public User getByEmailAndPassword(String email, String hashedPassword) throws DAOException;
 
     /**
      * Returns the list of all the valid {@link User users} stored by the

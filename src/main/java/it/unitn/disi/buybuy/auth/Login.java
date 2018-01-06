@@ -9,6 +9,7 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOExcept
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
 import it.unitn.disi.buybuy.dao.UserDAO;
+import it.unitn.disi.buybuy.dao.entities.User;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -63,15 +64,22 @@ public class Login extends HttpServlet {
 
         try {
             // Get salt and hash from db to recalculate hash and check if password is correct
-            // ex stefano.chirico@example.com
             String[] saltAndHash = userDao.getSaltAndHashByEmail(email);
             if (saltAndHash != null) {
                 String hashedPassword = passwordHashing.hashPassword(password, saltAndHash[0]);
                 if (hashedPassword.equals(saltAndHash[1])) {
-                    // Logged in
-                    response.getWriter().println("Hi sir, logged in");
+                    User user = userDao.getByEmailAndPassword(email, hashedPassword);
+                    if (user.getType() != User.Type.REGISTRATION_PENDING) {
+                        // Logged in
+                        request.getSession().setAttribute("user", user);
+                        response.sendRedirect("/BuyBuy");
+                    } else {
+                        // Error, registration still pending
+                        request.setAttribute("error_message", "You have to confirm your account by clicking in the link you received by email");
+                        doGet(request, response);
+                    }
                 } else {
-                    // Error in login
+                    // Error in login credentials
                     request.setAttribute("error_message", "Password is wrong");
                     doGet(request, response);
                 }
