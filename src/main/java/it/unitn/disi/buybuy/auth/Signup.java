@@ -139,7 +139,9 @@ public class Signup extends HttpServlet {
             user.setHashSalt(salt);
             // Insert user into DB
             userDao.insert(user);
-            req.getRequestDispatcher("success.jsp").forward(req, res);
+            // Add success attribute to request and forward
+            req.setAttribute("signup_success", true);
+            req.getRequestDispatcher("signup.jsp").forward(req, res);
         } catch (NoSuchAlgorithmException | DAOException ex) {
             errors.add("Errore interno, riprovare più tardi");
             req.getRequestDispatcher("signup.jsp").forward(req, res);

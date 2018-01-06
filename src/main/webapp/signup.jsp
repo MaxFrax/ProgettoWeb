@@ -27,14 +27,19 @@
                 <div class="col-md-6 col-md-offset-3">
                     <form action="Signup" id="form-signup" method="post">
                         <h3 id="h3-register">Registrazione</h3>
-                        <c:if test="${not empty requestScope.errors}">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <c:forEach var="message" items="${requestScope.errors}">
-                                    <li>${message}</li>
+                        <c:choose>
+                            <c:when test="${not empty requestScope.errors}">
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <c:forEach var="message" items="${requestScope.errors}">
+                                        <li>${message}</li>
                                     </c:forEach>
-                            </div>
-                        </c:if>
+                                </div>
+                            </c:when>
+                            <c:when test="${requestScope.signup_success}">
+                                <div class="alert alert-success" role="alert">Registrazione avvenuta con successo</div>
+                            </c:when>
+                        </c:choose>
                         <div class="form-group">
                             <label for="name">Nome</label>
                             <input type="text" class="form-control" id="name" placeholder="Inserisci nome" name="name" value="${param.name != null ? param.name : ""}">
