@@ -28,7 +28,12 @@
                     <form action="Signup" id="form-signup" method="post">
                         <h3 id="h3-register">Registrazione</h3>
                         <c:if test="${not empty requestScope.errors}">
-                            Some fields are empty or contain errors.<br>    
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <c:forEach var="message" items="${requestScope.errors}">
+                                    <li>${message}</li>
+                                    </c:forEach>
+                            </div>
                         </c:if>
                         <div class="form-group">
                             <label for="name">Nome</label>
