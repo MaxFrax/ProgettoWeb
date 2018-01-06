@@ -104,5 +104,9 @@ public interface UserDAO extends DAO<User,Integer>{
      * @author MaxFrax
      */
     public String[] getSaltAndHashByEmail(String email) throws DAOException;
+    
+    public User getByEmail(String email) throws DAOException;
+    
+    public User getByUsername(String username) throws DAOException;
      
 }

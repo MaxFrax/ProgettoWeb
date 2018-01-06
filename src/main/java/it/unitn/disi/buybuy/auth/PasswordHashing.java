@@ -13,15 +13,7 @@ public class PasswordHashing {
         MessageDigest md = MessageDigest.getInstance(ALGORITHM);
         md.update(salt.getBytes());
         md.update(password.getBytes());
-        byte[] hash = md.digest();
- 
-        // DEBUG
-        System.out.println("\n--- hashPassword() ---");
-        System.out.println("Password:        " + password);
-        System.out.println("Salt:            " + salt);
-        System.out.println("Hashed password: " + bytesToHex(hash));
-        System.out.println("--- hashPassword() ---\n");
-        
+        byte[] hash = md.digest();        
         return bytesToHex(hash); // Base16 encoding
     }
 
