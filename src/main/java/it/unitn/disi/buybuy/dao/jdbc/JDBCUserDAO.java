@@ -83,6 +83,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setLastname(rs.getString("lastname"));
                 user.setEmail(rs.getString("email"));
                 user.setType(User.Type.values()[rs.getInt("user_type")]);
+                user.setConfirmationID(rs.getString("id_confirmation"));
 
                 return user;
             }
@@ -129,6 +130,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
                     user.setType(User.Type.values()[rs.getInt("user_type")]);
+                    user.setConfirmationID(rs.getString("id_confirmation"));
 
                     return user;
                 }
@@ -167,6 +169,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastname(rs.getString("lastname"));
                     user.setEmail(rs.getString("email"));
                     user.setType(User.Type.values()[rs.getInt("user_type")]);
+                    user.setConfirmationID(rs.getString("id_confirmation"));
 
                     users.add(user);
                 }
@@ -193,7 +196,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed user is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE app.USER_DETAIL SET username = ?, hash_password = ?, hash_salt = ?, name = ?, lastname = ?, email = ?, user_type = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.USER_DETAIL SET username = ?, hash_password = ?, hash_salt = ?, name = ?, lastname = ?, email = ?, user_type = ?, id_confirmation = ? WHERE id = ?")) {
             std.setString(1, user.getUsername());
             std.setString(2, user.getHashPassword());
             std.setString(3, user.getHashSalt());
@@ -201,7 +204,8 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             std.setString(5, user.getLastname());
             std.setString(6, user.getEmail());
             std.setInt(7, user.getType().ordinal());
-            std.setInt(8, user.getId());
+            std.setString(8, user.getConfirmationID());
+            std.setInt(9, user.getId());
             if (std.executeUpdate() == 1) {
                 return user;
             } else {
@@ -224,7 +228,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      */
     @Override
     public Long insert(User user) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(name,lastname,username,email,hash_password,hash_salt,user_type) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.USER_DETAIL(name,lastname,username,email,hash_password,hash_salt,user_type,id_confirmation) VALUES(?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getName());
             ps.setString(2, user.getLastname());
@@ -233,6 +237,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             ps.setString(5, user.getHashPassword());
             ps.setString(6, user.getHashSalt());
             ps.setInt(7, user.getType().ordinal());
+            ps.setString(8, user.getConfirmationID());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -307,6 +312,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setLastname(rs.getString("lastname"));
                 user.setEmail(rs.getString("email"));
                 user.setType(User.Type.values()[rs.getInt("user_type")]);
+                user.setConfirmationID(rs.getString("id_confirmation"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(JDBCUserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -331,6 +337,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setHashPassword(resultSet.getString("HASH_PASSWORD"));
                 user.setHashSalt("HASH_SALT");
                 user.setType(User.Type.values()[resultSet.getInt("USER_TYPE")]);
+                user.setConfirmationID(resultSet.getString("ID_CONFIRMATION"));
                 return user;
             }
         } catch (SQLException ex) {
@@ -358,6 +365,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setHashPassword(resultSet.getString("HASH_PASSWORD"));
                 user.setHashSalt("HASH_SALT");
                 user.setType(User.Type.values()[resultSet.getInt("USER_TYPE")]);
+                user.setConfirmationID(resultSet.getString("ID_CONFIRMATION"));
                 return user;
             }
         } catch (SQLException ex) {

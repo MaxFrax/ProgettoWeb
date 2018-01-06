@@ -21,6 +21,7 @@ public class User implements Serializable{
     private String email;
     private String hashPassword;
     private String hashSalt;
+    private String confirmationID;
     private Type type;
 
     /**
@@ -159,6 +160,24 @@ public class User implements Serializable{
      */
     public void setHashSalt(String hashSalt) {
         this.hashSalt = hashSalt;
+    }
+    
+    /**
+     * Returns confirmation ID of this user entity.
+     * 
+     * @return the confirmation ID of this user.
+     */
+    public String getConfirmationID() {
+        return confirmationID;
+    }
+    
+    /**
+     * Sets the confirmation ID of this user entity.
+     * 
+     * @param id confirmation ID of this user.
+     */
+    public void setConfirmationID(String id) {
+        this.confirmationID = id;
     }
 
     /**

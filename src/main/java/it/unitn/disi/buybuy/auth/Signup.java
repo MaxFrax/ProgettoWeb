@@ -137,6 +137,9 @@ public class Signup extends HttpServlet {
             String hashedPassword = passwordHashing.hashPassword(password, salt);
             user.setHashPassword(hashedPassword);
             user.setHashSalt(salt);
+            // Create random ID for email confirmation
+            String confirmationID = passwordHashing.getConfirmationID();
+            user.setConfirmationID(confirmationID);
             // Insert user into DB
             userDao.insert(user);
             // Add success attribute to request and forward
