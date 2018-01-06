@@ -37,19 +37,19 @@
                         </c:if>
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input type="text" class="form-control" id="name" placeholder="Inserisci nome" name="name">
+                            <input type="text" class="form-control" id="name" placeholder="Inserisci nome" name="name" value="${param.name != null ? param.name : ""}">
                         </div>
                         <div class="form-group">
                             <label for="lastname">Cognome</label>
-                            <input type="text" class="form-control" id="lastname" placeholder="Inserisci cognome" name="lastname">
+                            <input type="text" class="form-control" id="lastname" placeholder="Inserisci cognome" name="lastname" value="${param.lastname != null ? param.lastname : ""}">
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Inserisci username" name="username">
+                            <input type="text" class="form-control" id="username" placeholder="Inserisci username" name="username" value="${param.username != null ? param.username : ""}">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="Inserisci email" name="email">
+                            <input type="text" class="form-control" id="email" placeholder="Inserisci email" name="email" value="${param.email != null ? param.email : ""}">
                         </div>
                         <div class="form-group">
                             <label for="pass">Password</label>
