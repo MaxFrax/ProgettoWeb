@@ -37,7 +37,7 @@
                                 </div>
                             </c:when>
                             <c:when test="${requestScope.signup_success}">
-                                <div class="alert alert-success" role="alert">Registrazione avvenuta con successo</div>
+                                <div class="alert alert-success" role="alert">Registrazione avvenuta con successo. Ti abbiamo inviato una email di conferma per attivare l'account.</div>
                             </c:when>
                         </c:choose>
                         <div class="form-group">

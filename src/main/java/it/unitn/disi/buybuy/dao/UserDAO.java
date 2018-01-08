@@ -108,5 +108,7 @@ public interface UserDAO extends DAO<User,Integer>{
     public User getByEmail(String email) throws DAOException;
     
     public User getByUsername(String username) throws DAOException;
+    
+    public User getByConfirmationID(String confirmationID) throws DAOException;
      
 }

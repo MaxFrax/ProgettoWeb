@@ -8,6 +8,10 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.auth.Login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConfirmAccount</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.auth.ConfirmAccount</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -20,6 +24,10 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmAccount</servlet-name>
+        <url-pattern>/ConfirmAccount</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

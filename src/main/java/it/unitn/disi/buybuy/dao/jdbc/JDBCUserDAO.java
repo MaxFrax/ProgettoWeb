@@ -291,7 +291,6 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         return output;
     }
 
-
     @Override
     public User getByEmailAndPassword(String email, String hashedPassword) throws DAOException {
         User user = null;
@@ -346,7 +345,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         // Return null if there are no results
         return null;
     }
-    
+
     @Override
     public User getByUsername(String username) throws DAOException {
         String query = "SELECT * FROM USER_DETAIL WHERE USERNAME=?";
@@ -364,6 +363,34 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setEmail(resultSet.getString("EMAIL"));
                 user.setHashPassword(resultSet.getString("HASH_PASSWORD"));
                 user.setHashSalt("HASH_SALT");
+                user.setType(User.Type.values()[resultSet.getInt("USER_TYPE")]);
+                user.setConfirmationID(resultSet.getString("ID_CONFIRMATION"));
+                return user;
+            }
+        } catch (SQLException ex) {
+            throw new DAOException(ex.getMessage());
+        }
+        // Return null if there are no results
+        return null;
+    }
+
+    @Override
+    public User getByConfirmationID(String confirmationID) throws DAOException {
+        String query = "SELECT * FROM USER_DETAIL WHERE ID_CONFIRMATION=?";
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setString(1, confirmationID);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                // Retrieve user and return
+                User user = new User();
+                user.setId(resultSet.getInt("ID"));
+                user.setName(resultSet.getString("NAME"));
+                user.setLastname(resultSet.getString("LASTNAME"));
+                user.setUsername(resultSet.getString("USERNAME"));
+                user.setEmail(resultSet.getString("EMAIL"));
+                user.setHashPassword(resultSet.getString("HASH_PASSWORD"));
+                user.setHashSalt(resultSet.getString("HASH_SALT"));
                 user.setType(User.Type.values()[resultSet.getInt("USER_TYPE")]);
                 user.setConfirmationID(resultSet.getString("ID_CONFIRMATION"));
                 return user;
