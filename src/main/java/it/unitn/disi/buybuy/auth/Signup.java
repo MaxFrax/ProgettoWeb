@@ -12,16 +12,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.mail.MessagingException;
 
 public class Signup extends HttpServlet {
 
     private UserDAO userDao;
     private PasswordHashing passwordHashing;
-
+    private EmailUtil emailUtil;
+    
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -34,6 +34,7 @@ public class Signup extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
         passwordHashing = new PasswordHashing();
+        emailUtil = new EmailUtil();
     }
 
     @Override
@@ -46,8 +47,6 @@ public class Signup extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         /* TODO
-            - validation feedback (redirect to signup.jsp with errors)
-            - email confirmation using JavaMail
             - input length constraints (?)
          */
         ArrayList<String> errors = new ArrayList<>();
@@ -88,7 +87,7 @@ public class Signup extends HttpServlet {
         String email = req.getParameter("email").trim();
         if (email == null || email.isEmpty()) {
             errors.add("Inserisci l'indirizzo email");
-        } else if (!isValidEmail(email)) {
+        } else if (!emailUtil.isValidEmail(email)) {
             errors.add("Indirizzo email non corretto");
         } else {
             try {
@@ -115,8 +114,8 @@ public class Signup extends HttpServlet {
             errors.add("L'accettazione della normativa sulla privacy è obbligatoria");
         }
 
-        // If there are errors, forward to JSP with same request
-        // JSP will use "errors" attribute to print <span> with error strings
+        // If there are errors, forward to signup JSP with same request
+        // JSP will use "errors" request attribute to print errors
         if (!errors.isEmpty()) {
             req.getRequestDispatcher("signup.jsp").forward(req, res);
             return; // Stop executing this servlet.
@@ -137,27 +136,21 @@ public class Signup extends HttpServlet {
             String hashedPassword = passwordHashing.hashPassword(password, salt);
             user.setHashPassword(hashedPassword);
             user.setHashSalt(salt);
+            // Create random ID for email confirmation
+            String confirmationID = passwordHashing.getConfirmationID();
+            user.setConfirmationID(confirmationID);
+            // Send email with confirmation link
+            sendConfirmationEmail(email, confirmationID);
             // Insert user into DB
             userDao.insert(user);
             // Add success attribute to request and forward
             req.setAttribute("signup_success", true);
             req.getRequestDispatcher("signup.jsp").forward(req, res);
-        } catch (NoSuchAlgorithmException | DAOException ex) {
+        } catch (NoSuchAlgorithmException | DAOException | MessagingException ex) {
             errors.add("Errore interno, riprovare più tardi");
             req.getRequestDispatcher("signup.jsp").forward(req, res);
-        } 
-
-    }
-
-    private boolean isValidEmail(String email) {
-        boolean isValid = true;
-        try {
-            InternetAddress internetAddress = new InternetAddress(email);
-            internetAddress.validate();
-        } catch (AddressException e) {
-            isValid = false;
         }
-        return isValid;
+
     }
 
     private boolean isValidUsername(String username) {
@@ -177,6 +170,12 @@ public class Signup extends HttpServlet {
     private boolean isDuplicateUsername(String username) throws DAOException {
         User user = userDao.getByUsername(username);
         return (user != null);
+    }
+
+    private void sendConfirmationEmail(String recipient, String id) throws MessagingException {
+        // TODO: HTML template for email content (inject ID)
+        String html = "<b>Benvenuto/a in BuyBuy!</b><br><br>Clicca <a href=\"http://localhost:8084/BuyBuy/ConfirmAccount?id="+id+"\">qui</a> per attivare il tuo account.";
+        emailUtil.sendEmail(recipient, "Conferma registrazione", html);
     }
 
 }

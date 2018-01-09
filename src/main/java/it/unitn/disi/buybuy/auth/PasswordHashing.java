@@ -29,6 +29,15 @@ public class PasswordHashing {
             builder.append(String.format("%02x", b));
         }
         return builder.toString();
-    } 
+    }
+    
+    /**
+     * Generate an ID for email confirmation or password reset.
+     * 
+     * @return a random alpha-numeric string
+     */
+    public String getConfirmationID() {
+        return getSalt();
+    }
 
 }
