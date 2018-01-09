@@ -75,17 +75,17 @@ public class Login extends HttpServlet {
                         response.sendRedirect("/BuyBuy");
                     } else {
                         // Error, registration still pending
-                        request.setAttribute("error_message", "You have to confirm your account by clicking in the link you received by email");
+                        request.setAttribute("error_message", "Prima di effettuare l'accesso è necessario confermare l'account cliccando sul link che ti è stato inviato via email.");
                         doGet(request, response);
                     }
                 } else {
                     // Error in login credentials
-                    request.setAttribute("error_message", "Password is wrong");
+                    request.setAttribute("error_message", "Password non corretta.");
                     doGet(request, response);
                 }
             } else {
                 // Error in login
-                request.setAttribute("error_message", "No users with this email");
+                request.setAttribute("error_message", "Non esistono utenti registrati con questa email.");
                 doGet(request, response);
             }
 
