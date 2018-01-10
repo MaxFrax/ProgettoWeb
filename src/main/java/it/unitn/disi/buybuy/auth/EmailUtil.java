@@ -29,7 +29,6 @@ public class EmailUtil {
         sysProperties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         sysProperties.setProperty("mail.smtp.auth", "true");
         sysProperties.setProperty("mail.smtp.starttls.enable", "true");
-        sysProperties.setProperty("mail.debug", "true");
         this.session = Session.getInstance(sysProperties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
