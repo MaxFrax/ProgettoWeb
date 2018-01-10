@@ -64,7 +64,7 @@
                             <label>
                                 <input type="checkbox" name="privacy" value="privacy">Accetto la normativa sulla privacy</label>
                         </div>
-                        <button type="submit" class="btn btn-default">Registrati</button><span id="span-cancel">oppure <a href="#">annulla</a></span>
+                        <button type="submit" class="btn btn-default">Registrati</button><span id="span-cancel">oppure <a href="javascript:history.back()">annulla</a></span>
                     </form>
                 </div>
             </div>

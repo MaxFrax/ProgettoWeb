@@ -48,7 +48,7 @@
                             <label for="pass">Password</label><a class="pull-right" href="#">Password dimenticata</a>
                             <input type="password" class="form-control" id="pass" placeholder="Inserisci password" name="pass">
                         </div>
-                        <button type="submit" class="btn btn-default">Accedi</button><span id="span-cancel">oppure <a href="#">annulla</a></span>
+                        <button type="submit" class="btn btn-default">Accedi</button><span id="span-cancel">oppure <a href="javascript:history.back()">annulla</a></span>
                     </form>
                 </div>
             </div>
