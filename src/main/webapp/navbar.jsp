@@ -24,8 +24,8 @@
                     <%-- Guest user --%>
                     <c:when test="${empty user}">
                         <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Carrello</a></li>
-                        <li><a href="Signup"><span class="glyphicon glyphicon-user"></span> Registrati</a></li>
-                        <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span> Accedi</a></li>
+                        <li><a href="signup.jsp"><span class="glyphicon glyphicon-user"></span> Registrati</a></li>
+                        <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Accedi</a></li>
                     </c:when>
                     <%-- Registered user --%>
                     <c:when test="${user.type == 'REGISTERED'}">

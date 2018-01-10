@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ConfirmAccount extends HttpServlet {
+public class ActivateAccount extends HttpServlet {
 
     private UserDAO userDAO;
 

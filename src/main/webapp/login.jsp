@@ -32,7 +32,7 @@
             <!-- Form -->
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <form action="Login" id="form-login" method="post">
+                    <form action="login" id="form-login" method="post">
                         <h3 id="h3-login">Accesso</h3>
                         <c:if test="${not empty requestScope.error_message}">
                             <div class="alert alert-danger alert-dismissible" role="alert">

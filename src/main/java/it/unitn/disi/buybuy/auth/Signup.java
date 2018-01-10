@@ -174,7 +174,7 @@ public class Signup extends HttpServlet {
 
     private void sendConfirmationEmail(String recipient, String id) throws MessagingException {
         // TODO: HTML template for email content (inject ID)
-        String html = "<b>Benvenuto/a in BuyBuy!</b><br><br>Clicca <a href=\"http://localhost:8084/BuyBuy/ConfirmAccount?id="+id+"\">qui</a> per attivare il tuo account.";
+        String html = "<b>Benvenuto/a in BuyBuy!</b><br><br>Clicca <a href=\"http://localhost:8084/BuyBuy/activate_account?id="+id+"\">qui</a> per attivare il tuo account.";
         emailUtil.sendEmail(recipient, "Conferma registrazione", html);
     }
 
