@@ -1,5 +1,6 @@
-<%@page import="it.unitn.disi.buybuy.dao.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -23,48 +24,8 @@
     </head>
 
     <body>
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire"></span> BuyBuy</a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <div class="col-sm-3 col-md-3">
-                        <form class="navbar-form" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" name="q">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <% if (request.getSession().getAttribute("user") == null) { %>
-                        <li><a href="Signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                            <% } else {
-                                User user = (User) request.getSession().getAttribute("user");
-                            %>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= user.getName()%> <%= user.getLastname()%><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Page 1-1</a></li>
-                                <li><a href="#">Page 1-2</a></li>
-                                <li><a href="#">Page 1-3</a></li>
-                            </ul>
-                        </li>
-                        <% }%>
-                    </ul>                        
-                </div>
-            </div>
-        </nav>
+        <!-- Dynamic navbar based on user -->
+        <%@include file="navbar.jsp" %>
         <!-- Page Content -->
         <div class="container">
             <div class="row">
