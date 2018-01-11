@@ -62,6 +62,7 @@ public class EmailUtil {
      * @return true if email is valid, false otherwise
      */
     public static boolean isValidEmail(String email) {
+        if (email == null) return false;
         boolean isValid = true;
         try {
             InternetAddress internetAddress = new InternetAddress(email);
