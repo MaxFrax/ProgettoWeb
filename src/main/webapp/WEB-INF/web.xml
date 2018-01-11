@@ -17,6 +17,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.auth.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ForgotPassword</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.auth.ForgotPassword</servlet-class>
+    </servlet>
     <!-- Servlets mapping -->
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -33,6 +37,10 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPassword</servlet-name>
+        <url-pattern>/forgot_password</url-pattern>
     </servlet-mapping>
     <!-- Application config -->
     <context-param>
