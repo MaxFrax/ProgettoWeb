@@ -36,7 +36,7 @@
                                 <li><a href="#">Profilo</a></li>
                                 <li><a href="#">Segnala anomalia</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Esci</a></li>
+                                <li><a href="logout">Esci</a></li>
                             </ul>
                         </li>
                     </c:when>
@@ -51,7 +51,7 @@
                                 <li><a href="#">Il mio negozio</a></li>
                                 <li><a href="#">Segnala anomalia</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Esci</a></li>
+                                <li><a href="logout">Esci</a></li>
                             </ul>
                         </li>
                     </c:when>
@@ -63,7 +63,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">Profilo</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Esci</a></li>
+                                <li><a href="logout">Esci</a></li>
                             </ul>
                         </li>
                     </c:when>
