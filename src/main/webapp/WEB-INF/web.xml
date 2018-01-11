@@ -41,7 +41,4 @@
         <description>ServletContextListener</description>
         <listener-class>it.unitn.disi.listeners.WebAppContextListener</listener-class>
     </listener>
-    <error-page>
-        <location>/error.jsp</location>
-    </error-page>
 </web-app>
