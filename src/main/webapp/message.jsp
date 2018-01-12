@@ -1,6 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%-- If there is nothing to show, redirect to home --%>
+<c:if test="${empty error && empty message}">
+    <c:redirect url="${pageContext.request.contextPath}"></c:redirect>
+</c:if>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -9,11 +14,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <title>Ooops...</title>
+        <title>${empty error ? 'Informazione' : 'Errore'}</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/error.css" rel="stylesheet">
+        <link href="css/message.css" rel="stylesheet">
     </head>
 
     <body>
@@ -27,12 +32,20 @@
             </div>
             <div class="row panel-error">
                 <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-danger">
+                    <%-- If requestScope.error, then panel-danger, else panel-info --%>
+                    <div class="panel ${empty error ? 'panel-info' : 'panel-danger'}">
                         <div class="panel-heading">
-                            <h3 class="panel-title">C'è stato un errore</h3>
+                            <h3 class="panel-title">${empty error ? 'Info' : 'Errore'}</h3>
                         </div> 
                         <div class="panel-body">
-                            Se hai bisogno di aiuto, <a href="#">contattaci</a>.
+                            <c:choose>
+                                <c:when test="${empty message && !empty error}">
+                                    Se hai bisogno di aiuto, <a href="#">contattaci</a>.
+                                </c:when>
+                                <c:when test="${!empty message}">
+                                    ${message}
+                                </c:when>
+                            </c:choose>
                         </div> 
                     </div>
                 </div>
