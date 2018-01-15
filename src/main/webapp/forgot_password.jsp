@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <form action="forgot_password" id="form-forgot-password" method="post">
-                        <h3 id="h3-register">Password dimenticata</h3>
+                        <h3 id="h3-forgot-password">Password dimenticata</h3>
                         <c:choose>
                             <c:when test="${not empty errorMessage}">
                                 <div class="alert alert-danger alert-dismissible" role="alert">
