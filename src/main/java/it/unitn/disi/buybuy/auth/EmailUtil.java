@@ -61,7 +61,8 @@ public class EmailUtil {
      * @param email the email address to validate
      * @return true if email is valid, false otherwise
      */
-    public boolean isValidEmail(String email) {
+    public static boolean isValidEmail(String email) {
+        if (email == null) return false;
         boolean isValid = true;
         try {
             InternetAddress internetAddress = new InternetAddress(email);
