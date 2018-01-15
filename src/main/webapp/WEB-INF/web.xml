@@ -18,6 +18,10 @@
         <servlet-name>Search</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.shop.Search</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Main</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.Main</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -40,6 +44,10 @@
         <servlet-name>Search</servlet-name>
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Main</servlet-name>
+        <url-pattern>/welcome</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -52,4 +60,7 @@
     <error-page>
         <location>/error.jsp</location>
     </error-page>
+    <welcome-file-list>
+        <welcome-file>welcome</welcome-file>
+    </welcome-file-list>
 </web-app>
