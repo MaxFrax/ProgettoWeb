@@ -5,15 +5,16 @@ public class Message {
     public enum Type {
         INFO, ERROR
     };
-    public Type type;
-    public String text;
-
+    private Type type;
+    private String text;
+    
     public Message() {
         this.type = Type.INFO;
+        this.text = null;
     }
     
     public Message(String text) {
-        this();
+        this.type = Type.INFO;
         this.text = text;
     }
     
@@ -32,6 +33,14 @@ public class Message {
     
     public void setText(String text) {
         this.text = text;
+    }
+    
+    public Type getType() {
+        return this.type;
+    }
+    
+    public String getText() {
+        return this.text;
     }
     
     @Override
