@@ -30,7 +30,7 @@
                     <img class="img-responsive center-block logo" src="img/logo.png" alt="BuyBuy">
                 </div>
             </div>
-            <div class="row panel-error">
+            <div class="row panel-message">
                 <div class="col-md-6 col-md-offset-3">
                     <%-- If requestScope.error, then panel-danger, else panel-info --%>
                     <div class="panel ${empty error ? 'panel-info' : 'panel-danger'}">
