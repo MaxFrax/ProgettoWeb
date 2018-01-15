@@ -21,6 +21,10 @@
         <servlet-name>ForgotPassword</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.auth.ForgotPassword</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPassword</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.auth.ResetPassword</servlet-class>
+    </servlet>
     <!-- Servlets mapping -->
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -41,6 +45,10 @@
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgot_password</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPassword</servlet-name>
+        <url-pattern>/reset_password</url-pattern>
     </servlet-mapping>
     <!-- Application config -->
     <context-param>
