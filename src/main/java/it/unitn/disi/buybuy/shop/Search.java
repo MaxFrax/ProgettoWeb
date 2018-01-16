@@ -9,8 +9,9 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOExcept
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
 import it.unitn.disi.buybuy.dao.ItemDAO;
+import it.unitn.disi.buybuy.dao.entities.Item;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -51,22 +52,27 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Item> res = null;
         String query = request.getParameter("query");
         try {
             int category_id = Integer.parseInt(request.getParameter("category"));
             if (query.isEmpty()) {
-                itemDao.getByCategory(category_id);
+                res = itemDao.getByCategory(category_id);
             } else {
-                itemDao.getByCategoryAndQuery(category_id, query);
+                res = itemDao.getByCategoryAndQuery(category_id, query);
             }
         } catch (NumberFormatException ex) {
             try {
                 // Numero di categoria non intero, per cui secondo la logica del frontend è vuoto = non settato
-                itemDao.getAll();
+                res = itemDao.getAll();
             } catch (DAOException ex1) {
                 Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex1);
             }
+        } catch (DAOException ex) {
+            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.setAttribute("results", res);
+        request.getRequestDispatcher("results.jsp").forward(request, response);
     }
 
 }

@@ -22,7 +22,7 @@
         <%@include file="navbar.jsp"%>
         <!-- Main container -->
         <div class="container main">
-
+            <%= request.getAttribute("results")%>
             <div class="row">
                 <div class="col-xs-12">
                     <h3 class="no-margin">Risultati di ricerca</h3>
