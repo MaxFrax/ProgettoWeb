@@ -1,0 +1,18 @@
+.no-margin {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.main .search-result {
+    margin-top: 30px;
+}
+
+.search-result .thumbnail {
+    margin-bottom: 0px;
+}
+
+.search-result ul {
+    list-style-type: none;
+    -webkit-padding-start: 0px;
+}
+
