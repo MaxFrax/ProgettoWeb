@@ -1,5 +1,3 @@
-<%@page import="it.unitn.disi.buybuy.dao.entities.Category"%>
-<%@page import="java.util.List"%>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
