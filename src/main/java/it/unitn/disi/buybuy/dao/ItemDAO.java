@@ -80,4 +80,10 @@ public interface ItemDAO extends DAO<Item,Integer>{
      */
     @Override
     public Item update(Item item) throws DAOException;
+    
+    public List<Item> getByQuery(String query);
+    
+    public List<Item> getByCategory(Integer category_id);
+    
+    public List<Item> getByCategoryAndQuery(Integer category_id, String query);
 }
