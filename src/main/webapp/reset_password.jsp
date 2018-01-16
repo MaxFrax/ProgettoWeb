@@ -1,11 +1,5 @@
-<%-- 
-    Document   : login
-    Created on : 4-gen-2018, 17.42.12
-    Author     : maxfrax
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -15,12 +9,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Accedi - BuyBuy</title>
+        <title>Password dimenticata</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/login.css" rel="stylesheet">
+        <link href="css/reset_password.css" rel="stylesheet">
     </head>
 
     <body>
@@ -32,23 +25,27 @@
             <!-- Form -->
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <form action="login" id="form-login" method="post">
-                        <h3 id="h3-login">Accesso</h3>
-                        <c:if test="${not empty requestScope.error_message}">
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                ${requestScope.error_message}
+                    <form action="${pageContext.request.contextPath}/reset_password" id="form-reset-password" method="POST">
+                        <h3 id="h3-reset-password">Reimpostazione password</h3>
+                        <c:if test="${!empty message}">
+                            <c:choose>
+                                <c:when test="${message.type == 'ERROR'}">
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="alert alert-success" role="alert">
+                                </c:otherwise>
+                            </c:choose>
+                            ${message}
                             </div>
                         </c:if>
+                        <p>Inserisci una nuova password per il tuo account e clicca su "Conferma".</p>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="Inserisci email" name="email">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci password">
+                            <input type="hidden" value="${param.id}" name="id">
                         </div>
-                        <div class="form-group">
-                            <label for="pass">Password</label><a class="pull-right" href="${pageContext.request.contextPath}/forgot_password.jsp">Password dimenticata</a>
-                            <input type="password" class="form-control" id="pass" placeholder="Inserisci password" name="pass">
-                        </div>
-                        <button type="submit" class="btn btn-default">Accedi</button><span id="span-cancel">oppure <a href="javascript:history.back()">annulla</a></span>
+                        <button type="submit" class="btn btn-default">Conferma</button>
                     </form>
                 </div>
             </div>

@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <form action="signup" id="form-signup" method="post">
-                        <h3 id="h3-register">Registrazione</h3>
+                        <h3 id="h3-signup">Registrazione</h3>
                         <c:choose>
                             <c:when test="${not empty requestScope.errors}">
                                 <div class="alert alert-danger alert-dismissible" role="alert">
