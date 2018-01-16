@@ -44,7 +44,25 @@ public class JDBCCategoryDAO extends JDBCDAO<Category, Integer> implements Categ
 
     @Override
     public Category getByPrimaryKey(Integer prmrk) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Category category = null;
+        if (prmrk == null) {
+            throw new DAOException("primaryKey is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM category WHERE id = ?")) {
+            stm.setInt(1, prmrk);
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    category = new Category();
+                    category.setId(prmrk);
+                    category.setName(rs.getString("NAME"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(JDBCCategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCCategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return category;
     }
 
     @Override
