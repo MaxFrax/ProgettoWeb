@@ -1,6 +1,3 @@
-<%@page import="it.unitn.disi.buybuy.dao.entities.Category"%>
-<%@page import="java.util.List"%>
-<% List<Category> categories = (List<Category>)request.getAttribute("categories"); %>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -21,7 +18,7 @@
                             </button>
                             <ul class="dropdown-menu" role="category">
                                 <li><a onclick="onCategoryChoice(null, '')">Tutte le categorie</a></li>
-                                <c:forEach items="${categories}" var="cat">
+                                <c:forEach items="${applicationScope.categories}" var="cat">
                                     <li><a onclick="onCategoryChoice(this, ${cat.getId()})">${cat.getName()}</a></li>
                                 </c:forEach>
                             </ul>
