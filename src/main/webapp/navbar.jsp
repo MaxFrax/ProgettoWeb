@@ -20,13 +20,13 @@
                                 <span id="selected_category">Categoria</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="category">
-                                <li><a onclick="onCategoryChoice(null)">Tutte le categorie</a></li>
+                                <li><a onclick="onCategoryChoice(null, '')">Tutte le categorie</a></li>
                                 <c:forEach items="${categories}" var="cat">
-                                    <li><a onclick="onCategoryChoice(this)">${cat.getName()}</a></li>
+                                    <li><a onclick="onCategoryChoice(this, ${cat.getId()})">${cat.getName()}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>        
-                        <input type="hidden" name="category">
+                        <input type="hidden" name="category" value="">
                         <input type="text" class="form-control" name="query" placeholder="Search term...">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
@@ -88,11 +88,11 @@
     </div>
 </nav>
 <script>
-    let onCategoryChoice = function (list_item) {
+    let onCategoryChoice = function (list_item, category_id) {
         let form = document.getElementById('search-form');
         if (list_item !== null) {
             console.log("a");
-            form.elements.namedItem('category').value = list_item.innerText;
+            form.elements.namedItem('category').value = category_id;
             let selected_category = document.getElementById('selected_category').innerText = list_item.innerText;
         } else {
             form.elements.namedItem('category').value = '';
