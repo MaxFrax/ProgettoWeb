@@ -19,7 +19,7 @@
                             <ul class="dropdown-menu" role="category">
                                 <li><a onclick="onCategoryChoice(null, '')">Tutte le categorie</a></li>
                                 <c:forEach items="${applicationScope.categories}" var="cat">
-                                    <li><a onclick="onCategoryChoice(this, ${cat.getId()})">${cat.getName()}</a></li>
+                                    <li><a onclick="onCategoryChoice(this, ${cat.id})">${cat.name}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>        
