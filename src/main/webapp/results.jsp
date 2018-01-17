@@ -82,9 +82,9 @@
             <%@include file="footer.jsp"%>
         </div>
         <!-- Navbar script -->
-        <script src="js/navbar.js">
-<!-- jQuery -->
-            <script src="js/jquery.js"></script>
+        <script src="js/navbar.js"></script>
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
     </body>
