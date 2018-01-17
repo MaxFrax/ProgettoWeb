@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<% List<Item> results = (List<Item>) request.getAttribute("results");%>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h3 class="no-margin">Risultati di ricerca</h3>
-                    <h4><b class="text-danger"><%= results.size()%></b> oggetti trovati per "<b class="text-danger"><%= request.getParameter("query")%></b>"</h4>
+                    <h4><b class="text-danger">${results.size()}</b> oggetti trovati</h4>
                     <hr class="no-margin">
                 </div>
             </div>
@@ -35,8 +35,8 @@
             <div class="row search-result">
                 <div class="col-xs-12">
 
-                    <!-- Item -->
-                    <c:forEach items="${results}" var="res">
+                    <!-- Items -->
+                    <c:forEach items="${results}" var="item">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="row">
@@ -48,17 +48,17 @@
                                     <div class="col-xs-9">
                                         <div class="row">
                                             <div class="col-sm-8">
-                                                <h4><a href="#">${res.getName()}</a></h4>
+                                                <h4><a href="#">${item.name}</a></h4>
                                                 <ul>
-                                                    <li>di <a href="${res.getSeller().getWebsite()}">${res.getSeller().getName()}</a></li>
+                                                    <li>di <a href="${item.seller.website}">${item.seller.name}</a></li>
                                                     <li>
-                                                        <a href="#"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;Mappa</a>
+                                                        <a href="#"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;TODO: link mappa</a>
                                                     </li>
                                                 </ul>
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <h4><b>${res.getPrice()}&euro;</b></h4>
+                                                <h4><b>${item.price}&euro;</b></h4>
                                                 <span>
                                                     <span class="glyphicon glyphicon-star"></span>
                                                     <span class="glyphicon glyphicon-star"></span>
@@ -66,7 +66,7 @@
                                                     <span class="glyphicon glyphicon-star"></span>
                                                     <span class="glyphicon glyphicon-star-empty"></span>
                                                 </span>
-                                                (x recensioni)
+                                                (TODO: # e media recensioni)
                                             </div>
                                         </div>
 
