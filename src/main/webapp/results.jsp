@@ -59,14 +59,14 @@
 
                                             <div class="col-sm-4">
                                                 <h4><b>${item.price}&euro;</b></h4>
-                                                <!--<span>
-                                                    <span class="glyphicon glyphicon-star"></span>
-                                                    <span class="glyphicon glyphicon-star"></span>
-                                                    <span class="glyphicon glyphicon-star"></span>
-                                                    <span class="glyphicon glyphicon-star"></span>
-                                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                                </span>-->
-                                                Media recensioni: ${item.rating}
+                                                <span>
+                                                    <c:forEach var="i" begin="1" end="${item.rating}">
+                                                        <span class="glyphicon glyphicon-star"></span>
+                                                    </c:forEach>
+                                                    <c:forEach var="i" begin="${item.rating+1}" end="5">
+                                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                                    </c:forEach>
+                                                </span>
                                                 (${item.reviewCount})
                                             </div>
                                         </div>
@@ -81,8 +81,10 @@
             <!-- Footer -->
             <%@include file="footer.jsp"%>
         </div>
-        <!-- jQuery -->
-        <script src="js/jquery.js"></script>
+        <!-- Navbar script -->
+        <script src="js/navbar.js">
+<!-- jQuery -->
+            <script src="js/jquery.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
     </body>
