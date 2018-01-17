@@ -62,12 +62,8 @@ public class Search extends HttpServlet {
                 res = itemDao.getByCategoryAndQuery(category_id, query);
             }
         } catch (NumberFormatException ex) {
-            try {
-                // Numero di categoria non intero, per cui secondo la logica del frontend è vuoto = non settato
-                res = itemDao.getAll();
-            } catch (DAOException ex1) {
-                Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            // Numero di categoria non intero, per cui secondo la logica del frontend è vuoto = non settato
+            res = itemDao.getByQuery(query);
         } catch (DAOException ex) {
             Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
         }

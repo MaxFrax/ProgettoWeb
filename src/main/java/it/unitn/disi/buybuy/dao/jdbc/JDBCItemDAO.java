@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,9 +61,39 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     }
 
     @Override
-    public List<Item> getByQuery(String query) {
+    public List<Item> getByQuery(String userQuery) {
+        // TODO ricerca non case sensitive e parole di ricerca che possono essere contenute in una parola del db
+        List<Item> results = new ArrayList<>();
         // https://stackoverflow.com/questions/14290857/sql-select-where-field-contains-words
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] searchWords = userQuery.split("\\s+");
+        StringBuilder query = new StringBuilder("SELECT * FROM item WHERE false ");
+        for (String searchWord : searchWords) {
+            //query.append("OR name LIKE '%?%' OR description LIKE '%?%' ");
+            query.append("OR name LIKE ? OR description LIKE ? ");
+        }
+        System.out.println(query.toString());
+        System.out.println(Arrays.toString(searchWords));
+        try (PreparedStatement stm = CON.prepareStatement(query.toString())) {
+            int i = 1;
+            for (String searchWord : searchWords) {
+                stm.setString(i, searchWord);
+                i++;
+                stm.setString(i, searchWord);
+                i++;
+            }
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Item it = itemFactory(rs);
+                    results.add(it);
+                }
+            } catch (DAOFactoryException | DAOException ex) {
+                Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return results;
     }
 
     @Override
@@ -75,13 +106,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
             stm.setInt(1, category_id);
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
-                    Item i = new Item();
-                    i.setId(rs.getInt("ID"));
-                    i.setName(rs.getString("NAME"));
-                    i.setDescription(rs.getString("DESCRIPTION"));
-                    i.setPrice(rs.getFloat("PRICE"));
-                    i.setCategory(getDAO(CategoryDAO.class).getByPrimaryKey(category_id));
-                    i.setSeller(getDAO(ShopDAO.class).getByPrimaryKey(rs.getInt("SELLER_ID")));
+                    Item i = itemFactory(rs);
                     results.add(i);
                 }
             } catch (SQLException | DAOFactoryException ex) {
@@ -96,6 +121,17 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     @Override
     public List<Item> getByCategoryAndQuery(Integer category_id, String query) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private Item itemFactory(ResultSet rs) throws SQLException, DAOFactoryException, DAOException {
+        Item i = new Item();
+        i.setId(rs.getInt("ID"));
+        i.setName(rs.getString("NAME"));
+        i.setDescription(rs.getString("DESCRIPTION"));
+        i.setPrice(rs.getFloat("PRICE"));
+        i.setCategory(getDAO(CategoryDAO.class).getByPrimaryKey(rs.getInt("CATEGORY_ID")));
+        i.setSeller(getDAO(ShopDAO.class).getByPrimaryKey(rs.getInt("SELLER_ID")));
+        return i;
     }
 
 }
