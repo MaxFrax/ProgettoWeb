@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.disi.buybuy.dao.jdbc;
 
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
@@ -10,9 +5,11 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactor
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
 import it.unitn.disi.buybuy.dao.CategoryDAO;
 import it.unitn.disi.buybuy.dao.ItemDAO;
+import it.unitn.disi.buybuy.dao.ReviewDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
-import it.unitn.disi.buybuy.dao.entities.Category;
 import it.unitn.disi.buybuy.dao.entities.Item;
+import it.unitn.disi.buybuy.dao.entities.Review;
+import it.unitn.disi.buybuy.dao.entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -131,7 +128,42 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         i.setPrice(rs.getFloat("PRICE"));
         i.setCategory(getDAO(CategoryDAO.class).getByPrimaryKey(rs.getInt("CATEGORY_ID")));
         i.setSeller(getDAO(ShopDAO.class).getByPrimaryKey(rs.getInt("SELLER_ID")));
+        i.setRating(getRatingByItemId(rs.getInt("ID")));
+        i.setReviewCount(getReviewCountByItemId(rs.getInt("ID")));
         return i;
     }
 
+    @Override
+    public Integer getRatingByItemId(Integer itemId) throws DAOException {
+        String query = "SELECT AVG(RATING) AS AVG_RATING FROM REVIEW WHERE ITEM_ID=?";
+        Integer average = 0;
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, itemId);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                average = resultSet.getInt("AVG_RATING");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to query reviews with ITEM_ID = " + itemId, ex);
+        }
+        return average;
+    }
+    
+    @Override
+    public Integer getReviewCountByItemId(Integer itemId) throws DAOException {
+        String query = "SELECT COUNT(RATING) AS TOTAL FROM REVIEW WHERE ITEM_ID=?";
+        Integer count = 0;
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, itemId);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt("TOTAL");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to query reviews with ITEM_ID = " + itemId, ex);
+        }
+        return count;
+    }
 }

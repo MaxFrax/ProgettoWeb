@@ -59,14 +59,15 @@
 
                                             <div class="col-sm-4">
                                                 <h4><b>${item.price}&euro;</b></h4>
-                                                <span>
+                                                <!--<span>
                                                     <span class="glyphicon glyphicon-star"></span>
                                                     <span class="glyphicon glyphicon-star"></span>
                                                     <span class="glyphicon glyphicon-star"></span>
                                                     <span class="glyphicon glyphicon-star"></span>
                                                     <span class="glyphicon glyphicon-star-empty"></span>
-                                                </span>
-                                                (TODO: # e media recensioni)
+                                                </span>-->
+                                                Media recensioni: ${item.rating}
+                                                (${item.reviewCount})
                                             </div>
                                         </div>
 

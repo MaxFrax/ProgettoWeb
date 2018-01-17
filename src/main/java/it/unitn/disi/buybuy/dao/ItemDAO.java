@@ -87,4 +87,8 @@ public interface ItemDAO extends DAO<Item, Integer> {
     public List<Item> getByCategory(Integer category_id) throws DAOException;
 
     public List<Item> getByCategoryAndQuery(Integer category_id, String query);
+    
+    public Integer getRatingByItemId(Integer itemId) throws DAOException;
+    
+    public Integer getReviewCountByItemId(Integer itemId) throws DAOException;
 }

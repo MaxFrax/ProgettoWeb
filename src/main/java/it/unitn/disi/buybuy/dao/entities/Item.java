@@ -18,6 +18,8 @@ public class Item implements Serializable {
     private Float price;
     private Category category;
     private Shop seller;
+    private Integer rating;
+    private Integer reviewCount;
 
     /**
      * Returns the primary key of this item entity.
@@ -150,4 +152,21 @@ public class Item implements Serializable {
     public void setSeller(Shop seller) {
         this.seller = seller;
     }
+    
+    public Integer getRating() {
+        return this.rating;
+    }
+    
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+    
+    public Integer getReviewCount() {
+        return this.reviewCount;
+    }
+    
+    public void setReviewCount(Integer count) {
+        this.reviewCount = count;
+    }
+    
 }
