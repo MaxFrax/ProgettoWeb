@@ -9,22 +9,23 @@
             <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire"></span> BuyBuy</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-            <div class="col-sm-3 col-md-3">
+            <div class="col-sm-8">
                 <form class="navbar-form" role="search" id="search-form" method="get" action="search">
                     <div class="input-group">
                         <div class="input-group-btn search-panel">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span id="selected_category">Categoria</span> <span class="caret"></span>
+                                <span id="selected_category">Tutte le categorie</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="category">
-                                <li><a onclick="onCategoryChoice(null, '')">Tutte le categorie</a></li>
+                                <li><a onclick="onCategoryChoice(null, '')" class="cursor-pointer">Tutte le categorie</a></li>
+                                <li role="separator" class="divider"></li>
                                 <c:forEach items="${applicationScope.categories}" var="cat">
-                                    <li><a onclick="onCategoryChoice(this, ${cat.id})">${cat.name}</a></li>
+                                    <li><a onclick="onCategoryChoice(this, ${cat.id})" class="cursor-pointer">${cat.name}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>        
                         <input type="hidden" name="category" value="">
-                        <input type="text" class="form-control" name="query" placeholder="Search term...">
+                        <input type="text" class="form-control" name="query" placeholder="Cerca qualcosa...">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                         </span>

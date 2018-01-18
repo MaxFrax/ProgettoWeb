@@ -6,6 +6,6 @@ let onCategoryChoice = function (list_item, category_id) {
         let selected_category = document.getElementById('selected_category').innerText = list_item.innerText;
     } else {
         form.elements.namedItem('category').value = '';
-        let selected_category = document.getElementById('selected_category').innerText = "Categoria";
+        let selected_category = document.getElementById('selected_category').innerText = "Tutte le categorie";
     }
 };

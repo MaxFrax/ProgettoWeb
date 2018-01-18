@@ -16,3 +16,6 @@
     -webkit-padding-start: 0px;
 }
 
+a.cursor-pointer {
+    cursor: pointer;
+}
