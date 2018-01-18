@@ -19,3 +19,8 @@
 a.cursor-pointer {
     cursor: pointer;
 }
+
+#navbar > .col-sm-8 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
