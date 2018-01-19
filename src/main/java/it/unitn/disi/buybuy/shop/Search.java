@@ -57,7 +57,7 @@ public class Search extends HttpServlet {
         query = query.trim();
         try {
             int category_id = Integer.parseInt(request.getParameter("category"));
-            if (query.isEmpty() || query == null) {
+            if (query == null || query.isEmpty()) {
                 res = itemDao.getByCategory(category_id);
             } else {
                 res = itemDao.getByCategoryAndQuery(category_id, query);
