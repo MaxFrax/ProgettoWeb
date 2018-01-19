@@ -66,14 +66,14 @@
         <div class="row">
             <div class="col-xs-12">
                 <form class="navbar-form" action="${pageContext.servletContext.contextPath}/search" method="GET">
-                    <input type="text" class="form-control" placeholder="Cosa cerchi?" name="query">
+                    <input type="text" class="form-control" placeholder="Cosa cerchi?" name="query" value="${param.query}">
                     <select class="form-control margin-top" name="category">
                         <option value="">Tutte le categorie</option>
                         <c:forEach items="${applicationScope.categories}" var="cat">
-                            <option value="${cat.id}">${cat.name}</option>
+                            <option value="${cat.id}" ${cat.id == param.category ? 'selected' : ''}>${cat.name}</option>
                         </c:forEach>
                     </select>
-                    <input type="text" class="form-control margin-top" placeholder="Dove?" name="location">
+                    <input type="text" class="form-control margin-top" placeholder="Dove?" name="location" value="${param.location}">
                     <button type="submit" class="btn btn-default margin-top">Cerca</button>
                 </form>
             </div>
