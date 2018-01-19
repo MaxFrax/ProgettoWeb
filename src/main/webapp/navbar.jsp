@@ -1,3 +1,11 @@
+<script>
+    function initMap() {
+        let input = document.getElementById("location");
+        let autocomplete = new google.maps.places.Autocomplete(input);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALUGh67rEnW78pYXegEI32DSMg-NFo2D4&libraries=places&callback=initMap"
+async defer></script>
 <nav class="navbar navbar-inverse" id="navbar-top">
     <div class="container-fluid">
         <div class="row">
@@ -73,7 +81,7 @@
                             <option value="${cat.id}" ${cat.id == param.category ? 'selected' : ''}>${cat.name}</option>
                         </c:forEach>
                     </select>
-                    <input type="text" class="form-control margin-top" placeholder="Dove?" name="location" value="${param.location}">
+                    <input type="text" class="form-control margin-top" placeholder="Dove?" id="location" name="location" value="${param.location}">
                     <button type="submit" class="btn btn-default margin-top">Cerca</button>
                 </form>
             </div>
