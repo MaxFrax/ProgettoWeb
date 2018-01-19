@@ -74,6 +74,7 @@
                         </c:forEach>
                     </select>
                     <input type="text" class="form-control margin-top" placeholder="Dove?" name="location" value="${param.location}">
+                    <input type="hidden" name="sort" value="price_asc">
                     <button type="submit" class="btn btn-default margin-top">Cerca</button>
                 </form>
             </div>

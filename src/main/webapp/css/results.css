@@ -18,3 +18,10 @@
     list-style-type: none;
     -webkit-padding-start: 0px;
 }
+
+/* Search navbar bottom margin on smartphone */
+@media (max-width: 768px) {
+    #navbar-search {
+        margin-bottom: 10px;
+    }
+}
