@@ -1,0 +1,108 @@
+.slide-image {
+    width: 100%;
+}
+
+.carousel-holder {
+    margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.caption {
+    height: 130px;
+    overflow: hidden;
+}
+
+.caption h4 {
+    white-space: nowrap;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #d17581;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+#footer {
+    text-align: center;
+}
+
+/* Navbar */
+
+ul.navbar-nav > li {
+    display: inline-block;
+}
+
+.navbar-right {
+    float: right !important;
+}
+
+.navbar .col-xs-4 {
+    padding-right: 0px;
+}
+
+.navbar-brand {
+    padding-right: 0px;
+    color: #E88A00 !important;
+}
+
+/* Remove navbar-brand left padding on mobile */
+@media (max-width: 768px) {
+    .navbar-brand {
+        padding-left: 0px;
+    }
+}
+
+#navbar-top {
+    margin-bottom: 0px;
+}
+
+#navbar-search {
+    background-color: #F7F5F0;
+}
+
+.navbar {
+    border-radius: 0px;
+    border: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-form {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-form .margin-top {
+        margin-top: 5px;
+    }
+    .navbar-form {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+.navbar-form {
+    border: none;
+}
