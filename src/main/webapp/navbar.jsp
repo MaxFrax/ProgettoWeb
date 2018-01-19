@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-4">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire"></span> BuyBuy</a>
+                    <a class="navbar-brand" href="${pageContext.servletContext.contextPath}"><span class="glyphicon glyphicon-fire"></span> BuyBuy</a>
                 </div>
             </div>
             <div class="col-xs-8">
