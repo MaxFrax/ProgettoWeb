@@ -59,7 +59,6 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
 
     @Override
     public List<Item> getByQuery(String userQuery) {
-        // TODO ricerca non case sensitive e parole di ricerca che possono essere contenute in una parola del db
         List<Item> results = new ArrayList<>();
         // Make user query lowercase
         userQuery = userQuery.toLowerCase();
@@ -114,8 +113,38 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     }
 
     @Override
-    public List<Item> getByCategoryAndQuery(Integer category_id, String query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Item> getByCategoryAndQuery(Integer categoryId, String userQuery) {
+        List<Item> results = new ArrayList<>();
+        // Make user query lowercase
+        userQuery = userQuery.toLowerCase();
+        String[] searchWords = userQuery.split("\\s+");
+        StringBuilder query = new StringBuilder("SELECT * FROM item WHERE category_id = ? AND (false ");
+        for (String searchWord : searchWords) {
+            query.append("OR LOWER(name) LIKE ? OR LOWER(description) LIKE ? ");
+        }
+        query.append(")");
+        try (PreparedStatement stm = CON.prepareStatement(query.toString())) {
+            int i = 1;
+            stm.setInt(i, categoryId);
+            for (String searchWord : searchWords) {
+                i++;
+                stm.setString(i, "%" + searchWord + "%");
+                i++;
+                stm.setString(i, "%" + searchWord + "%");
+            }
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Item it = itemFactory(rs);
+                    results.add(it);
+                }
+            } catch (DAOFactoryException | DAOException ex) {
+                Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return results;
     }
 
     private Item itemFactory(ResultSet rs) throws SQLException, DAOFactoryException, DAOException {
@@ -147,7 +176,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         }
         return average;
     }
-    
+
     @Override
     public Integer getReviewCountByItemId(Integer itemId) throws DAOException {
         String query = "SELECT COUNT(RATING) AS TOTAL FROM REVIEW WHERE ITEM_ID=?";
