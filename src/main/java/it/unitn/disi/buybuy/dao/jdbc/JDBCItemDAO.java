@@ -61,21 +61,19 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     public List<Item> getByQuery(String userQuery) {
         // TODO ricerca non case sensitive e parole di ricerca che possono essere contenute in una parola del db
         List<Item> results = new ArrayList<>();
-        // https://stackoverflow.com/questions/14290857/sql-select-where-field-contains-words
+        // Make user query lowercase
+        userQuery = userQuery.toLowerCase();
         String[] searchWords = userQuery.split("\\s+");
         StringBuilder query = new StringBuilder("SELECT * FROM item WHERE false ");
         for (String searchWord : searchWords) {
-            //query.append("OR name LIKE '%?%' OR description LIKE '%?%' ");
-            query.append("OR name LIKE ? OR description LIKE ? ");
+            query.append("OR LOWER(name) LIKE ? OR LOWER(description) LIKE ? ");
         }
-        System.out.println(query.toString());
-        System.out.println(Arrays.toString(searchWords));
         try (PreparedStatement stm = CON.prepareStatement(query.toString())) {
             int i = 1;
             for (String searchWord : searchWords) {
-                stm.setString(i, searchWord);
+                stm.setString(i, "%" + searchWord + "%");
                 i++;
-                stm.setString(i, searchWord);
+                stm.setString(i, "%" + searchWord + "%");
                 i++;
             }
             try (ResultSet rs = stm.executeQuery()) {
