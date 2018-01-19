@@ -25,6 +25,14 @@
         <servlet-name>ResetPassword</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.auth.ResetPassword</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.Search</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Main</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.Main</servlet-class>
+    </servlet>
     <!-- Servlets mapping -->
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -50,6 +58,14 @@
         <servlet-name>ResetPassword</servlet-name>
         <url-pattern>/reset_password</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Main</servlet-name>
+        <url-pattern>/welcome</url-pattern>
+    </servlet-mapping>
     <!-- Application config -->
     <context-param>
         <description>The url of the JDBC persistence system database position</description>
@@ -65,4 +81,7 @@
         <description>ServletContextListener</description>
         <listener-class>it.unitn.disi.listeners.WebAppContextListener</listener-class>
     </listener>
+    <welcome-file-list>
+        <welcome-file>welcome</welcome-file>
+    </welcome-file-list>
 </web-app>

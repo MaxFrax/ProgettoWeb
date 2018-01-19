@@ -66,7 +66,7 @@ public class ActivateAccount extends HttpServlet {
         
         // Login user & redirect to home page
         request.getSession().setAttribute("user", user);
-        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+        response.sendRedirect(response.encodeRedirectURL(""));
 
     }
 

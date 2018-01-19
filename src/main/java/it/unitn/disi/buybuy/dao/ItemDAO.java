@@ -1,6 +1,6 @@
 /*
  * ItemDAO.java
-*/
+ */
 package it.unitn.disi.buybuy.dao;
 
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.DAO;
@@ -9,13 +9,13 @@ import it.unitn.disi.buybuy.dao.entities.Item;
 import java.util.List;
 
 /**
- * All concrete DAOs must implement this interface to handle the persistence 
+ * All concrete DAOs must implement this interface to handle the persistence
  * system that interact with {@code Item}.
- * 
+ *
  * @author apello96
  */
-public interface ItemDAO extends DAO<Item,Integer>{
-    
+public interface ItemDAO extends DAO<Item, Integer> {
+
     /**
      * Returns the number of {@link Item item} stored on the persistence system
      * of the application.
@@ -46,8 +46,8 @@ public interface ItemDAO extends DAO<Item,Integer>{
     public Item getByPrimaryKey(Integer primaryKey) throws DAOException;
 
     /**
-     * Returns the list of all the valid {@link Item item} stored by the
-     * storage system.
+     * Returns the list of all the valid {@link Item item} stored by the storage
+     * system.
      *
      * @return the list of all the valid {@code item}.
      * @throws DAOException if an error occurred during the information
@@ -57,18 +57,19 @@ public interface ItemDAO extends DAO<Item,Integer>{
      */
     @Override
     public List<Item> getAll() throws DAOException;
-    
+
     /**
      * Persists the new {@link Item item} passed as parameter to the storage
      * system.
+     *
      * @param item the new {@code item} to persist.
-     * @return the id of the new persisted record. 
+     * @return the id of the new persisted record.
      * @throws DAOException if an error occurred during the persist action.
-     * 
+     *
      * @author apello96
      */
     public Long insert(Item item) throws DAOException;
-    
+
     /**
      * Update the item passed as parameter and returns it.
      *
@@ -80,4 +81,14 @@ public interface ItemDAO extends DAO<Item,Integer>{
      */
     @Override
     public Item update(Item item) throws DAOException;
+
+    public List<Item> getByQuery(String query);
+
+    public List<Item> getByCategory(Integer category_id) throws DAOException;
+
+    public List<Item> getByCategoryAndQuery(Integer category_id, String query);
+    
+    public Integer getRatingByItemId(Integer itemId) throws DAOException;
+    
+    public Integer getReviewCountByItemId(Integer itemId) throws DAOException;
 }

@@ -79,7 +79,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop,Integer> implements ShopDAO{
                 Shop shop = new Shop();
                 shop.setId(rs.getInt("id"));
                 shop.setName(rs.getString("name"));
-                shop.setDescription(rs.getString("shop"));
+                shop.setDescription(rs.getString("description"));
                 shop.setWebsite(rs.getString("website"));
                 shop.setRating(rs.getInt("rating"));
                 UserDAO userDAO = getDAO(UserDAO.class);

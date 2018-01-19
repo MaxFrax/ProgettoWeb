@@ -80,4 +80,6 @@ public interface ReviewDAO extends DAO<Review,Integer>{
      */
     @Override
     public Review update(Review review) throws DAOException;
+    
+    public List<Review> getByItemID(Integer id) throws DAOException;
 }
