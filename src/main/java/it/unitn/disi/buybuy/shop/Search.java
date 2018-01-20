@@ -52,22 +52,32 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Float latitude = null, longitude = null;
         List<Item> res = null;
         String query = request.getParameter("query");
-        query = query.trim();
         try {
-            int category_id = Integer.parseInt(request.getParameter("category"));
-            if (query.isEmpty() || query == null) {
-                res = itemDao.getByCategory(category_id);
-            } else {
-                res = itemDao.getByCategoryAndQuery(category_id, query);
+            latitude = Float.parseFloat(request.getParameter("lat"));
+            longitude = Float.parseFloat(request.getParameter("lng"));
+            res = itemDao.getWithRetailer();
+        } catch (NumberFormatException e) {
+            // This catch executes when the place is not given by the user
+            try {
+                int category_id = Integer.parseInt(request.getParameter("category"));
+                if (query == null || query.isEmpty()) {
+                    res = itemDao.getByCategory(category_id);
+                } else {
+                    res = itemDao.getByCategoryAndQuery(category_id, query);
+                }
+            } catch (NumberFormatException ex) {
+                // Numero di categoria non intero, per cui secondo la logica del frontend è vuoto = non settato
+                res = itemDao.getByQuery(query);
+            } catch (DAOException ex) {
+                Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (NumberFormatException ex) {
-            // Numero di categoria non intero, per cui secondo la logica del frontend è vuoto = non settato
-            res = itemDao.getByQuery(query);
         } catch (DAOException ex) {
             Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         request.setAttribute("results", res);
         request.getRequestDispatcher("results.jsp").forward(request, response);
     }

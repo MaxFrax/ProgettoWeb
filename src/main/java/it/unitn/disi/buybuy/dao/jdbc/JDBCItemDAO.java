@@ -5,17 +5,13 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactor
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
 import it.unitn.disi.buybuy.dao.CategoryDAO;
 import it.unitn.disi.buybuy.dao.ItemDAO;
-import it.unitn.disi.buybuy.dao.ReviewDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.entities.Item;
-import it.unitn.disi.buybuy.dao.entities.Review;
-import it.unitn.disi.buybuy.dao.entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -192,5 +188,22 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
             throw new DAOException("Failed to query reviews with ITEM_ID = " + itemId, ex);
         }
         return count;
+    }
+
+    @Override
+    public List<Item> getWithRetailer() throws DAOException {
+        List<Item> results = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement("SELECT ITEM.* FROM ITEM INNER JOIN SHOP on SELLER_ID = SHOP.ID INNER JOIN RETAILER ON RETAILER.SHOP_ID = SHOP.ID")) {
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    results.add(itemFactory(rs));
+                }
+            } catch (DAOFactoryException ex) {
+                Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return results;
     }
 }
