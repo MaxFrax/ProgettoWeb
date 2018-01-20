@@ -54,10 +54,12 @@ public class Search extends HttpServlet {
             throws ServletException, IOException {
         List<Item> res = null;
         String query = request.getParameter("query");
-        query = query.trim();
+        if (query != null) {
+            query = query.trim();
+        }
         try {
             int category_id = Integer.parseInt(request.getParameter("category"));
-            if (query.isEmpty() || query == null) {
+            if (query == null || query.isEmpty()) {
                 res = itemDao.getByCategory(category_id);
             } else {
                 res = itemDao.getByCategoryAndQuery(category_id, query);
@@ -67,6 +69,20 @@ public class Search extends HttpServlet {
             res = itemDao.getByQuery(query);
         } catch (DAOException ex) {
             Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Sort results
+        String sortBy = request.getParameter("sort");
+        if (res != null && sortBy != null && !sortBy.isEmpty()) {
+            switch (sortBy) {
+                case "rating":
+                    res.sort(Item.Order.RATING);
+                    break;
+                case "price_desc":
+                    res.sort(Item.Order.PRICE_DESC);
+                    break;
+                default:
+                    res.sort(Item.Order.PRICE_ASC);
+            }
         }
         request.setAttribute("results", res);
         request.getRequestDispatcher("results.jsp").forward(request, response);
