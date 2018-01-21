@@ -6,7 +6,9 @@ package it.unitn.disi.buybuy.dao;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.DAO;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.disi.buybuy.dao.entities.Item;
+import it.unitn.disi.buybuy.dao.entities.Retailer;
 import java.util.List;
+import javafx.util.Pair;
 
 /**
  * All concrete DAOs must implement this interface to handle the persistence
@@ -88,7 +90,7 @@ public interface ItemDAO extends DAO<Item, Integer> {
 
     public List<Item> getByCategoryAndQuery(Integer category_id, String query);
 
-    public List<Item> getWithRetailer() throws DAOException;
+    public List<Pair<Item, Retailer>> getWithRetailer() throws DAOException;
 
     public Integer getRatingByItemId(Integer itemId) throws DAOException;
 
