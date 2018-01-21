@@ -1,0 +1,242 @@
+/* navbar.jsp */
+
+ul.navbar-nav > li {
+    display: inline-block;
+}
+
+.navbar-right {
+    float: right !important;
+}
+
+.navbar .col-xs-4 {
+    padding-right: 0px;
+}
+
+.navbar-brand {
+    padding-right: 0px;
+    color: #E88A00 !important;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        padding-left: 0px;
+    }
+}
+
+#navbar-top {
+    margin-bottom: 0px;
+}
+
+#navbar-search {
+    background-color: #F7F5F0;
+}
+
+.navbar {
+    border-radius: 0px;
+    border: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-form {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-form .margin-top {
+        margin-top: 5px;
+    }
+    .navbar-form {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+.navbar-form {
+    border: none;
+}
+
+/* forgot_password.jsp */
+
+#container-form {
+    margin-top: 20px;
+}
+
+#form-forgot-password {
+    margin-top: 20px;
+    padding: 0px 20px 20px 20px; 
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+#h3-forgot-password {
+    margin-bottom: 15px;
+}
+
+#span-cancel {
+    margin-left: 15px;    
+}
+
+/* index.jsp */
+
+.slide-image {
+    width: 100%;
+}
+
+.carousel-holder {
+    margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.caption {
+    height: 130px;
+    overflow: hidden;
+}
+
+.caption h4 {
+    white-space: nowrap;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #d17581;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
+}
+
+/* login.jsp */
+#container-form {
+    margin-top: 20px;
+}
+
+#form-login {
+    margin-top: 20px;
+    padding: 0px 20px 20px 20px; 
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+#h3-login {
+    margin-bottom: 15px;
+}
+
+#span-cancel {
+    margin-left: 15px;    
+}
+
+/* message.jsp */
+
+div.main {
+    margin-top: 20px;
+}
+
+img.logo {
+    height: 45px;
+}
+
+div.panel-message {
+    margin-top: 20px;
+}
+
+/* reset_password.jsp */
+
+#container-form {
+    margin-top: 20px;
+}
+
+#form-reset-password {
+    margin-top: 20px;
+    padding: 0px 20px 20px 20px; 
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+#h3-reset-password {
+    margin-bottom: 15px;
+}
+
+#span-cancel {
+    margin-left: 15px;    
+}
+
+.panel-danger {
+    margin-top: 20px;
+}
+
+/* results.jsp */
+
+.no-margin {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.main .search-result {
+    margin-top: 30px;
+}
+
+.search-result .thumbnail {
+    margin-bottom: 0px;
+}
+
+.search-result ul {
+    list-style-type: none;
+    -webkit-padding-start: 0px;
+}
+
+@media (max-width: 768px) {
+    #navbar-search {
+        margin-bottom: 10px;
+    }
+}
+
+/* signup.jsp */
+
+#container-form {
+    margin-top: 20px;
+}
+
+#form-signup {
+    margin-top: 20px;
+    padding: 0px 20px 20px 20px; 
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+#h3-signup {
+    margin-bottom: 15px;
+}
+
+#span-cancel {
+    margin-left: 15px;    
+}
+
+/* footer.jsp */
+
+#footer {
+    text-align: center;
+}

@@ -14,7 +14,7 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/index.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -61,15 +61,8 @@
         </div>
         <!-- /.container -->
         <div class="container">
-            <hr>
             <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-md-12" id="footer">
-                        Copyright &copy; BuyBuy 2017
-                    </div>
-                </div>
-            </footer>
+            <%@include file="footer.jsp"%>
         </div>
         <!-- /.container -->
         <!-- jQuery -->

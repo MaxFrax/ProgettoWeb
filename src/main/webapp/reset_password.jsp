@@ -13,7 +13,7 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/reset_password.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -31,7 +31,7 @@
                             <c:choose>
                                 <c:when test="${message.type == 'ERROR'}">
                                     <div class="alert alert-danger alert-dismissible" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="alert alert-success" role="alert">
@@ -49,23 +49,12 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <hr>
             <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-md-12" id="footer">
-                        Copyright &copy; BuyBuy 2017
-                    </div>
-                </div>
-            </footer>
+            <%@include file="footer.jsp"%>
         </div>
-        <!-- /.container -->
         <!-- jQuery -->
         <script src="js/jquery.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
     </body>
-
 </html>

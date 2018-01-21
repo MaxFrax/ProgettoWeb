@@ -13,7 +13,7 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/signup.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -70,15 +70,8 @@
             </div>
         </div>
         <div class="container">
-            <hr>
             <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-md-12" id="footer">
-                        Copyright &copy; BuyBuy 2017
-                    </div>
-                </div>
-            </footer>
+            <%@include file="footer.jsp"%>
         </div>
         <!-- /.container -->
         <!-- jQuery -->

@@ -18,7 +18,7 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/message.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
     </head>
 
     <body>
@@ -49,16 +49,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <footer class="text-center">
-                        Copyright &copy; BuyBuy 2018
-                    </footer>
-                </div>
-            </div>
+            <%@include file="footer.jsp"%>
         </div>
-
         <!-- jQuery -->
         <script src="js/jquery.js"></script>
         <!-- Bootstrap Core JavaScript -->
