@@ -13,11 +13,11 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/form_page.css" rel="stylesheet">
     </head>
 
     <body>
-        <div class="container" id="container-form">
+        <div class="container main">
             <!-- Logo -->
             <div class="row">
                 <div class="col-md-12"><img class="img-responsive center-block" src="img/logo.png" alt="BuyBuy"></div>

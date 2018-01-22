@@ -18,7 +18,7 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/message.css" rel="stylesheet">
     </head>
 
     <body>
@@ -27,7 +27,7 @@
             <!-- Logo -->
             <div class="row">
                 <div class="col-xs-12">
-                    <img class="img-responsive center-block logo" src="img/logo.png" alt="BuyBuy">
+                    <img class="img-responsive center-block" src="img/logo.png" alt="BuyBuy">
                 </div>
             </div>
             <div class="row panel-message">
