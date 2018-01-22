@@ -57,7 +57,7 @@
                                     <div class="col-xs-9">
                                         <div class="row">
                                             <div class="col-sm-8">
-                                                <h4><a href="#">${item.name}</a></h4>
+                                                <h4><a href="${pageContext.request.contextPath}/item?id=${item.id}">${item.name}</a></h4>
                                                 <ul>
                                                     <li>di <a href="${item.seller.website}">${item.seller.name}</a></li>
                                                     <li>
