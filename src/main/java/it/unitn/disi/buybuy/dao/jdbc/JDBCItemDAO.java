@@ -5,17 +5,13 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactor
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
 import it.unitn.disi.buybuy.dao.CategoryDAO;
 import it.unitn.disi.buybuy.dao.ItemDAO;
-import it.unitn.disi.buybuy.dao.ReviewDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.entities.Item;
-import it.unitn.disi.buybuy.dao.entities.Review;
-import it.unitn.disi.buybuy.dao.entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,8 +34,20 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     }
 
     @Override
-    public Item getByPrimaryKey(Integer prmrk) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Item getByPrimaryKey(Integer primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("primaryKey is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM app.ITEM WHERE id = ?")) {
+            stm.setInt(1, primaryKey);
+            try (ResultSet rs = stm.executeQuery()) {
+                rs.next();
+                Item item = itemFactory(rs);
+                return item;
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the item for the passed primary key", ex);
+        }
     }
 
     @Override

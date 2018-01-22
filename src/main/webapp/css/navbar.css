@@ -1,0 +1,58 @@
+/* navbar.jsp */
+
+ul.navbar-nav > li {
+    display: inline-block;
+}
+
+.navbar-right {
+    float: right !important;
+}
+
+.navbar .col-xs-4 {
+    padding-right: 0px;
+}
+
+.navbar-brand {
+    padding-right: 0px;
+    color: #E88A00 !important;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        padding-left: 0px;
+    }
+}
+
+#navbar-top {
+    margin-bottom: 0px;
+}
+
+#navbar-search {
+    background-color: #F7F5F0;
+}
+
+.navbar {
+    border-radius: 0px;
+    border: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-form {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-form .margin-top {
+        margin-top: 5px;
+    }
+    .navbar-form {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+.navbar-form {
+    border: none;
+}
