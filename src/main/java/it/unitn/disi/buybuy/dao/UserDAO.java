@@ -110,5 +110,7 @@ public interface UserDAO extends DAO<User,Integer>{
     public User getByUsername(String username) throws DAOException;
     
     public User getByConfirmationID(String confirmationID) throws DAOException;
+    
+    public User updateProfile(User user) throws DAOException;
      
 }
