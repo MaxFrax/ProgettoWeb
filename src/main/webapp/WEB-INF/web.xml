@@ -98,7 +98,7 @@
     <context-param>
         <description>The url of the JDBC persistence system database position</description>
         <param-name>dburl</param-name>
-        <param-value>jdbc:derby:C:\Users\apell\Documents\NetBeansProjects\ProgettoWeb\db</param-value>
+        <param-value>jdbc:derby:/Users/Francesco/Desktop/ProgettoWeb/db</param-value>
     </context-param>
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>

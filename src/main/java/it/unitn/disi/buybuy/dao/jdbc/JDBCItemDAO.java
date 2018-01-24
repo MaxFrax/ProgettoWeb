@@ -201,4 +201,9 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         }
         return count;
     }
+
+    @Override
+    public Item getByShopID(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

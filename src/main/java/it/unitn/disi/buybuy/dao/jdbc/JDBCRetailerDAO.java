@@ -228,4 +228,9 @@ public class JDBCRetailerDAO extends JDBCDAO<Retailer,Integer> implements Retail
             throw new DAOException("Impossible to persist the new retailer", ex);
         }
     }
+
+    @Override
+    public Retailer getByShopID(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
