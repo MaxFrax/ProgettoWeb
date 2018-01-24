@@ -1,6 +1,8 @@
 package it.unitn.disi.buybuy.types;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
 
     public enum Type {
         INFO, ERROR

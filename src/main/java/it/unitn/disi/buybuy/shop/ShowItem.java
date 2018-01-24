@@ -9,7 +9,6 @@ import it.unitn.disi.buybuy.dao.entities.Item;
 import it.unitn.disi.buybuy.dao.entities.Review;
 import it.unitn.disi.buybuy.types.Message;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
