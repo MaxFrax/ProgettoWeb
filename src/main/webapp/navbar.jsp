@@ -11,7 +11,7 @@
                     <c:choose>
                         <%-- Guest user --%>
                         <c:when test="${empty user}">
-                            <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span><span class="hidden-xs"> Carrello</span></a></li>
+                            <li><a href="${pageContext.servletContext.contextPath}/cart"><span class="glyphicon glyphicon-shopping-cart"></span><span class="hidden-xs"> Carrello</span></a></li>
                             <li><a href="signup"><span class="glyphicon glyphicon-user"></span><span class="hidden-xs"> Registrati</span></a></li>
                             <li><a href="login"><span class="glyphicon glyphicon-log-in"></span><span class="hidden-xs"> Accedi</span></a></li>
                         </c:when>
