@@ -92,5 +92,5 @@ public interface ItemDAO extends DAO<Item, Integer> {
     
     public Integer getReviewCountByItemId(Integer itemId) throws DAOException;
 
-    public Item getByShopID(Integer id);
+    public Item getByShopID(Integer id) throws DAOException;
 }
