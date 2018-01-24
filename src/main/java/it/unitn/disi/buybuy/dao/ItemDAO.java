@@ -90,7 +90,7 @@ public interface ItemDAO extends DAO<Item, Integer> {
 
     public List<Item> getByCategoryAndQuery(Integer category_id, String query);
 
-    public List<Pair<Item, Retailer>> getWithRetailer() throws DAOException;
+    public List<Pair<Item, Retailer>> getWithRetailer(Integer category, String query) throws DAOException;
 
     public Integer getRatingByItemId(Integer itemId) throws DAOException;
 

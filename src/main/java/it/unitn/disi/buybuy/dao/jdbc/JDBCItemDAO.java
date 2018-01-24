@@ -195,9 +195,35 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     }
 
     @Override
-    public List<Pair<Item, Retailer>> getWithRetailer() throws DAOException {
+    public List<Pair<Item, Retailer>> getWithRetailer(Integer category, String userQuery) throws DAOException {
+        // Split query string
+        String[] searchWords = userQuery.split("\\s+");
+        // Attach to sql query user query words
+        StringBuilder query = new StringBuilder("SELECT ITEM.*, RETAILER.ID as RET_ID FROM ITEM INNER JOIN SHOP on SELLER_ID = SHOP.ID INNER JOIN RETAILER ON RETAILER.SHOP_ID = SHOP.ID WHERE (false ");
+        for (String searchWord : searchWords) {
+            query.append("OR LOWER(ITEM.NAME) LIKE ? OR LOWER(ITEM.DESCRIPTION) LIKE ? ");
+        }
+        query.append(")");
+        // attach category if given
+        if (category != null) {
+            query.append("AND category_id = ?");
+        }
         List<Pair<Item, Retailer>> results = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT ITEM.*, RETAILER.ID as RET_ID FROM ITEM INNER JOIN SHOP on SELLER_ID = SHOP.ID INNER JOIN RETAILER ON RETAILER.SHOP_ID = SHOP.ID")) {
+        try (PreparedStatement stm = CON.prepareStatement(query.toString())) {
+            // Fill query with values
+            int i = 0;
+            for (String searchWord : searchWords) {
+                i++;
+                stm.setString(i, "%" + searchWord + "%");
+                i++;
+                stm.setString(i, "%" + searchWord + "%");
+            }
+            if (category != null) {
+                i++;
+                stm.setInt(i, category);
+            }
+            // iterate through the values
+            System.out.println(stm);
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     Pair<Item, Retailer> p = new Pair<>(itemFactory(rs), getDAO(RetailerDAO.class).getByPrimaryKey(rs.getInt("RET_ID")));
