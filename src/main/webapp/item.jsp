@@ -59,26 +59,26 @@
                         <div class="col-xs-12 col-sm-8">
                             <div class="panel panel-default price">
                                 <div class="panel-body">
-                                    <form class="form-inline">
-                                        <table>
-                                            <tr>
-                                                <td class="price-label">Prezzo:</td>
-                                                <td class="price-val">${item.price} &euro;</td>
-                                            </tr>
-                                            <tr class="pickup-label"><td></td><td><span class="label label-info"><span class="glyphicon glyphicon-ok"></span> Ritiro in negozio</span></td></tr>
-                                            <tr>
-                                                <td>Quantità:</td>
-                                                <td>
+                                    <table>
+                                        <tr>
+                                            <td class="price-label">Prezzo:</td>
+                                            <td class="price-val">${item.price} &euro;</td>
+                                        </tr>
+                                        <tr class="pickup-label"><td></td><td><span class="label label-info"><span class="glyphicon glyphicon-ok"></span> Ritiro in negozio</span></td></tr>
+                                        <tr>
+                                            <td>Quantità:</td>
+                                            <td>
+                                                <form class="form-inline" action="${pageContext.servletContext.contextPath}/update_cart" method="GET">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" value="1">
+                                                        <input type="number" class="form-control" name="${item.id}" value="1" min="1">
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-shopping-cart"></span> Aggiungi al carrello</button>
+                                                            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span> Aggiungi al carrello</button>
                                                         </span>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </form>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

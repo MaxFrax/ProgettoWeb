@@ -37,6 +37,14 @@
         <servlet-name>ShowItem</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.shop.ShowItem</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowCart</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.ShowCart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCart</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.UpdateCart</servlet-class>
+    </servlet>
     <!-- Servlets mapping -->
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -73,6 +81,14 @@
     <servlet-mapping>
         <servlet-name>ShowItem</servlet-name>
         <url-pattern>/item</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowCart</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCart</servlet-name>
+        <url-pattern>/update_cart</url-pattern>
     </servlet-mapping>
     <!-- Application config -->
     <context-param>
