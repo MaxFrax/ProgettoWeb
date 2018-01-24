@@ -46,9 +46,6 @@ public class Signup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        /* TODO
-            - input length constraints (?)
-         */
         ArrayList<String> errors = new ArrayList<>();
         req.setAttribute("errors", errors); // Now it's available in JSP by ${errors}
 
@@ -127,7 +124,8 @@ public class Signup extends HttpServlet {
         user.setLastname(lastname);
         user.setUsername(username);
         user.setEmail(email);
-        user.setType(User.Type.REGISTRATION_PENDING); // Default user type
+        // User type
+        user.setType(User.Type.REGISTRATION_PENDING); // Temporary user
 
         // Add user to DB
         try {
@@ -140,7 +138,8 @@ public class Signup extends HttpServlet {
             String confirmationID = passwordHashing.getConfirmationID();
             user.setConfirmationID(confirmationID);
             // Send email with confirmation link
-            sendConfirmationEmail(email, confirmationID);
+            boolean isSeller = req.getParameter("seller") != null;
+            sendConfirmationEmail(email, confirmationID, isSeller);
             // Insert user into DB
             userDao.insert(user);
             // Add success attribute to request and forward
@@ -172,9 +171,13 @@ public class Signup extends HttpServlet {
         return (user != null);
     }
 
-    private void sendConfirmationEmail(String recipient, String id) throws MessagingException {
-        // TODO: HTML template for email content (inject ID)
-        String html = "<b>Benvenuto/a in BuyBuy!</b><br><br>Clicca <a href=\"http://localhost:8084/BuyBuy/activate_account?id="+id+"\">qui</a> per attivare il tuo account.";
+    private void sendConfirmationEmail(String recipient, String id, boolean isSeller) throws MessagingException {
+        String url = "http://localhost:8084/BuyBuy/activate_account";
+        url += "?id=" + id;
+        if (isSeller) {
+            url += "&seller";
+        }
+        String html = "<b>Benvenuto/a in BuyBuy!</b><br><br>Clicca <a href=\"" + url + "\">qui</a> per attivare il tuo account.";
         emailUtil.sendEmail(recipient, "Conferma registrazione", html);
     }
 

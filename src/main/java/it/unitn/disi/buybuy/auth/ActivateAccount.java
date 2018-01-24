@@ -55,7 +55,11 @@ public class ActivateAccount extends HttpServlet {
             if (user == null || user.getType() != User.Type.REGISTRATION_PENDING) {
                 throw new DAOException();
             }
-            user.setType(User.Type.REGISTERED);
+            if (request.getParameter("seller") != null) {
+                user.setType(User.Type.SELLER);
+            } else {
+                user.setType(User.Type.REGISTERED);
+            }
             user.setConfirmationID(null);
             // Update user in DB
             userDAO.update(user);
