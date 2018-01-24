@@ -62,7 +62,13 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="privacy" value="privacy">Accetto la normativa sulla privacy</label>
+                                <input type="checkbox" name="seller">Sono un venditore
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="privacy" value="privacy">Accetto la normativa sulla privacy
+                            </label>
                         </div>
                         <button type="submit" class="btn btn-default">Registrati</button><span class="cancel">oppure <a href="javascript:history.back()">annulla</a></span>
                     </form>
