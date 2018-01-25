@@ -3,7 +3,9 @@ package it.unitn.disi.buybuy.auth;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
+import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.UserDAO;
+import it.unitn.disi.buybuy.dao.entities.Shop;
 import it.unitn.disi.buybuy.dao.entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ActivateAccount extends HttpServlet {
 
     private UserDAO userDAO;
+    private ShopDAO shopDAO;
 
     @Override
     public void init() throws ServletException {
@@ -24,6 +27,7 @@ public class ActivateAccount extends HttpServlet {
                 throw new DAOFactoryException("Failed to get DAO factory.");
             }
             userDAO = daoFactory.getDAO(UserDAO.class);
+            shopDAO = daoFactory.getDAO(ShopDAO.class);
         } catch (DAOFactoryException ex) {
             throw new ServletException(ex.getMessage(), ex);
         }
@@ -57,6 +61,14 @@ public class ActivateAccount extends HttpServlet {
             }
             if (request.getParameter("seller") != null) {
                 user.setType(User.Type.SELLER);
+                // Create default shop
+                Shop shop = new Shop();
+                shop.setOwner(user);
+                shop.setName(user.getUsername());
+                shop.setDescription(null);
+                shop.setRating(0);
+                shop.setWebsite(null);
+                shopDAO.insert(shop);
             } else {
                 user.setType(User.Type.REGISTERED);
             }
