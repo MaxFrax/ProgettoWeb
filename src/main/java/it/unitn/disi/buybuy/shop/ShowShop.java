@@ -70,7 +70,6 @@ public class ShowShop extends HttpServlet {
         request.setAttribute("shop", shop);
         request.setAttribute("retailer", retailer);
         
-        //------
         
         Item item = null;
         List<Review> reviews = null;

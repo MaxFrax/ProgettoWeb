@@ -262,7 +262,6 @@ public class JDBCRetailerDAO extends JDBCDAO<Retailer,Integer> implements Retail
             // Get Shop from SHOP_ID
             Shop shop = shopDAO.getByPrimaryKey(resultSet.getInt("SHOP_ID"));
             retailer.setShop(shop);
-          
             
         } catch (SQLException ex) {
             throw new DAOException("Failed to query reviews with ITEM_ID = " + id, ex);
