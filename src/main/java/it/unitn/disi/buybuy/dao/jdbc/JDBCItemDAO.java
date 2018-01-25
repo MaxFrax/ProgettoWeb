@@ -201,4 +201,25 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         }
         return count;
     }
+    
+    public List<Item> getByUserId(Integer user_id) throws DAOException{
+        List<Item> result = new ArrayList();
+        String query = "SELECT DISTINCT i.ID AS item_id, i.NAME AS item_name "
+                + "FROM PURCHASE p ,ITEM i, USER_DETAIL u "
+                + "WHERE u.ID = p.USER_ID AND p.ITEM_ID = i.ID AND u.ID = ?";
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getInt("item_id"));
+                item.setName(rs.getString("item_name"));
+                result.add(item);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to get the item purchased by this user", ex);
+        }
+        return result;
+    }
 }
