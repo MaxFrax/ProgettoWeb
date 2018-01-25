@@ -57,10 +57,10 @@
                     </p>
                   </div>
                   <div class="col-md-8">                 
-                    <c:out value="${item.name}" />
+                      <a href="${pageContext.servletContext.contextPath}/item?id=${item.id}"><c:out value="${item.name}" /></a>
                   </div>
                   <div class="col-md-2">
-                    <a href="${pageContext.servletContext.contextPath}/ReviewServlet?id=${item.id}">Scrivi una recensione</a>
+                    <a href="${pageContext.servletContext.contextPath}/review?id=${item.id}">Scrivi una recensione</a>
                     <br>
                     <a href="#">Segnala un' anomalia</a>
                   </div>

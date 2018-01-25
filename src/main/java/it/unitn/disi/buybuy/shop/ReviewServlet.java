@@ -58,7 +58,7 @@ public class ReviewServlet extends HttpServlet {
             Item item = itemDAO.getByPrimaryKey(item_id);
             if(review.getId()!= null){
                 request.setAttribute("message", new Message("Hai già recensito questo oggetto"));
-                request.getRequestDispatcher("/OrderServlet").forward(request, response);
+                request.getRequestDispatcher("/orders").forward(request, response);
             }            
             request.setAttribute("item", item);
             request.getRequestDispatcher("/review.jsp").forward(request, response);
@@ -94,12 +94,12 @@ public class ReviewServlet extends HttpServlet {
                     review.setDescription(request.getParameter("user_review"));
                     reviewDAO.insert(review);
                     request.setAttribute("message", new Message("Recensione inviata con successo! Grazie per il tuo contributo"));
-                    request.getRequestDispatcher("/OrderServlet").forward(request, response);
+                    request.getRequestDispatcher("/orders").forward(request, response);
                 }
             }
             else{
                 request.setAttribute("message", new Message("Hai già recensito questo oggetto"));
-                request.getRequestDispatcher("/OrderServlet").forward(request, response);
+                request.getRequestDispatcher("/orders").forward(request, response);
             }
             
             

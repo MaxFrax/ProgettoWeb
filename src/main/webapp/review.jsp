@@ -44,7 +44,7 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <form action="ReviewServlet?id=${item.getId()}" method="POST" class="form-horizontal" role="form">
+                <form action="review?id=${item.getId()}" method="POST" class="form-horizontal" role="form">
                   <div class="form-group">
                     <textarea class="form-control" name="user_review" placeholder="Scrivi la tua recensione qui..." rows="7"></textarea>
                   </div>
