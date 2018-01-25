@@ -38,7 +38,7 @@
                     </c:if>
                     <h3>Informazioni personali</h3>
 
-                    <form action="ProfileServlet" method="POST" class="form-horizontal" role="form">
+                    <form action="profile" method="POST" class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Nome:</label>
                             <div class="col-lg-8">
