@@ -137,10 +137,6 @@
         <param-value>jdbc:derby:C:\Users\apell\Documents\NetBeansProjects\ProgettoWeb\db</param-value>
     </context-param>
     <servlet-mapping>
-        <servlet-name>ProfileServlet</servlet-name>
-        <url-pattern>/profile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>OrderServlet</servlet-name>
         <url-pattern>/orders</url-pattern>
     </servlet-mapping>
