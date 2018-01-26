@@ -5,13 +5,16 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOExcept
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
 import it.unitn.disi.buybuy.dao.IssueDAO;
+import it.unitn.disi.buybuy.dao.ItemDAO;
 import it.unitn.disi.buybuy.dao.PurchaseDAO;
 import it.unitn.disi.buybuy.dao.entities.Issue;
+import it.unitn.disi.buybuy.dao.entities.Item;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +28,7 @@ public class JDBCIssueDAO extends JDBCDAO<Issue, Integer> implements IssueDAO {
     public JDBCIssueDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(PurchaseDAO.class, new JDBCPurchaseDAO(con));
+        FRIEND_DAOS.put(ItemDAO.class, new JDBCItemDAO(con));
     }
 
     @Override
@@ -107,4 +111,34 @@ public class JDBCIssueDAO extends JDBCDAO<Issue, Integer> implements IssueDAO {
         }
     }
     
+    @Override
+    public Integer getCountNotReadBySellerId(Integer seller_id) throws DAOException {
+        ItemDAO itemDAO;        
+        try {
+            itemDAO = getDAO(ItemDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new DAOException("Failed to get DAOs", ex);
+        }
+        ArrayList<Item> items = (ArrayList<Item>) itemDAO.getBySellerId(seller_id);
+        Integer count = 0;
+        if(items.size() > 0){            
+            String query = "SELECT COUNT(*) AS number FROM ISSUE iss, PURCHASE p, ITEM i WHERE iss.SELLER_READ IS NULL AND iss.PURCHASE_ID = p.ID AND i.ID = p.ITEM_ID";
+            query += " AND ( i.ID = " + items.get(0).getId().toString();
+            for (int i = 1; i < items.size(); i++) {
+                query += " OR i.ID = " + items.get(i).getId().toString();
+
+            }
+            query += ")";
+            
+            try {
+                PreparedStatement stmt = CON.prepareStatement(query);
+                ResultSet resultSet = stmt.executeQuery();
+                resultSet.next();
+                count = resultSet.getInt("number");               
+            } catch (SQLException ex) {
+                throw new DAOException("Failed to query the count", ex);
+            }
+        }
+        return count;
+    }
 }

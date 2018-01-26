@@ -80,4 +80,6 @@ public interface IssueDAO extends DAO<Issue,Integer>{
      */
     @Override
     public Issue update(Issue issue) throws DAOException;
+    
+    public Integer getCountNotReadBySellerId(Integer seller_id) throws DAOException;
 }

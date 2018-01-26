@@ -222,4 +222,27 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         }
         return result;
     }
+    
+    @Override
+    public List<Item> getBySellerId(Integer seller_id) throws DAOException{
+        System.out.println("prova");
+        List<Item> result = new ArrayList();
+        String query = "SELECT i.ID AS item_id "
+                + "FROM SHOP s, ITEM i, USER_DETAIL u "
+                + "WHERE u.ID = s.OWNER_ID AND i.SELLER_ID = s.ID AND u.ID = ?";
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, seller_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getInt("item_id"));
+                result.add(item);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to get the item purchased by this user", ex);
+        }
+        System.out.println("prova");
+        return result;
+    }
 }
