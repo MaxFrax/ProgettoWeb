@@ -1,4 +1,4 @@
-/* profile.jsp */
+/* myshop.jsp */
 
 @import "navbar.css";
 
@@ -19,14 +19,6 @@ div.nav {
     margin-bottom: 0px;
 }
 
-#add-retailer {
-    margin-top: 10px;
-}
-
-form#shop-address {
-    display: none;
-}
-
 div.street-number, div.postal-code {
     padding-left: 0px;
 }
@@ -39,4 +31,13 @@ div.street-number, div.postal-code {
 }
 #place-search {
     padding-left: 36px;
+}
+
+ul.errors {
+    list-style: none;
+    padding:0px;
+}
+
+span.error {
+    margin-left: 5px;
 }

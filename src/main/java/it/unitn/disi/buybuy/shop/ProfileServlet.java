@@ -7,13 +7,10 @@ import it.unitn.disi.buybuy.auth.EmailUtil;
 import it.unitn.disi.buybuy.auth.PasswordHashing;
 import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.UserDAO;
-import it.unitn.disi.buybuy.dao.entities.Shop;
 import it.unitn.disi.buybuy.dao.entities.User;
 import it.unitn.disi.buybuy.types.Message;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,22 +41,8 @@ public class ProfileServlet extends HttpServlet {
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
-        }
-        // Retrieve shop if the user is a seller
-        if (user.getType() == User.Type.SELLER) {
-            try {
-                Shop shop = shopDAO.getByOwnerId(user.getId());
-                if (shop == null) {
-                    throw new DAOException("Shop not found");
-                }
-                request.setAttribute("shop", shop);
-            } catch (DAOException ex) {
-                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                forwardToErrorPage(request, response);
-                return;
-            }
         }
         request.getRequestDispatcher("/profile.jsp").forward(request, response);
     }

@@ -49,6 +49,18 @@
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.shop.ProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MyShop</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.MyShop</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Error</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.Error</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateRetailer</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.UpdateRetailer</servlet-class>
+    </servlet>
     <!-- Servlets mapping -->
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -97,6 +109,18 @@
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
         <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyShop</servlet-name>
+        <url-pattern>/myshop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateRetailer</servlet-name>
+        <url-pattern>/update_retailer</url-pattern>
     </servlet-mapping>
     <!-- Application config -->
     <context-param>
