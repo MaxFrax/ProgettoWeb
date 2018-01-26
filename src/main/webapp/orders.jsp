@@ -62,7 +62,7 @@
                   <div class="col-md-2">
                     <a href="${pageContext.servletContext.contextPath}/review?id=${item.id}">Scrivi una recensione</a>
                     <br>
-                    <a href="#">Segnala un' anomalia</a>
+                    <a href="${pageContext.servletContext.contextPath}/issue?id=${item.id}">Segnala un' anomalia</a>
                   </div>
                 </div>
             </c:forEach>
