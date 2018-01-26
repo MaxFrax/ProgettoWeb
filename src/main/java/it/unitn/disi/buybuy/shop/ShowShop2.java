@@ -15,9 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShowShop extends HttpServlet {
+public class ShowShop2 extends HttpServlet {
 
     private RetailerDAO retailerDAO;
+    private ShopDAO shopDAO;
 
     @Override
     public void init() throws ServletException {
@@ -27,7 +28,9 @@ public class ShowShop extends HttpServlet {
             if (daoFactory == null) {
                 throw new DAOFactoryException("Failed to get DAO factory.");
             }
-            retailerDAO = daoFactory.getDAO(RetailerDAO.class); 
+            retailerDAO = daoFactory.getDAO(RetailerDAO.class);
+            shopDAO = daoFactory.getDAO(ShopDAO.class);
+            
         } catch (DAOFactoryException ex) {
             throw new ServletException(ex.getMessage(), ex);
         }
@@ -36,23 +39,27 @@ public class ShowShop extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String retailerId = request.getParameter("id");
-        if (retailerId == null || retailerId.isEmpty()) {
+        String shopId = request.getParameter("id");
+        if (shopId == null || shopId.isEmpty()) {
             forwardToErrorPage(request, response);
             return;
         }
         Retailer retailer = null;
+        Shop shop = null;
         try {
-            Integer id = Integer.valueOf(retailerId);
-            retailer = retailerDAO.getByPrimaryKey(id);
-            if (retailer == null) {
+            Integer id = Integer.valueOf(shopId);
+            shop = shopDAO.getByPrimaryKey(id);
+            retailer = retailerDAO.getByShopID(id);
+            if (shop == null) {
                 throw new DAOException();
             }
         } catch (DAOException | NumberFormatException ex) {
             forwardToErrorPage(request, response);
             return;
         }
+        request.setAttribute("shop", shop);
         request.setAttribute("retailer", retailer);
+
         request.getRequestDispatcher("/shop.jsp").forward(request, response);
     }
 

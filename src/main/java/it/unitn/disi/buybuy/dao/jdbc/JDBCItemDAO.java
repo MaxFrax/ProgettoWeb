@@ -6,9 +6,7 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
 import it.unitn.disi.buybuy.dao.CategoryDAO;
 import it.unitn.disi.buybuy.dao.ItemDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
-import it.unitn.disi.buybuy.dao.entities.Category;
 import it.unitn.disi.buybuy.dao.entities.Item;
-import it.unitn.disi.buybuy.dao.entities.Shop;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -202,46 +200,6 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
             throw new DAOException("Failed to query reviews with ITEM_ID = " + itemId, ex);
         }
         return count;
-    }
-    
-    @Override
-    public Item getByShopID(Integer id) throws DAOException {
-        
-        // Get needed DAOs
-        CategoryDAO categoryDAO;
-        ShopDAO shopDAO; 
-        try {
-            shopDAO = getDAO(ShopDAO.class);
-            categoryDAO = getDAO(CategoryDAO.class);
-        } catch (DAOFactoryException ex) {
-            throw new DAOException("Failed to get DAOs", ex);
-        }
-        
-        Item item = new Item();
-        String query = "SELECT * FROM ITEM WHERE SHOP_ID=?";
-        try {
-            PreparedStatement stmt = CON.prepareStatement(query);
-            stmt.setInt(1, id);
-            ResultSet resultSet = stmt.executeQuery();
-            
-            item.setId(resultSet.getInt("ID"));
-            item.setName(resultSet.getString("NAME"));
-            item.setDescription(resultSet.getString("DESCRIPTION"));
-            item.setPrice(resultSet.getFloat("PRICE"));
-            //Get Category from CATEGORY_ID
-            Category category = categoryDAO.getByPrimaryKey(resultSet.getInt("CATEGORY_ID"));
-            item.setCategory(category);
-            //Get Shop from SHOP_ID
-            Shop shop = shopDAO.getByPrimaryKey(resultSet.getInt("SHOP_ID"));
-            item.setSeller(shop);
-            
-            item.setRating(resultSet.getInt("RATING"));
-            item.setReviewCount(resultSet.getInt("REVIEWCOUNT"));          
-            
-        } catch (SQLException ex) {
-            throw new DAOException("Failed to query reviews with ITEM_ID = " + id, ex);
-        }
-        return item;
     }
     
 }

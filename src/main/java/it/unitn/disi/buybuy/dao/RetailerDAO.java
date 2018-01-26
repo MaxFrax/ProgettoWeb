@@ -81,5 +81,4 @@ public interface RetailerDAO extends DAO<Retailer,Integer>{
     @Override
     public Retailer update(Retailer retailer) throws DAOException;
 
-    public Retailer getByShopID(Integer id) throws DAOException;
 }

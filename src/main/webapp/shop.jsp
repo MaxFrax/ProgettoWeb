@@ -81,18 +81,18 @@
                 </div>
                 <div class="col-sm-5">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-8">
-                            <div class="panel panel-default price">
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="panel panel-default address">
                                 <div class="panel-body">
                                     <form class="form-inline">
                                         <table>
                                             <tr>
-                                                <td class="price-label">Indirizzo:</td>
-                                                <td class="price-val">${retailer.streetName} ${retailer.streetNumber}, ${retailer.postalCode}, ${retailer.city} ${retailer.province}</td>
+                                                <td class="address-label">Indirizzo:</td>
+                                                <td class="address-label2">${retailer.streetName} ${retailer.streetNumber}, ${retailer.postalCode}, ${retailer.city} ${retailer.province}</td>
                                             </tr>
                                             <tr>
-                                                <td class="price-label">Sito Web:</td>
-                                                <td class="price-val"><a href="${retailer.shop.website}">${retailer.shop.name}</a></td>
+                                                <td class="address-label">Sito Web:       </td>
+                                                <td class="address-label2"><a href="${retailer.shop.website}">${retailer.shop.name}</a></td>
                                             </tr>
                                         </table>
                                     </form>

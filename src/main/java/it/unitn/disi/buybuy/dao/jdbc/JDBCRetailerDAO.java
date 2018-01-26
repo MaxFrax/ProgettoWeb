@@ -231,42 +231,4 @@ public class JDBCRetailerDAO extends JDBCDAO<Retailer,Integer> implements Retail
         }
     }
     
-    @Override
-    public Retailer getByShopID(Integer id) throws DAOException {
-        
-        // Get needed DAOs
-        ShopDAO shopDAO;        
-        try {
-            shopDAO = getDAO(ShopDAO.class);
-        } catch (DAOFactoryException ex) {
-            throw new DAOException("Failed to get DAOs", ex);
-        }
-        
-        Retailer retailer = new Retailer();
-        String query = "SELECT * FROM RETAILER WHERE SHOP_ID=?";
-        try {
-            PreparedStatement stmt = CON.prepareStatement(query);
-            stmt.setInt(1, id);
-            ResultSet resultSet = stmt.executeQuery();
-            
-            // Add current result
-            retailer.setId(resultSet.getInt("ID"));
-            retailer.setLatitude(resultSet.getFloat("LATITUDE"));
-            retailer.setLongitude(resultSet.getFloat("LONGITUDE"));
-            retailer.setPostalCode(resultSet.getString("POSTALCODE"));
-            retailer.setCity(resultSet.getString("CITY"));
-            retailer.setStreetName(resultSet.getString("STREETNAME"));
-            retailer.setStreetNumber(resultSet.getInt("STREETNUMBER"));
-            retailer.setProvince(resultSet.getString("PROVINCE"));
-            retailer.setOpenTimetable(resultSet.getString("OPENTIMETABLE"));
-            // Get Shop from SHOP_ID
-            Shop shop = shopDAO.getByPrimaryKey(resultSet.getInt("SHOP_ID"));
-            retailer.setShop(shop);
-            
-        } catch (SQLException ex) {
-            throw new DAOException("Failed to query reviews with ITEM_ID = " + id, ex);
-        }
-        return retailer;
-    }
-    
 }
