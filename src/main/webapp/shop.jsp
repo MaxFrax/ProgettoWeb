@@ -64,6 +64,12 @@
                                 <span class="glyphicon glyphicon-chevron-right"></span>
                             </a>
                         </div>
+                        
+                        <div class="caption">
+                            <hr>
+                            Link alla posizione: 
+                            <button type="button" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-5">
