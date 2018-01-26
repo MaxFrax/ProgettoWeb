@@ -3,10 +3,10 @@ package it.unitn.disi.buybuy.shop;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
-import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.RetailerDAO;
-import it.unitn.disi.buybuy.dao.entities.Shop;
+import it.unitn.disi.buybuy.dao.ReviewDAO;
 import it.unitn.disi.buybuy.dao.entities.Retailer;
+import it.unitn.disi.buybuy.dao.entities.Review;
 import it.unitn.disi.buybuy.types.Message;
 import java.io.IOException;
 import java.util.List;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ShowShop extends HttpServlet {
 
     private RetailerDAO retailerDAO;
+    private ReviewDAO reviewDAO;
 
     @Override
     public void init() throws ServletException {
@@ -27,7 +28,8 @@ public class ShowShop extends HttpServlet {
             if (daoFactory == null) {
                 throw new DAOFactoryException("Failed to get DAO factory.");
             }
-            retailerDAO = daoFactory.getDAO(RetailerDAO.class); 
+            retailerDAO = daoFactory.getDAO(RetailerDAO.class);
+            reviewDAO = daoFactory.getDAO(ReviewDAO.class);
         } catch (DAOFactoryException ex) {
             throw new ServletException(ex.getMessage(), ex);
         }
@@ -53,6 +55,20 @@ public class ShowShop extends HttpServlet {
             return;
         }
         request.setAttribute("retailer", retailer);
+        
+        List<Review> reviews = null;
+        try {
+            Integer id = Integer.valueOf(retailerId);
+            reviews = reviewDAO.getByShopID(id);
+            if (reviews == null) {
+                throw new DAOException();
+            }
+        } catch (DAOException | NumberFormatException ex) {
+            forwardToErrorPage(request, response);
+            return;
+        }
+        request.setAttribute("reviews", reviews);
+
         request.getRequestDispatcher("/shop.jsp").forward(request, response);
     }
 

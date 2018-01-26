@@ -64,19 +64,6 @@
                                 <span class="glyphicon glyphicon-chevron-right"></span>
                             </a>
                         </div>
-                        
-                        
-                        <div class="caption">
-                            <hr>
-                            <c:forEach var="i" begin="1" end="${retailer.shop.rating}">
-                                <span class="glyphicon glyphicon-star"></span>
-                            </c:forEach>
-                            <c:forEach var="i" begin="${retailer.shop.rating+1}" end="5">
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </c:forEach>
-                            (Valutazione Totale)
-                            <button type="button" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-sm-5">
