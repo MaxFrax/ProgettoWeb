@@ -69,6 +69,10 @@
         <servlet-name>UpdateRetailer</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.shop.UpdateRetailer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>IssueServlet</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.IssueServlet</servlet-class>
+    </servlet>
     <!-- Servlets mapping -->
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -130,12 +134,6 @@
         <servlet-name>UpdateRetailer</servlet-name>
         <url-pattern>/update_retailer</url-pattern>
     </servlet-mapping>
-    <!-- Application config -->
-    <context-param>
-        <description>The url of the JDBC persistence system database position</description>
-        <param-name>dburl</param-name>
-        <param-value>jdbc:derby:C:\Users\apell\Documents\NetBeansProjects\ProgettoWeb\db</param-value>
-    </context-param>
     <servlet-mapping>
         <servlet-name>OrderServlet</servlet-name>
         <url-pattern>/orders</url-pattern>
@@ -144,6 +142,16 @@
         <servlet-name>ReviewServlet</servlet-name>
         <url-pattern>/review</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IssueServlet</servlet-name>
+        <url-pattern>/issue</url-pattern>
+    </servlet-mapping>
+    <!-- Application config -->
+    <context-param>
+        <description>The url of the JDBC persistence system database position</description>
+        <param-name>dburl</param-name>
+        <param-value>jdbc:derby:C:\Users\apell\Documents\NetBeansProjects\ProgettoWeb\db</param-value>
+    </context-param>
     <session-config>
         <session-timeout>
             30

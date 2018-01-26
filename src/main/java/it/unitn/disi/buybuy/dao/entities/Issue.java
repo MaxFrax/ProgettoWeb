@@ -16,6 +16,8 @@ public class Issue implements Serializable{
     
     private Integer id;
     private String userDescription;
+    private Boolean sellerRead;
+    private Boolean adminRead;
     private AdminChoice adminChoice;
     private Purchase purchase;
 
@@ -47,6 +49,46 @@ public class Issue implements Serializable{
      */
     public String getUserDescription() {
         return userDescription;
+    }
+    
+    /**
+     * Returns the sellerRead of this issue entity.
+     * @return the sellerRead of this issue entity.
+     * 
+     * @author apello96
+     */
+    public Boolean getSellerRead() {
+        return sellerRead;
+    }
+
+    /**
+     * Sets the new sellerRead of this issue entity.
+     * @param sellerRead the new seller read of this issue entity.
+     * 
+     * @author apello96
+     */
+    public void setSellerRead(Boolean sellerRead) {
+        this.sellerRead = sellerRead;
+    }
+    
+    /**
+     * Returns the sellerAdmin of this issue entity.
+     * @return the sellerAdmin of this issue entity.
+     * 
+     * @author apello96
+     */
+    public Boolean getAdminRead() {
+        return adminRead;
+    }
+
+    /**
+     * Sets the new adminRead of this issue entity.
+     * @param adminRead the new admin read of this issue entity.
+     * 
+     * @author apello96
+     */
+    public void setAdminRead(Boolean adminRead) {
+        this.adminRead = adminRead;
     }
 
     /**
@@ -97,5 +139,5 @@ public class Issue implements Serializable{
      */
     public void setPurchase(Purchase purchase) {
         this.purchase = purchase;
-    }
+    }   
 }
