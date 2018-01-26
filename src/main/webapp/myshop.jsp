@@ -145,8 +145,8 @@
                                 <input type="text" class="form-control" name="postal_code" value="${retailer.postalCode}" placeholder="es. 40026" readonly>
                             </div>
                         </div>
-                        <input type="hidden" name="lat" value="46.068362799999996">
-                        <input type="hidden" name="lng" value="46.068362799999996">
+                        <input type="hidden" name="lat" value="">
+                        <input type="hidden" name="lng" value="">
                         <div class="form-group">
                             <button class="btn btn-primary pull-right" type="submit">Salva modifiche</button>
                         </div>
@@ -194,8 +194,8 @@
                 };
                 var place = autocomplete.getPlace();
                 var location = place.geometry.location;
-                //$("input[name='lat']").val(location.lat());
-                //$("input[name='lng']").val(location.lng());
+                $("input[name='lat']").val(location.lat());
+                $("input[name='lng']").val(location.lng());
                 place.address_components.forEach((addrComponent) => {
                     var addrType = addrComponent.types[0];
                     if (formComponents[addrType]) {
