@@ -82,4 +82,6 @@ public interface IssueDAO extends DAO<Issue,Integer>{
     public Issue update(Issue issue) throws DAOException;
     
     public Integer getCountNotReadBySellerId(Integer seller_id) throws DAOException;
+    
+    public Integer getCountNotReadForAdmin() throws DAOException;
 }

@@ -141,4 +141,18 @@ public class JDBCIssueDAO extends JDBCDAO<Issue, Integer> implements IssueDAO {
         }
         return count;
     }
+    
+    public Integer getCountNotReadForAdmin() throws DAOException {        
+        Integer count = 0;            
+        String query = "SELECT COUNT(*) AS number FROM ISSUE WHERE ADMIN_READ IS NULL";            
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            resultSet.next();
+            count = resultSet.getInt("number");               
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to query the count", ex);
+        }
+        return count;
+    }
 }

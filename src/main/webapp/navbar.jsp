@@ -45,7 +45,7 @@
                 count = issueDao.getCountNotReadBySellerId(user.getId());
             }
             if(user.getType() == Type.ADMINISTRATOR){
-                count = issueDao.getCountNotReadBySellerId(user.getId());
+                count = issueDao.getCountNotReadForAdmin();
             }
             pageContext.setAttribute("notifications", count);
         } catch (DAOException ex) {
