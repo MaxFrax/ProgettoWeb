@@ -34,12 +34,12 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel ${message.type == 'ERROR' ? 'panel-danger' : 'panel-info'}">
                         <div class="panel-heading">
-                            <h3 class="panel-title">${message.type == 'ERROR' ? 'Errore' : 'Informazione'}</h3>
+                            <h3 class="panel-title">${message.type == 'ERROR' ? 'Ooops!' : 'Informazione'}</h3>
                         </div> 
                         <div class="panel-body">
                             <c:choose>
                                 <c:when test="${empty message.text}">
-                                    Se hai bisogno di aiuto, <a href="#">contattaci</a>.
+                                    Si è verificato un errore. Se hai bisogno di aiuto, <a href="#">contattaci</a>.
                                 </c:when>
                                 <c:otherwise>
                                     ${message.text}

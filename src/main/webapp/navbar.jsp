@@ -35,7 +35,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span class="hidden-xs"> ${user.name} ${user.lastname}</span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profilo.jsp">Profilo</a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}/profile">Profilo</a></li>
                                     <li><a href="#">Il mio negozio</a></li>
                                     <li><a href="${pageContext.servletContext.contextPath}/orders">I miei ordini</a></li>
                                     <li role="separator" class="divider hidden-xs"></li>
@@ -49,7 +49,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span class="hidden-xs"> ${user.name} ${user.lastname}</span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="profilo.jsp">Profilo</a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}/profile">Profilo</a></li>
                                     <li role="separator" class="divider hidden-xs"></li>
                                     <li><a href="logout">Esci</a></li>
                                 </ul>

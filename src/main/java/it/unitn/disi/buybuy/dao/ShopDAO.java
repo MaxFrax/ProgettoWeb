@@ -80,5 +80,7 @@ public interface ShopDAO extends DAO<Shop,Integer>{
      * @author apello96
      */
     public Long insert(Shop shop) throws DAOException;
-
+    
+    
+    public Shop getByOwnerId(Integer id) throws DAOException;
 }

@@ -1,44 +1,51 @@
-<%-- 
-    Document   : update_profile.jsp
-    Created on : 23-gen-2018, 11.15.07
-    Author     : apell
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Profilo</title>
-        <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- Custom CSS -->
-        <link href="css/results.css" rel="stylesheet">
-    </head>
-    <body>
-        <!-- Navbar -->
+<%-- Redirect to login if user is not logged in --%>
+<c:if test="${empty user}">
+    <c:redirect url="/login"/>
+</c:if>
+
+<%-- Get context path --%>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
+
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Profilo</title>
+            <!-- Bootstrap Core CSS -->
+            <link href="css/bootstrap.min.css" rel="stylesheet">
+            <!-- Custom CSS -->
+            <link href="css/navbar.css" rel="stylesheet">
+        </head>
+        <body>
+            <!-- Navbar -->
         <%@include file="navbar.jsp"%>
-        
+
         <div class="container">
-            <h1>Edit Profile</h1>
-                <hr>
+
+            <div class="page-header">
+                <h1>Il mio profilo</h1>
+            </div>
+
+            <%-- Show message if there is one --%>
+            <c:if test="${!empty message}">
                 <div class="row">
-                    <c:if test="${not empty message}">
-                        <!-- edit form column -->
+                    <div class="col-xs-12">
                         <div class="alert alert-info">
                             <c:out value="${message}"/>
                         </div>
-                    </c:if>
-                    <h3>Informazioni personali</h3>
+                    </div>
+                </div>
+            </c:if>
 
-                    <form action="profile" method="POST" class="form-horizontal" role="form">
+            <%-- Content --%>
+            <div class="row">
+                <div class="col-xs-12">
+                    <form action="${contextPath}/profile" method="POST" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Nome:</label>
                             <div class="col-lg-8">
@@ -110,8 +117,12 @@
                     </form>
                 </div>
             </div>
+            <!-- Footer -->
+            <%@include file="footer.jsp"%>         
         </div>
-        <!-- Footer -->
-        <%@include file="footer.jsp"%>
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
