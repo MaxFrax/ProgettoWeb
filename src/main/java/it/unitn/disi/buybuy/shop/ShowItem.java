@@ -4,8 +4,10 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOExcept
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
 import it.unitn.disi.buybuy.dao.ItemDAO;
+import it.unitn.disi.buybuy.dao.RetailerDAO;
 import it.unitn.disi.buybuy.dao.ReviewDAO;
 import it.unitn.disi.buybuy.dao.entities.Item;
+import it.unitn.disi.buybuy.dao.entities.Retailer;
 import it.unitn.disi.buybuy.dao.entities.Review;
 import it.unitn.disi.buybuy.types.Message;
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class ShowItem extends HttpServlet {
 
     private ItemDAO itemDAO;
     private ReviewDAO reviewDAO;
+    private RetailerDAO retailerDAO;
 
     @Override
     public void init() throws ServletException {
@@ -30,6 +33,7 @@ public class ShowItem extends HttpServlet {
             }
             itemDAO = daoFactory.getDAO(ItemDAO.class);
             reviewDAO = daoFactory.getDAO(ReviewDAO.class);
+            retailerDAO = daoFactory.getDAO(RetailerDAO.class);
             
         } catch (DAOFactoryException ex) {
             throw new ServletException(ex.getMessage(), ex);
@@ -46,10 +50,12 @@ public class ShowItem extends HttpServlet {
         }
         Item item = null;
         List<Review> reviews = null;
+        Retailer retailer = null;
         try {
             Integer id = Integer.valueOf(itemId);
             item = itemDAO.getByPrimaryKey(id);
             reviews = reviewDAO.getByItemID(id);
+            retailer = retailerDAO.getPositionByItemID(id);
             if (item == null) {
                 throw new DAOException();
             }
@@ -59,6 +65,8 @@ public class ShowItem extends HttpServlet {
         }
         request.setAttribute("item", item);
         request.setAttribute("reviews", reviews);
+        request.setAttribute("retailer", retailer);
+        
         request.getRequestDispatcher("/item.jsp").forward(request, response);
     }
 

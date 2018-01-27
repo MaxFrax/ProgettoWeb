@@ -67,9 +67,9 @@
                         
                         <div class="caption">
                             <hr>
-                            Link alla posizione:
+                            Mostra la posizione:
                             <button type="button" class="btn btn-default btn-xs pull-right" onclick="Mappa()"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
-                            <div id="map" style="padding-top: 300px; height:300px; width:100%; display: none"></div>
+                            <div id="map" style="height:300px; width:100%; display: none"></div>
                             <script>
                                 function Mappa(){
                                     var mappa = document.getElementById("map");

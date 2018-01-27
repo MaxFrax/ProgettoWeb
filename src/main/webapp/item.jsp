@@ -50,7 +50,44 @@
                                 <span class="glyphicon glyphicon-star-empty"></span>
                             </c:forEach>
                             (${item.reviewCount} recensioni)
-                            <button type="button" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
+                            
+                            <c:choose>
+                                <c:when test="${retailer.latitude eq null}">
+                                    Mappa non disponibilie
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="button" class="btn btn-default btn-xs pull-right" onclick="Mappa()"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
+                                </c:otherwise>
+                            </c:choose>
+                                    
+                            <script>
+                                function Mappa(){
+                                    var mappa = document.getElementById("map");
+                                    if(mappa.style.display === "none"){
+                                        mappa.style.display = ""; 
+                                        initMap();
+                                    }
+                                    else{
+                                        mappa.style.display = "none"; 
+                                    }
+                                }
+                            </script>
+                            <script>
+                              function initMap() {
+                                var retailer_pos = {lat: ${retailer.latitude}, lng: ${retailer.longitude}};
+                                var map = new google.maps.Map(document.getElementById('map'), {
+                                  zoom: 16,
+                                  center: retailer_pos
+                                });
+                                var marker = new google.maps.Marker({
+                                  position: retailer_pos,
+                                  map: map
+                                });
+                              }
+                            </script>
+                            <script async defer
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD56DJzP0gVy_EbPuEJ8zDQIjVJsDi9DBQ">
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -93,6 +130,7 @@
                     </div>
                 </div>
             </div>
+            <div id="map" style="height:300px; width:100%; display: none"></div>
             <div class="row">
                 <div class="col-xs-12">
                     <c:choose>
