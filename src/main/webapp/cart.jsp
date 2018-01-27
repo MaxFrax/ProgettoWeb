@@ -70,7 +70,7 @@
                                             <c:set var="quantity" value="${entry.value.quantity}"></c:set>
                                                 <tr>
                                                     <td class="thumb">
-                                                        <img src="img/chainsaw.jpg" class="thumbnail" alt="Immagine non disponibile">
+                                                        <img src="img/thumbnail.jpg" class="thumbnail" alt="Immagine non disponibile">
                                                     </td>
                                                     <td>
                                                         <ul>
