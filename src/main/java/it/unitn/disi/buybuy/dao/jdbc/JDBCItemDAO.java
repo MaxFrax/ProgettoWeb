@@ -209,6 +209,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
             query.append("AND category_id = ?");
         }
         List<Pair<Item, Retailer>> results = new ArrayList<>();
+        List<Integer> itemsAlreadyAdded = new ArrayList<>();
         try (PreparedStatement stm = CON.prepareStatement(query.toString())) {
             // Fill query with values
             int i = 0;
@@ -227,7 +228,12 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     Pair<Item, Retailer> p = new Pair<>(itemFactory(rs), getDAO(RetailerDAO.class).getByPrimaryKey(rs.getInt("RET_ID")));
-                    results.add(p);
+                    
+                    if(!itemsAlreadyAdded.contains(p.getKey().getId())) {
+                        results.add(p);
+                        itemsAlreadyAdded.add(p.getKey().getId());
+                    }
+                    
                 }
             } catch (DAOFactoryException ex) {
                 Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
