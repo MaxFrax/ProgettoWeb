@@ -74,6 +74,18 @@
         <servlet-class>it.unitn.disi.buybuy.shop.IssueServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Checkout</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.Checkout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProcessOrder</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.ProcessOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderSuccess</servlet-name>
+        <jsp-file>/order_success.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>NotificationServlet</servlet-name>
         <servlet-class>it.unitn.disi.buybuy.shop.NotificationServlet</servlet-class>
     </servlet>
@@ -153,6 +165,18 @@
     <servlet-mapping>
         <servlet-name>IssueServlet</servlet-name>
         <url-pattern>/issue</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Checkout</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProcessOrder</servlet-name>
+        <url-pattern>/process_order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderSuccess</servlet-name>
+        <url-pattern>/order_success</url-pattern>   
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NotificationServlet</servlet-name>
