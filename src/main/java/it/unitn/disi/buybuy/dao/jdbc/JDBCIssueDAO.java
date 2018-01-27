@@ -63,7 +63,31 @@ public class JDBCIssueDAO extends JDBCDAO<Issue, Integer> implements IssueDAO {
 
     @Override
     public List<Issue> getAll() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PurchaseDAO purchaseDAO;
+        try {
+            purchaseDAO = getDAO(PurchaseDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new DAOException("Failed to get DAOs", ex);
+        }
+        List<Issue> issues = new ArrayList();         
+        String query = "SELECT * FROM ISSUE ORDER BY ID DESC";            
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            while(resultSet.next()){
+                Issue issue = new Issue();
+                issue.setId(resultSet.getInt("ID"));
+                issue.setUserDescription(resultSet.getString("USER_DESCRIPTION"));
+                issue.setSellerRead(resultSet.getBoolean("SELLER_READ"));
+                issue.setAdminRead(resultSet.getBoolean("ADMIN_READ"));
+                issue.setAdminChoice(Issue.AdminChoice.values()[resultSet.getInt("ADMIN_CHOICE")]);
+                issue.setPurchase(purchaseDAO.getByPrimaryKey(resultSet.getInt("PURCHASE_ID")));
+                issues.add(issue);
+            }            
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to query the count", ex);
+        }
+        return issues;
     }
 
     @Override
@@ -142,6 +166,7 @@ public class JDBCIssueDAO extends JDBCDAO<Issue, Integer> implements IssueDAO {
         return count;
     }
     
+    @Override
     public Integer getCountNotReadForAdmin() throws DAOException {        
         Integer count = 0;            
         String query = "SELECT COUNT(*) AS number FROM ISSUE WHERE ADMIN_READ IS NULL";            
@@ -154,5 +179,174 @@ public class JDBCIssueDAO extends JDBCDAO<Issue, Integer> implements IssueDAO {
             throw new DAOException("Failed to query the count", ex);
         }
         return count;
+    }
+    
+    @Override
+    public List<Issue> getNotReadedBySellerId(Integer seller_id) throws DAOException {
+        ItemDAO itemDAO;
+        PurchaseDAO purchaseDAO;
+        try {
+            itemDAO = getDAO(ItemDAO.class);
+            purchaseDAO = getDAO(PurchaseDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new DAOException("Failed to get DAOs", ex);
+        }
+        
+        ArrayList<Item> items = (ArrayList<Item>) itemDAO.getBySellerId(seller_id);
+        List<Issue> issues = new ArrayList();
+        if(items.size() > 0){            
+            String query = "SELECT iss.ID, iss.USER_DESCRIPTION, iss.SELLER_READ, iss.ADMIN_READ, iss.ADMIN_CHOICE, iss.PURCHASE_ID FROM ISSUE iss, PURCHASE p, ITEM i WHERE iss.SELLER_READ IS NULL AND iss.PURCHASE_ID = p.ID AND i.ID = p.ITEM_ID";
+            query += " AND ( i.ID = " + items.get(0).getId().toString();
+            for (int i = 1; i < items.size(); i++) {
+                query += " OR i.ID = " + items.get(i).getId().toString();
+
+            }
+            query += ")  ORDER BY iss.ID DESC";
+            
+            try {
+                PreparedStatement stmt = CON.prepareStatement(query);
+                ResultSet resultSet = stmt.executeQuery();
+                while(resultSet.next()){
+                    Issue issue = new Issue();
+                    issue.setId(resultSet.getInt("ID"));
+                    issue.setUserDescription(resultSet.getString("USER_DESCRIPTION"));
+                    issue.setSellerRead(resultSet.getBoolean("SELLER_READ"));
+                    issue.setAdminRead(resultSet.getBoolean("ADMIN_READ"));
+                    issue.setAdminChoice(Issue.AdminChoice.values()[resultSet.getInt("ADMIN_CHOICE")]);
+                    issue.setPurchase(purchaseDAO.getByPrimaryKey(resultSet.getInt("PURCHASE_ID")));
+                    issues.add(issue);
+                }
+            } catch (SQLException ex) {
+                throw new DAOException("Failed to query the list of issues", ex);
+            }
+        }
+        return issues;
+    }
+    
+    @Override
+    public List<Issue> getBySellerId(Integer seller_id) throws DAOException {
+        ItemDAO itemDAO;
+        PurchaseDAO purchaseDAO;
+        try {
+            itemDAO = getDAO(ItemDAO.class);
+            purchaseDAO = getDAO(PurchaseDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new DAOException("Failed to get DAOs", ex);
+        }
+        ArrayList<Item> items = (ArrayList<Item>) itemDAO.getBySellerId(seller_id);
+        List<Issue> issues = new ArrayList();
+        if(items.size() > 0){            
+            String query = "SELECT iss.ID, iss.USER_DESCRIPTION, iss.SELLER_READ, iss.ADMIN_READ, iss.ADMIN_CHOICE, iss.PURCHASE_ID FROM ISSUE iss, PURCHASE p, ITEM i WHERE iss.PURCHASE_ID = p.ID AND i.ID = p.ITEM_ID";
+            query += " AND ( i.ID = " + items.get(0).getId().toString();
+            for (int i = 1; i < items.size(); i++) {
+                query += " OR i.ID = " + items.get(i).getId().toString();
+
+            }
+            query += ")  ORDER BY iss.ID DESC";
+            
+            try {
+                PreparedStatement stmt = CON.prepareStatement(query);
+                ResultSet resultSet = stmt.executeQuery();
+                while(resultSet.next()){
+                    Issue issue = new Issue();
+                    issue.setId(resultSet.getInt("ID"));
+                    issue.setUserDescription(resultSet.getString("USER_DESCRIPTION"));
+                    issue.setSellerRead(resultSet.getBoolean("SELLER_READ"));
+                    issue.setAdminRead(resultSet.getBoolean("ADMIN_READ"));
+                    issue.setAdminChoice(Issue.AdminChoice.values()[resultSet.getInt("ADMIN_CHOICE")]);
+                    issue.setPurchase(purchaseDAO.getByPrimaryKey(resultSet.getInt("PURCHASE_ID")));
+                    issues.add(issue);
+                }
+            } catch (SQLException ex) {
+                throw new DAOException("Failed to query the list of issues", ex);
+            }
+        }
+        return issues;
+    }
+    
+    @Override
+    public Issue setSellerRead(Issue issue) throws DAOException {
+        if (issue == null) {
+            throw new DAOException("parameter not valid", new IllegalArgumentException("The passed issue is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.ISSUE SET SELLER_READ = TRUE WHERE id = ?")) {            
+            std.setInt(1, issue.getId());
+            if (std.executeUpdate() == 1) {
+                issue.setSellerRead(Boolean.TRUE);
+                return issue;
+            } else {
+                throw new DAOException("Impossible to update the issue");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the issue", ex);
+        }
+    }
+    
+    @Override
+    public Issue setAdminRead(Issue issue) throws DAOException {
+        if (issue == null) {
+            throw new DAOException("parameter not valid", new IllegalArgumentException("The passed issue is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.ISSUE SET ADMIN_READ = TRUE WHERE id = ?")) {            
+            std.setInt(1, issue.getId());
+            if (std.executeUpdate() == 1) {
+                issue.setAdminRead(Boolean.TRUE);
+                return issue;
+            } else {
+                throw new DAOException("Impossible to update the issue");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the issue", ex);
+        }
+    }
+    
+    @Override
+    public List<Issue> getAllOpened() throws DAOException{
+        PurchaseDAO purchaseDAO;
+        try {
+            purchaseDAO = getDAO(PurchaseDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new DAOException("Failed to get DAOs", ex);
+        }
+        List<Issue> issues = new ArrayList();         
+        String query = "SELECT iss.ID, iss.USER_DESCRIPTION, iss.SELLER_READ, iss.ADMIN_READ, iss.ADMIN_CHOICE, iss.PURCHASE_ID FROM ISSUE iss WHERE ADMIN_CHOICE IS NULL ORDER BY iss.ID DESC";            
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            while(resultSet.next()){
+                Issue issue = new Issue();
+                issue.setId(resultSet.getInt("ID"));
+                issue.setUserDescription(resultSet.getString("USER_DESCRIPTION"));
+                issue.setSellerRead(resultSet.getBoolean("SELLER_READ"));
+                issue.setAdminRead(resultSet.getBoolean("ADMIN_READ"));
+                issue.setAdminChoice(Issue.AdminChoice.values()[resultSet.getInt("ADMIN_CHOICE")]);
+                issue.setPurchase(purchaseDAO.getByPrimaryKey(resultSet.getInt("PURCHASE_ID")));
+                issues.add(issue);
+            }            
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to query the count", ex);
+        }
+        return issues;
+    }
+    
+    @Override
+    public Issue setAdminChoice(Issue issue) throws DAOException {
+        if (issue == null) {
+            throw new DAOException("parameter not valid", new IllegalArgumentException("The passed issue is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.ISSUE SET ADMIN_CHOICE = ? WHERE id = ?")) {
+            std.setInt(1, issue.getAdminChoice().ordinal());
+            std.setInt(2, issue.getId());
+            if (std.executeUpdate() == 1) {
+                return issue;
+            } else {
+                throw new DAOException("Impossible to update the issue");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the issue", ex);
+        }
     }
 }

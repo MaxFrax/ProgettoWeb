@@ -73,7 +73,7 @@
                         </c:when>
                         <%-- Registered user --%>
                         <c:when test="${user.type == 'REGISTERED'}">
-                            <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span><span class="hidden-xs"> Carrello</span></a></li>
+                            <li><a href="${pageContext.servletContext.contextPath}/cart"><span class="glyphicon glyphicon-shopping-cart"></span><span class="hidden-xs"> Carrello</span></a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span class="hidden-xs"> ${user.name} ${user.lastname}</span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -86,13 +86,13 @@
                         </c:when>
                         <%-- Seller user --%>
                         <c:when test="${user.type == 'SELLER'}">
-                            <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span><span class="hidden-xs"> Carrello</span></a></li>
+                            <li><a href="${pageContext.servletContext.contextPath}/cart"><span class="glyphicon glyphicon-shopping-cart"></span><span class="hidden-xs"> Carrello</span></a></li>
                             <c:choose>
                                 <c:when test="${count == 0}">
-                                    <li><a href="#"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche </span></a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}/notification"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche </span></a></li>
                                 </c:when>
                                 <c:otherwise>
-                                        <li><a href="#"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche (<c:out value="${notifications}"/>)</span></a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/notification"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche (<c:out value="${notifications}"/>)</span></a></li>
                                 </c:otherwise>
                             </c:choose>
                             
@@ -111,10 +111,10 @@
                         <c:when test="${user.type == 'ADMINISTRATOR'}">
                             <c:choose>
                                 <c:when test="${count == 0}">
-                                    <li><a href="#"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche </span></a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}/notification"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche </span></a></li>
                                 </c:when>
                                 <c:otherwise>
-                                        <li><a href="#"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche (<c:out value="${notifications}"/>)</span></a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/notification"><span class="glyphicon glyphicon-bell"></span><span class="hidden-xs"> Notifiche (<c:out value="${notifications}"/>)</span></a></li>
                                 </c:otherwise>
                             </c:choose>
                             <li class="dropdown">

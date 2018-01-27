@@ -225,7 +225,6 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     
     @Override
     public List<Item> getBySellerId(Integer seller_id) throws DAOException{
-        System.out.println("prova");
         List<Item> result = new ArrayList();
         String query = "SELECT i.ID AS item_id "
                 + "FROM SHOP s, ITEM i, USER_DETAIL u "
@@ -242,7 +241,6 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         } catch (SQLException ex) {
             throw new DAOException("Failed to get the item purchased by this user", ex);
         }
-        System.out.println("prova");
         return result;
     }
 }
