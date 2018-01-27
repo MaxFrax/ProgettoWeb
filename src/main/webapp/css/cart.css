@@ -6,7 +6,7 @@
     margin-right:10px;
 }
 
-.page-title {
+.page-header {
     margin-top: 0px;
 }
 
@@ -60,4 +60,13 @@ table li {
     table {
         margin-bottom: 5px !important;
     }
+}
+
+h4.total {
+    display:inline;
+    margin-left: 15px;
+}
+
+button[type="submit"] {
+    margin-right: 10px;
 }

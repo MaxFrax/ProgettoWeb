@@ -84,4 +84,7 @@ public interface ReviewDAO extends DAO<Review,Integer>{
     public List<Review> getByItemID(Integer id) throws DAOException;
 
     public List<Review> getByShopID(Integer id) throws DAOException;
+    
+    public Review getByItemIDAndUserID(Integer user_id, Integer item_id) throws DAOException;
+    
 }

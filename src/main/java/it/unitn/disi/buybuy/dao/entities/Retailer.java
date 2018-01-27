@@ -11,10 +11,10 @@ import java.io.Serializable;
  * @author apello96
  */
 public class Retailer implements Serializable{
-    private Integer id;
+    private Long id;
     private Float latitude;
     private Float longitude;
-    private String postalCode;
+    private Integer postalCode;
     private String city;
     private String streetName;
     private Integer streetNumber;
@@ -28,7 +28,7 @@ public class Retailer implements Serializable{
      * 
      * @author apello96
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     
@@ -38,7 +38,7 @@ public class Retailer implements Serializable{
      * 
      * @author apello96
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
     
@@ -88,7 +88,7 @@ public class Retailer implements Serializable{
      * 
      * @author apello96
      */
-    public String getPostalCode() {
+    public Integer getPostalCode() {
         return postalCode;
     }
     
@@ -98,7 +98,7 @@ public class Retailer implements Serializable{
      * 
      * @author apello96
      */
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(Integer postalCode) {
         this.postalCode = postalCode;
     }
     

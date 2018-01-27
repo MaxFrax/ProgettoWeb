@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="thumbnail">
-                        <img src="img/chainsaw.jpg" alt="Immagine prodotto non disponibile">
+                        <img src="img/thumbnail.jpg" alt="Immagine prodotto non disponibile">
                         <div class="caption">
                             <hr>
                             <c:forEach var="i" begin="1" end="${item.rating}">

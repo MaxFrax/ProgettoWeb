@@ -80,4 +80,6 @@ public interface PurchaseDAO extends DAO<Purchase,Integer>{
      */
     @Override
     public Purchase update(Purchase purchase) throws DAOException;
+    
+    public Purchase getByUserIdAndItemId(Integer userId, Integer ItemId) throws DAOException;
 }

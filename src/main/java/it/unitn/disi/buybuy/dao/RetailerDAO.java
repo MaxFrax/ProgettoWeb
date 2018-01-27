@@ -83,4 +83,6 @@ public interface RetailerDAO extends DAO<Retailer,Integer>{
 
     public Retailer getPositionByItemID(Integer id) throws DAOException;
 
+    
+    public Retailer getByShopId(Integer id) throws DAOException;
 }
