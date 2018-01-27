@@ -10,25 +10,25 @@ h4.seller {
     margin-bottom:5px;
 }
 
-.panel.price td {
+.panel.address td {
     padding:5px;
 }
 
-.panel.price td.price-label {
+.panel.address td.address-label {
     vertical-align: top;
-    text-align: right;
+    width: 90px;
 }
 
-.panel.price td.price-val {
-    vertical-align: bottom;
-    font-size: 1.5em;
+.panel.address td.address-label2 {
+    vertical-align: top;
+    width: 200px;
 }
 
 tr.pickup-label td {
     padding-top: 0px !important;
 }
 
-.panel.price input[type="text"] {
+.panel.address input[type="text"] {
     width: 40px;
 }
 

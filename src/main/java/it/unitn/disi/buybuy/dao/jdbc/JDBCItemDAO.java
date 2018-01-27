@@ -202,6 +202,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         return count;
     }
     
+    @Override
     public List<Item> getByUserId(Integer user_id) throws DAOException{
         List<Item> result = new ArrayList();
         String query = "SELECT DISTINCT i.ID AS item_id, i.NAME AS item_name "
@@ -243,4 +244,5 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         }
         return result;
     }
+    
 }
