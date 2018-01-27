@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-md-1">
                                 <p>
-                                    <a href="${contextPath}/myshop?id=${issue.getPurchase().getItem().getSeller().getId()}"><c:out value="${issue.getPurchase().getItem().getSeller().getId()}" /></a>
+                                    <a href="${contextPath}/shop?id=${issue.getPurchase().getItem().getSeller().getId()}"><c:out value="${issue.getPurchase().getItem().getSeller().getId()}" /></a>
                                 </p>
                             </div>
                             <div class="col-md-1">
@@ -95,7 +95,7 @@
                             </div>
                             <div class="col-md-1">
                                 <p>
-                                    <a href="${contextPath}/myshop?id=${issue.getPurchase().getItem().getSeller().getId()}"><c:out value="${issue.getPurchase().getItem().getSeller().getId()}" /></a>
+                                    <a href="${contextPath}/shop?id=${issue.getPurchase().getItem().getSeller().getId()}"><c:out value="${issue.getPurchase().getItem().getSeller().getId()}" /></a>
                                 </p>
                             </div>
                             <div class="col-md-1">

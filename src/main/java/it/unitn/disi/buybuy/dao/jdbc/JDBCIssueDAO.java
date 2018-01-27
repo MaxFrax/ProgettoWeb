@@ -337,7 +337,7 @@ public class JDBCIssueDAO extends JDBCDAO<Issue, Integer> implements IssueDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed issue is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE app.ISSUE SET ADMIN_CHOICE = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.ISSUE SET ADMIN_CHOICE = ?, SELLER_READ = NULL WHERE id = ?")) {
             std.setInt(1, issue.getAdminChoice().ordinal());
             std.setInt(2, issue.getId());
             if (std.executeUpdate() == 1) {
