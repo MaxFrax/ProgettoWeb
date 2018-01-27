@@ -66,3 +66,7 @@ h4.total {
     display:inline;
     margin-left: 15px;
 }
+
+button[type="submit"] {
+    margin-right: 10px;
+}

@@ -1,30 +1,31 @@
 <%@page import="it.unitn.disi.buybuy.dao.entities.Item"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 
-<!DOCTYPE html>
-<html lang="it">
+    <!DOCTYPE html>
+    <html lang="it">
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Carrello</title>
-        <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <!-- Custom CSS -->
-        <link href="css/cart.css" rel="stylesheet">
-    </head>
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Carrello</title>
+            <!-- Bootstrap Core CSS -->
+            <link href="css/bootstrap.min.css" rel="stylesheet">
+            <!-- Custom CSS -->
+            <link href="css/cart.css" rel="stylesheet">
+        </head>
 
-    <body>
+        <body>
 
-        <!-- Navbar -->
+            <!-- Navbar -->
         <%@include file="navbar.jsp"%>
 
         <!-- Main container -->
         <div class="container">
-            
+
             <div class="row">
                 <div class="col-xs-12">
                     <h3 class="page-header">Carrello</h3>
@@ -75,7 +76,7 @@
                                                         <ul>
                                                             <li>${item.name}</li>
                                                         <li>di ${item.seller.name}</li>
-                                                        <li><span class="label label-info"><span class="glyphicon glyphicon-ok"></span> Ritiro in negozio</span></li>
+                                                        <li><input type="checkbox" name="pickup"> Ritiro in negozio</li>
                                                     </ul>
                                                 </td>
                                                 <td class="price text-nowrap">
@@ -105,8 +106,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
-                            <button type="submit" form="cart" class="btn btn-default pull-right">Aggiorna carrello</button>
+                        <div class="col-xs-12 text-right">
+                            <button class="btn btn-primary pull-right" onclick="goToCheckout()">Procedi all'acquisto</button>
+                            <button type="submit" form="cart" class="btn btn-default pull-right">Aggiorna carrello</button>                      
                         </div>
                     </div>
                 </c:otherwise>
@@ -126,6 +128,18 @@
                 var itemId = $(this).siblings("input").attr("name");
                 window.location.replace("${pageContext.servletContext.contextPath}/update_cart?" + itemId + "=0");
             });
+            function goToCheckout() {
+                // Count number of checked checkboxes
+                var pickups = document.querySelectorAll("input[type='checkbox']"); 
+                var pickupsCount = 0;
+                for (var i = 0; i < pickups.length; i++) {
+                    if (pickups[i].checked) {
+                        pickupsCount++;
+                    }
+                }
+                // Go to checkout
+                window.location.href = "${contextPath}/checkout?pickups_count=" + pickupsCount;
+            }
         </script>
 
     </body>

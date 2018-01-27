@@ -1,68 +1,58 @@
-/* cart.jsp */
+/* checkout.jsp */
 
-@import "navbar.css";
-
-.glyphicon-ok-circle {
-    margin-right:10px;
+.row.logo {
+    margin-top: 20px;
 }
 
-.page-header {
-    margin-top: 0px;
+img.center-block {
+    height: 40px;
 }
 
-table ul {
-    list-style-type: none;
-    padding-left: 0px;
+h4.page-header {
+    margin-top: 20px;
 }
 
-table li {
-    word-wrap: break-word;
+div.buy {
+   margin-top: 15px; 
 }
 
-/* Smartphone */
+a[role="button"] {
+    text-decoration: none;
+}
+
+#collapseOne hr {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* Smartphones, up to 767px */
 @media (max-width: 767px) {
-    img.thumbnail {
-        width: 75px;
-    }
-    td, th {
-        padding-left: 0px !important;
-    }
-    td.thumb {
-        padding-left: 4px !important;
-    }
-    table input[type="number"] {
-        width: 40px !important;
-    }
-    table button.remove {
-        margin-top: 2px;
+    .form-group.street-number,
+    .form-group.postal-code {
+        padding-left: 0px;
     }
 }
 
-/* Tablet and larger */
-@media (min-width: 768px) {
-    img.thumbnail {
-        width: 130px;
-    }
-    td.thumb {
-        width: 130px;
-    }
-    td.qty {
-        width: 50px;
-    }
-    table input[type="number"] {
-        width: 60px !important;
-        display: inline-block;
-    }
-    table button.remove {
-        margin-left: 2px;
-        display: inline-block;
-    }
-    table {
-        margin-bottom: 5px !important;
-    }
+#summary td:first-child {
+    text-align: right;
 }
 
-h4.total {
-    display:inline;
-    margin-left: 15px;
+#summary td:nth-child(2) {
+    text-align: left;
+    padding-left: 25px;
+}
+
+#summary th {
+    text-align: left;
+    font-weight: normal;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+}
+
+#summary th.payment {
+    padding-top:15px;
+}
+
+#collapseThree .row:first-child {
+    margin-bottom:30px;
 }

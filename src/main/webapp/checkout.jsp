@@ -37,53 +37,55 @@
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <%-- Shipping information--%>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Indirizzo di spedizione
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <p>
-                                        <strong>Nota:</strong> l'indirizzo di spedizione si applica solo agli oggetti per i quali non è stato selezionato "Ritiro in negozio"
-                                    </p>
-                                    <hr>
-                                    <form id="address">
-                                        <div class="row">
-                                            <div class="form-group col-xs-9">
-                                                <label for="street_name">Via</label>
-                                                <input type="text" class="form-control" id="street_name" name="street_name" placeholder="es. Via Garibaldi">
+                        <c:if test="${!empty shipping}">
+                            <%-- Shipping information--%>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Indirizzo di spedizione
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <p>
+                                            <strong>Nota:</strong> l'indirizzo di spedizione si applica solo agli oggetti per i quali non è stato selezionato "Ritiro in negozio"
+                                        </p>
+                                        <hr>
+                                        <form id="address">
+                                            <div class="row">
+                                                <div class="form-group col-xs-9">
+                                                    <label for="street_name">Via</label>
+                                                    <input type="text" class="form-control" id="street_name" name="street_name" placeholder="es. Via Garibaldi">
+                                                </div>
+                                                <div class="form-group col-xs-3 street-number">
+                                                    <label for="street_number">Numero</label>
+                                                    <input type="text" class="form-control" id="street_number" name="street_number" placeholder="es. 12">
+                                                </div>
                                             </div>
-                                            <div class="form-group col-xs-3 street-number">
-                                                <label for="street_number">Numero</label>
-                                                <input type="text" class="form-control" id="street_number" name="street_number" placeholder="es. 12">
+                                            <div class="form-group">
+                                                <label for="city">Città</label>
+                                                <input type="text" class="form-control" id="city" name="city" placeholder="es. Imola">
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="city">Città</label>
-                                            <input type="text" class="form-control" id="city" name="city" placeholder="es. Imola">
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-xs-8 province">
-                                                <label for="province">Provincia</label>
-                                                <input type="text" class="form-control" id="province" name="province" placeholder="es. Bologna">
+                                            <div class="row">
+                                                <div class="form-group col-xs-8 province">
+                                                    <label for="province">Provincia</label>
+                                                    <input type="text" class="form-control" id="province" name="province" placeholder="es. Bologna">
+                                                </div>
+                                                <div class="form-group col-xs-4 postal-code">
+                                                    <label for="postal_code" class="text-nowrap">Codice postale</label>
+                                                    <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="es. 40026">
+                                                </div>
                                             </div>
-                                            <div class="form-group col-xs-4 postal-code">
-                                                <label for="postal_code" class="text-nowrap">Codice postale</label>
-                                                <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="es. 40026">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Continua</button>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Continua</button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>
                         <%-- Payment information --%>
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingTwo">
@@ -93,7 +95,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div id="collapseTwo" class="panel-collapse collapse ${empty shipping ? 'in':''}" role="tabpanel" aria-labelledby="headingTwo">
                                 <div class="panel-body">
                                     <form id="payment">
                                         <div class="row">
@@ -119,7 +121,7 @@
                                             </div>
                                             <div class="form-group col-xs-4">
                                                 <label for="security_code">Cod. di sicurezza</label>
-                                                <input class="form-control" type="text" id="securiy_code" name="securiy_code" placeholder="123" maxlength="3">
+                                                <input class="form-control" type="text" id="securiy_code" name="security_code" placeholder="123" maxlength="3">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -146,27 +148,29 @@
                                                 Controlla i tuoi dati prima di acquistare. Cliccando su "Acquista ora", verrà effettuato il pagamento.
                                             </p>
                                             <table id="summary">
-                                                <tr>
-                                                    <th colspan="2">Indirizzo di spedizione</th>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Via</strong></td>
-                                                    <td class="street_name"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Numero</strong></td>
-                                                    <td class="street_number" ></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Città</strong></td>
-                                                    <td class="city"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Provincia</strong></td><td class="province"></td></tr>
-                                                <tr>
-                                                    <td><strong>Codice postale</strong></td>
-                                                    <td class="postal_code"></td>
-                                                </tr>
+                                                <c:if test="${!empty shipping}">
+                                                    <tr>
+                                                        <th colspan="2">Indirizzo di spedizione</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Via</strong></td>
+                                                        <td class="street_name"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Numero</strong></td>
+                                                        <td class="street_number" ></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Città</strong></td>
+                                                        <td class="city"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Provincia</strong></td><td class="province"></td></tr>
+                                                    <tr>
+                                                        <td><strong>Codice postale</strong></td>
+                                                        <td class="postal_code"></td>
+                                                    </tr>
+                                                </c:if>
                                                 <tr>
                                                     <th colspan="2" class="payment">Dettagli di pagamento</th></tr>
                                                 <tr>
@@ -187,14 +191,14 @@
                                                 </tr>
                                                 <tr>
                                                     <td><strong>Cod. di sicurezza</strong></td>
-                                                    <td class="securiy_code"></td>
+                                                    <td class="security_code"></td>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div>
                                     <div class="row buy">
                                         <div class="form-group col-xs-12">
-                                            <button class="btn btn-primary col-xs-12">Acquista ora</button>
+                                            <button class="btn btn-primary col-xs-12" onclick="submitForm(this)">Acquista ora</button>
                                         </div>
                                     </div>
                                 </div>
@@ -203,17 +207,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-
-                </div>
-            </div>
-            <%@include file="footer.jsp"%>         
+            <%@include file="footer.jsp"%>
         </div>
 
         <script>
             function fillSummary() {
-                var inputs = document.querySelectorAll("#address input, #payment input");
+                var inputs = document.querySelectorAll("#accordion input");
                 var table = document.getElementById("summary");
                 for (i = 0; i < inputs.length; i++) {
                     // Inject value into table
@@ -221,6 +220,23 @@
                     var td = document.querySelector(selector);
                     td.textContent = inputs[i].value;
                 }
+            }
+            function submitForm(btn) {
+                $(btn).prop('disabled', true);
+                var qs = $("form").serialize();
+                var url = "${contextPath}/process_order"${!empty shipping ? " + \"?shipping=true\"":""};
+                        $.ajax({
+                            method: "POST",
+                            url: url,
+                            data: qs,
+                            dataType: "text",
+                            error: function () {
+                                $(btn).text("Errore");
+                            },
+                            success: function (url) {
+                                window.location.href = url;
+                            }
+                        });
             }
         </script>
 
