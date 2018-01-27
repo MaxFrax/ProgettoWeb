@@ -1,6 +1,6 @@
 <%-- 
-    Document   : orders.jsp
-    Created on : 23-gen-2018, 19.23.26
+    Document   : notifications.jsp
+    Created on : 27-gen-2018, 11.58.22
     Author     : apell
 --%>
 
@@ -10,15 +10,12 @@
 <%-- Get context path --%>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
 
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
-        rel="stylesheet" type="text/css">
-        <title>I miei ordini</title>
+        <title>Notifiche</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
@@ -44,38 +41,27 @@
                 </div>
               </c:if>
               <div class="col-md-12">
-                <h1 class="text-center">I miei ordini</h1>
+                <h1 class="text-center">${title}</h1>
               </div>
             </div>
           </div>
         </div>
-        <div class="section">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-2">ID</div>
-              <div class="col-md-8">OGGETTO</div>
-              <div class="col-md-2">AZIONE</div>
-            </div>
-            <c:forEach items="${items}" var="item">
-                <hr>
-                <div class="row">
-                  <div class="col-md-2">
-                    <p>
-                        <c:out value="${item.id}" />
-                    </p>
-                  </div>
-                  <div class="col-md-8">                 
-                      <a href="${pageContext.servletContext.contextPath}/item?id=${item.id}"><c:out value="${item.name}" /></a>
-                  </div>
-                  <div class="col-md-2">
-                    <a href="${pageContext.servletContext.contextPath}/review?id=${item.id}">Scrivi una recensione</a>
-                    <br>
-                    <a href="${pageContext.servletContext.contextPath}/issue?id=${item.id}">Segnala un' anomalia</a>
-                  </div>
+        <c:choose>
+            <c:when test="${user.getType()=='SELLER'}">
+                <%@include file="notifications_seller.jsp"%>
+            </c:when>
+            <c:otherwise>
+                <%@include file="notifications_admin.jsp"%>
+            </c:otherwise>
+        </c:choose>
+        <hr>
+        <c:if test="${title != 'Tutte le anomalie'}">
+            <form action="${contextPath}/notification" method="POST" class="form-horizontal" role="form">
+                <div class="form-group text-center">
+                    <input class="btn btn-primary input" value="Vedi tutte" type="submit">
                 </div>
-            </c:forEach>
-          </div>
-        </div>
+            </form>
+        </c:if>
         <!-- Footer -->
         <%@include file="footer.jsp"%>
     </body>

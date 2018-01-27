@@ -1,25 +1,32 @@
 <%-- 
-    Document   : review
+    Document   : review.jsp
     Created on : 25-gen-2018, 14.17.40
     Author     : apell
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%-- Get context path --%>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath}"></c:set>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--bootstrap -->
-        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">       
+        <title>Scrivi una recensione</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+        <!-- Star rating -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link href="kartik-v-bootstrap-star-rating-19120d9/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
-        <!--jquery -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="kartik-v-bootstrap-star-rating-19120d9/js/star-rating.js" type="text/javascript"></script>
-        <title>Scrivi una recensione</title>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
         <!-- Custom CSS -->
-        <link href="css/results.css" rel="stylesheet">
+        <link href="css/navbar.css" rel="stylesheet">
     </head>
     <body>
         <!-- Navbar -->

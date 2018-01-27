@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class Issue implements Serializable{
     
-    public enum AdminChoice{REFUND, DO_NOTHING, BAD_REVIEWS, NOT_VALID}
+    public enum AdminChoice{PENDING, REFUND, DO_NOTHING, BAD_REVIEWS, NOT_VALID}
     
     private Integer id;
     private String userDescription;
