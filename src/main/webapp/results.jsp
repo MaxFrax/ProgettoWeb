@@ -51,7 +51,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <a href="#" class="thumbnail">
-                                            <img src="img/chainsaw.jpg" alt="Immagine non disponibile">
+                                            <img src="img/thumbnail.jpg" alt="Immagine non disponibile">
                                         </a>
                                     </div>
                                     <div class="col-xs-9">
