@@ -1,0 +1,72 @@
+/* cart.jsp */
+
+@import "navbar.css";
+
+.glyphicon-ok-circle {
+    margin-right:10px;
+}
+
+.page-header {
+    margin-top: 0px;
+}
+
+table ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+table li {
+    word-wrap: break-word;
+}
+
+/* Smartphone */
+@media (max-width: 767px) {
+    img.thumbnail {
+        width: 75px;
+    }
+    td, th {
+        padding-left: 0px !important;
+    }
+    td.thumb {
+        padding-left: 4px !important;
+    }
+    table input[type="number"] {
+        width: 40px !important;
+    }
+    table button.remove {
+        margin-top: 2px;
+    }
+}
+
+/* Tablet and larger */
+@media (min-width: 768px) {
+    img.thumbnail {
+        width: 130px;
+    }
+    td.thumb {
+        width: 130px;
+    }
+    td.qty {
+        width: 50px;
+    }
+    table input[type="number"] {
+        width: 60px !important;
+        display: inline-block;
+    }
+    table button.remove {
+        margin-left: 2px;
+        display: inline-block;
+    }
+    table {
+        margin-bottom: 5px !important;
+    }
+}
+
+h4.total {
+    display:inline;
+    margin-left: 15px;
+}
+
+button[type="submit"] {
+    margin-right: 10px;
+}
