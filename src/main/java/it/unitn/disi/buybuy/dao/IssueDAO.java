@@ -80,4 +80,20 @@ public interface IssueDAO extends DAO<Issue,Integer>{
      */
     @Override
     public Issue update(Issue issue) throws DAOException;
+    
+    public Integer getCountNotReadBySellerId(Integer seller_id) throws DAOException;
+    
+    public Integer getCountNotReadForAdmin() throws DAOException;
+    
+    public List<Issue> getBySellerId(Integer seller_id) throws DAOException;
+    
+    public List<Issue> getNotReadedBySellerId(Integer seller_id) throws DAOException;
+    
+    public List<Issue> getAllOpened() throws DAOException;
+    
+    public Issue setSellerRead(Issue issue) throws DAOException;
+    
+    public Issue setAdminRead(Issue issue) throws DAOException;
+    
+    public Issue setAdminChoice(Issue issue) throws DAOException;
 }

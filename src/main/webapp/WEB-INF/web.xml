@@ -85,6 +85,14 @@
         <servlet-name>OrderSuccess</servlet-name>
         <jsp-file>/order_success.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>NotificationServlet</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.NotificationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IssueResolveServlet</servlet-name>
+        <servlet-class>it.unitn.disi.buybuy.shop.IssueResolveServlet</servlet-class>
+    </servlet>
     <!-- Servlets mapping -->
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -169,6 +177,14 @@
     <servlet-mapping>
         <servlet-name>OrderSuccess</servlet-name>
         <url-pattern>/order_success</url-pattern>   
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationServlet</servlet-name>
+        <url-pattern>/notification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IssueResolveServlet</servlet-name>
+        <url-pattern>/resolveissue</url-pattern>
     </servlet-mapping>
     <!-- Application config -->
     <context-param>
