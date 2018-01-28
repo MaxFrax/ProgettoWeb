@@ -5,6 +5,7 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactor
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
 import it.unitn.disi.buybuy.dao.CategoryDAO;
 import it.unitn.disi.buybuy.dao.ItemDAO;
+import it.unitn.disi.buybuy.dao.RetailerDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.entities.Item;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import it.unitn.disi.buybuy.types.ItemRetailerPair;
 
 /**
  *
@@ -26,6 +28,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         super(con);
         FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(con));
         FRIEND_DAOS.put(CategoryDAO.class, new JDBCCategoryDAO(con));
+        FRIEND_DAOS.put(RetailerDAO.class, new JDBCRetailerDAO(con));
     }
 
     @Override
@@ -200,6 +203,56 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
             throw new DAOException("Failed to query reviews with ITEM_ID = " + itemId, ex);
         }
         return count;
+    }
+
+    @Override
+    public List<ItemRetailerPair> getWithRetailer(Integer category, String userQuery) throws DAOException {
+        // Split query string
+        String[] searchWords = userQuery.split("\\s+");
+        // Attach to sql query user query words
+        StringBuilder query = new StringBuilder("SELECT ITEM.*, RETAILER.ID as RET_ID FROM ITEM INNER JOIN SHOP on SELLER_ID = SHOP.ID INNER JOIN RETAILER ON RETAILER.SHOP_ID = SHOP.ID WHERE (false ");
+        for (String searchWord : searchWords) {
+            query.append("OR LOWER(ITEM.NAME) LIKE ? OR LOWER(ITEM.DESCRIPTION) LIKE ? ");
+        }
+        query.append(")");
+        // attach category if given
+        if (category != null) {
+            query.append("AND category_id = ?");
+        }
+        List<ItemRetailerPair> results = new ArrayList<>();
+        List<Integer> itemsAlreadyAdded = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement(query.toString())) {
+            // Fill query with values
+            int i = 0;
+            for (String searchWord : searchWords) {
+                i++;
+                stm.setString(i, "%" + searchWord + "%");
+                i++;
+                stm.setString(i, "%" + searchWord + "%");
+            }
+            if (category != null) {
+                i++;
+                stm.setInt(i, category);
+            }
+            // iterate through the values
+            System.out.println(stm);
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    ItemRetailerPair p = new ItemRetailerPair(itemFactory(rs), getDAO(RetailerDAO.class).getByPrimaryKey(rs.getInt("RET_ID")));
+                    
+                    if(!itemsAlreadyAdded.contains(p.getKey().getId())) {
+                        results.add(p);
+                        itemsAlreadyAdded.add(p.getKey().getId());
+                    }
+                    
+                }
+            } catch (DAOFactoryException ex) {
+                Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return results;
     }
     
     @Override

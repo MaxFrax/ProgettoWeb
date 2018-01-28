@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException"%>
 <%@page import="it.unitn.disi.buybuy.dao.entities.User.Type"%>
 <%@page import="it.unitn.disi.buybuy.dao.UserDAO"%>
@@ -7,6 +7,7 @@
 <%@page import="it.unitn.disi.buybuy.dao.IssueDAO"%>
 <%@page import="it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException"%>
 <%@page import="it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory"%>
+
 <%
     User user = (User)request.getSession().getAttribute("user");
     if (user != null) {
@@ -53,6 +54,19 @@
         }
     }
 %>
+
+<script>
+    function initMap() {
+        let input = document.getElementById("location");
+        let autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            document.getElementById("lat").value = place.geometry.location.lat();
+            document.getElementById("lng").value = place.geometry.location.lng();
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALUGh67rEnW78pYXegEI32DSMg-NFo2D4&libraries=places&callback=initMap" async defer></script>
 
 <nav class="navbar navbar-inverse" id="navbar-top">
     <div class="container-fluid">
@@ -144,8 +158,10 @@
                             <option value="${cat.id}" ${cat.id == param.category ? 'selected' : ''}>${cat.name}</option>
                         </c:forEach>
                     </select>
+                    <input type="text" class="form-control margin-top" placeholder="Dove?" id="location" name="location" value="${param.location}">
+                    <input type="hidden" name="lat" id="lat" value="${param.lat}">
+                    <input type="hidden" name="lng" id="lng" value="${param.lng}">
                     <input type="text" class="form-control margin-top" placeholder="Dove?" name="location" value="${param.location}">
-                    <input type="hidden" name="sort" value="price_asc">
                     <button type="submit" class="btn btn-default margin-top">Cerca</button>
                 </form>
             </div>
