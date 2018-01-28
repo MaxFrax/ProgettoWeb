@@ -9,6 +9,7 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.UserDAO;
 import it.unitn.disi.buybuy.dao.entities.Shop;
+import it.unitn.disi.buybuy.dao.entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,16 +17,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The JDBC implementation of the {@link ShopDAO} interface.
  *
  * @author apello96
  */
-public class JDBCShopDAO extends JDBCDAO<Shop,Integer> implements ShopDAO{
+public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
 
-    JDBCShopDAO(Connection CON) {
-        super(CON);
+    public JDBCShopDAO(Connection con) {
+        super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
     }
 
@@ -113,7 +116,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop,Integer> implements ShopDAO{
                     Shop shop = new Shop();
                     shop.setId(rs.getInt("id"));
                     shop.setName(rs.getString("name"));
-                    shop.setDescription(rs.getString("shop"));
+                    shop.setDescription(rs.getString("descripton"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setRating(rs.getInt("rating"));
                     UserDAO userDAO = getDAO(UserDAO.class);
@@ -172,14 +175,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop,Integer> implements ShopDAO{
      */
     @Override
     public Long insert(Shop shop) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.SHOP(id,name,description,website,rating,owner_id) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO app.SHOP(name,description,website,rating,owner_id) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             
-            ps.setInt(1, shop.getId());
-            ps.setString(2, shop.getName());
-            ps.setString(3, shop.getDescription());
-            ps.setString(4, shop.getWebsite());
-            ps.setInt(5, shop.getRating());
-            ps.setInt(6, shop.getOwner().getId());
+            ps.setString(1, shop.getName());
+            ps.setString(2, shop.getDescription());
+            ps.setString(3, shop.getWebsite());
+            ps.setInt(4, shop.getRating());
+            ps.setInt(5, shop.getOwner().getId());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -209,5 +211,40 @@ public class JDBCShopDAO extends JDBCDAO<Shop,Integer> implements ShopDAO{
             }
             throw new DAOException("Impossible to persist the new shop", ex);
         }
+    }
+    
+    @Override
+    public Shop getByOwnerId(Integer id) throws DAOException {
+        String query = "SELECT * FROM SHOP WHERE OWNER_ID=?";
+        UserDAO userDAO;
+        try {
+            userDAO = getDAO(UserDAO.class);
+        } catch (DAOFactoryException ex) {
+            Logger.getLogger(JDBCShopDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Failed to get user DAO");
+        }
+        Shop shop = null;
+        try {   
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                shop = new Shop();
+                shop.setId(resultSet.getInt("ID"));
+                shop.setName(resultSet.getString("NAME"));
+                shop.setDescription(resultSet.getString("DESCRIPTION"));
+                shop.setWebsite(resultSet.getString("WEBSITE"));
+                shop.setRating(resultSet.getInt("RATING"));
+                // Find owner
+                User owner = userDAO.getByPrimaryKey(id);
+                if (owner == null) {
+                   throw new DAOException("UserDAO.getByPrimaryKey(" + id + ") returned null");
+                }
+                shop.setOwner(owner);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
+        }
+        return shop;
     }
 }

@@ -1,0 +1,38 @@
+/* item.jsp */
+
+@import "navbar.css";
+
+h5.seller {
+    margin-top: 0px;
+}
+
+h4.seller {
+    margin-bottom:5px;
+}
+
+.panel.price td {
+    padding:5px;
+}
+
+.panel.price td.price-label {
+    vertical-align: top;
+    text-align: right;
+}
+
+.panel.price td.price-val {
+    vertical-align: bottom;
+    font-size: 1.5em;
+}
+
+tr.pickup-label td {
+    padding-top: 0px !important;
+}
+
+.panel.price input[type="number"] {
+    width: 60px;
+}
+
+.thumbnail .caption hr {
+    margin-top: 0px;
+    margin-bottom: 8px;
+}

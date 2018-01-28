@@ -1,0 +1,58 @@
+/* checkout.jsp */
+
+.row.logo {
+    margin-top: 20px;
+}
+
+img.center-block {
+    height: 40px;
+}
+
+h4.page-header {
+    margin-top: 20px;
+}
+
+div.buy {
+   margin-top: 15px; 
+}
+
+a[role="button"] {
+    text-decoration: none;
+}
+
+#collapseOne hr {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* Smartphones, up to 767px */
+@media (max-width: 767px) {
+    .form-group.street-number,
+    .form-group.postal-code {
+        padding-left: 0px;
+    }
+}
+
+#summary td:first-child {
+    text-align: right;
+}
+
+#summary td:nth-child(2) {
+    text-align: left;
+    padding-left: 25px;
+}
+
+#summary th {
+    text-align: left;
+    font-weight: normal;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+}
+
+#summary th.payment {
+    padding-top:15px;
+}
+
+#collapseThree .row:first-child {
+    margin-bottom:30px;
+}

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : login
-    Created on : 4-gen-2018, 17.42.12
-    Author     : maxfrax
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -20,11 +14,11 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/login.css" rel="stylesheet">
+        <link href="css/form_page.css" rel="stylesheet">
     </head>
 
     <body>
-        <div class="container" id="container-form">
+        <div class="container main">
             <!-- Logo -->
             <div class="row">
                 <div class="col-md-12"><img class="img-responsive center-block" src="img/logo.png" alt="BuyBuy"></div>
@@ -32,8 +26,8 @@
             <!-- Form -->
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <form action="login" id="form-login" method="post">
-                        <h3 id="h3-login">Accesso</h3>
+                    <form action="login" method="post">
+                        <h3>Accesso</h3>
                         <c:if test="${not empty requestScope.error_message}">
                             <div class="alert alert-danger alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -48,21 +42,14 @@
                             <label for="pass">Password</label><a class="pull-right" href="${pageContext.request.contextPath}/forgot_password.jsp">Password dimenticata</a>
                             <input type="password" class="form-control" id="pass" placeholder="Inserisci password" name="pass">
                         </div>
-                        <button type="submit" class="btn btn-default">Accedi</button><span id="span-cancel">oppure <a href="javascript:history.back()">annulla</a></span>
+                        <button type="submit" class="btn btn-default">Accedi</button><span class="cancel">oppure <a href="javascript:history.back()">annulla</a></span>
                     </form>
                 </div>
             </div>
         </div>
         <div class="container">
-            <hr>
             <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-md-12" id="footer">
-                        Copyright &copy; BuyBuy 2017
-                    </div>
-                </div>
-            </footer>
+            <%@include file="footer.jsp"%>
         </div>
         <!-- /.container -->
         <!-- jQuery -->

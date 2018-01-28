@@ -8,7 +8,6 @@ import it.unitn.disi.buybuy.dao.ItemDAO;
 import it.unitn.disi.buybuy.dao.RetailerDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.entities.Item;
-import it.unitn.disi.buybuy.dao.entities.Retailer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.util.Pair;
+import it.unitn.disi.buybuy.types.ItemRetailerPair;
 
 /**
  *
@@ -38,8 +37,20 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     }
 
     @Override
-    public Item getByPrimaryKey(Integer prmrk) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Item getByPrimaryKey(Integer primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("primaryKey is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM app.ITEM WHERE id = ?")) {
+            stm.setInt(1, primaryKey);
+            try (ResultSet rs = stm.executeQuery()) {
+                rs.next();
+                Item item = itemFactory(rs);
+                return item;
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the item for the passed primary key", ex);
+        }
     }
 
     @Override
@@ -195,7 +206,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
     }
 
     @Override
-    public List<Pair<Item, Retailer>> getWithRetailer(Integer category, String userQuery) throws DAOException {
+    public List<ItemRetailerPair> getWithRetailer(Integer category, String userQuery) throws DAOException {
         // Split query string
         String[] searchWords = userQuery.split("\\s+");
         // Attach to sql query user query words
@@ -208,7 +219,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         if (category != null) {
             query.append("AND category_id = ?");
         }
-        List<Pair<Item, Retailer>> results = new ArrayList<>();
+        List<ItemRetailerPair> results = new ArrayList<>();
         List<Integer> itemsAlreadyAdded = new ArrayList<>();
         try (PreparedStatement stm = CON.prepareStatement(query.toString())) {
             // Fill query with values
@@ -227,7 +238,7 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
             System.out.println(stm);
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
-                    Pair<Item, Retailer> p = new Pair<>(itemFactory(rs), getDAO(RetailerDAO.class).getByPrimaryKey(rs.getInt("RET_ID")));
+                    ItemRetailerPair p = new ItemRetailerPair(itemFactory(rs), getDAO(RetailerDAO.class).getByPrimaryKey(rs.getInt("RET_ID")));
                     
                     if(!itemsAlreadyAdded.contains(p.getKey().getId())) {
                         results.add(p);
@@ -243,4 +254,48 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
         }
         return results;
     }
+    
+    @Override
+    public List<Item> getByUserId(Integer user_id) throws DAOException{
+        List<Item> result = new ArrayList();
+        String query = "SELECT DISTINCT i.ID AS item_id, i.NAME AS item_name "
+                + "FROM PURCHASE p ,ITEM i, USER_DETAIL u "
+                + "WHERE u.ID = p.USER_ID AND p.ITEM_ID = i.ID AND u.ID = ?";
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, user_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getInt("item_id"));
+                item.setName(rs.getString("item_name"));
+                result.add(item);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to get the item purchased by this user", ex);
+        }
+        return result;
+    }
+    
+    @Override
+    public List<Item> getBySellerId(Integer seller_id) throws DAOException{
+        List<Item> result = new ArrayList();
+        String query = "SELECT i.ID AS item_id "
+                + "FROM SHOP s, ITEM i, USER_DETAIL u "
+                + "WHERE u.ID = s.OWNER_ID AND i.SELLER_ID = s.ID AND u.ID = ?";
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, seller_id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getInt("item_id"));
+                result.add(item);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to get the item purchased by this user", ex);
+        }
+        return result;
+    }
+    
 }

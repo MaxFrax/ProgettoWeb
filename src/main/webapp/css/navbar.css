@@ -1,4 +1,4 @@
-/* Styles for navbar */
+/* navbar.jsp */
 
 ul.navbar-nav > li {
     display: inline-block;
@@ -17,7 +17,6 @@ ul.navbar-nav > li {
     color: #E88A00 !important;
 }
 
-/* Remove navbar-brand left padding on mobile */
 @media (max-width: 768px) {
     .navbar-brand {
         padding-left: 0px;

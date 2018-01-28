@@ -1,0 +1,55 @@
+/* item.jsp */
+
+@import "navbar.css";
+
+h5.seller {
+    margin-top: 0px;
+}
+
+h4.seller {
+    margin-bottom:5px;
+}
+
+.panel.address td {
+    padding:5px;
+}
+
+.panel.address td.address-label {
+    vertical-align: top;
+    width: 90px;
+}
+
+.panel.address td.address-label2 {
+    vertical-align: top;
+    width: 200px;
+}
+
+tr.pickup-label td {
+    padding-top: 0px !important;
+}
+
+.panel.address input[type="text"] {
+    width: 40px;
+}
+
+.thumbnail .caption hr {
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
+
+.slide-image {
+    width: 100%;
+}
+
+.carousel-holder {
+    margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.item {
+    height: 25vmax;
+}

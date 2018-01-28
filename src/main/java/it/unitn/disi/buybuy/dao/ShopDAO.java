@@ -5,7 +5,6 @@ package it.unitn.disi.buybuy.dao;
 
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.DAO;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
-import it.unitn.disi.buybuy.dao.entities.Retailer;
 import it.unitn.disi.buybuy.dao.entities.Shop;
 import java.util.List;
 
@@ -80,5 +79,7 @@ public interface ShopDAO extends DAO<Shop,Integer>{
      * @author apello96
      */
     public Long insert(Shop shop) throws DAOException;
-
+    
+    
+    public Shop getByOwnerId(Integer id) throws DAOException;
 }

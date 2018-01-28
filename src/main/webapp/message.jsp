@@ -27,19 +27,19 @@
             <!-- Logo -->
             <div class="row">
                 <div class="col-xs-12">
-                    <img class="img-responsive center-block logo" src="img/logo.png" alt="BuyBuy">
+                    <img class="img-responsive center-block" src="img/logo.png" alt="BuyBuy">
                 </div>
             </div>
             <div class="row panel-message">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel ${message.type == 'ERROR' ? 'panel-danger' : 'panel-info'}">
                         <div class="panel-heading">
-                            <h3 class="panel-title">${message.type == 'ERROR' ? 'Errore' : 'Informazione'}</h3>
+                            <h3 class="panel-title">${message.type == 'ERROR' ? 'Ooops!' : 'Informazione'}</h3>
                         </div> 
                         <div class="panel-body">
                             <c:choose>
                                 <c:when test="${empty message.text}">
-                                    Se hai bisogno di aiuto, <a href="#">contattaci</a>.
+                                    Si è verificato un errore. Se hai bisogno di aiuto, <a href="#">contattaci</a>.
                                 </c:when>
                                 <c:otherwise>
                                     ${message.text}
@@ -49,16 +49,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <footer class="text-center">
-                        Copyright &copy; BuyBuy 2018
-                    </footer>
-                </div>
-            </div>
+            <%@include file="footer.jsp"%>
         </div>
-
         <!-- jQuery -->
         <script src="js/jquery.js"></script>
         <!-- Bootstrap Core JavaScript -->

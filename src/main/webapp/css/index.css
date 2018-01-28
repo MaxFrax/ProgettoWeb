@@ -1,5 +1,6 @@
-/* Style for navabar */
-@import url("navbar.css");
+/* index.jsp */
+
+@import "navbar.css";
 
 .slide-image {
     width: 100%;
@@ -40,12 +41,4 @@
 .thumbnail .caption-full {
     padding: 9px;
     color: #333;
-}
-
-footer {
-    margin: 50px 0;
-}
-
-#footer {
-    text-align: center;
 }

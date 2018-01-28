@@ -5,16 +5,15 @@
  */
 package it.unitn.disi.buybuy.utils;
 
-import it.unitn.disi.buybuy.dao.entities.Item;
 import it.unitn.disi.buybuy.dao.entities.Retailer;
 import java.util.Comparator;
-import javafx.util.Pair;
+import it.unitn.disi.buybuy.types.ItemRetailerPair;
 
 /**
  *
  * @author maxfrax
  */
-public class ItemRetailerComparator implements Comparator<Pair<Item, Retailer>> {
+public class ItemRetailerComparator implements Comparator<ItemRetailerPair> {
 
     private Float latitude, longitude;
 
@@ -27,7 +26,7 @@ public class ItemRetailerComparator implements Comparator<Pair<Item, Retailer>> 
     }
 
     @Override
-    public int compare(Pair<Item, Retailer> o1, Pair<Item, Retailer> o2) {
+    public int compare(ItemRetailerPair o1, ItemRetailerPair o2) {
         // se distanza di o1 rispetto a me è maggiore di distanza da me di o2
         Retailer r1 = o1.getValue();
         Retailer r2 = o2.getValue();

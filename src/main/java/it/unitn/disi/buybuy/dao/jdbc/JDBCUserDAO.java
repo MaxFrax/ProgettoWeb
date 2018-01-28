@@ -215,6 +215,37 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             throw new DAOException("Impossible to update the user", ex);
         }
     }
+    
+    /**
+     * Update the user profile passed as parameter and returns it.
+     *
+     * @param user the user used to update the persistence system.
+     * @return the updated user.
+     * @throws DAOException if an error occurred during the action.
+     *
+     * @author apello96
+     */
+    @Override
+    public User updateProfile(User user) throws DAOException {
+        if (user == null) {
+            throw new DAOException("parameter not valid", new IllegalArgumentException("The passed user is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE app.USER_DETAIL SET username = ?, name = ?, lastname = ?, email = ? WHERE id = ?")) {
+            std.setString(1, user.getUsername());
+            std.setString(2, user.getName());
+            std.setString(3, user.getLastname());
+            std.setString(4, user.getEmail());
+            std.setInt(5, user.getId());
+            if (std.executeUpdate() == 1) {
+                return user;
+            } else {
+                throw new DAOException("Impossible to update the user");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the user", ex);
+        }
+    }
 
     /**
      * Persists the new {@link User user} passed as parameter to the storage
@@ -401,4 +432,6 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         // Return null if there are no results
         return null;
     }
+    
+    
 }

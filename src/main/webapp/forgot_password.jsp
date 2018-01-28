@@ -13,11 +13,11 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/forgot_password.css" rel="stylesheet">
+        <link href="css/form_page.css" rel="stylesheet">
     </head>
 
     <body>
-        <div class="container" id="container-form">
+        <div class="container main">
             <!-- Logo -->
             <div class="row">
                 <div class="col-md-12"><img class="img-responsive center-block" src="img/logo.png" alt="BuyBuy"></div>
@@ -25,8 +25,8 @@
             <!-- Form -->
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <form action="forgot_password" id="form-forgot-password" method="post">
-                        <h3 id="h3-forgot-password">Password dimenticata</h3>
+                    <form action="forgot_password" method="post">
+                        <h3>Password dimenticata</h3>
                         <c:choose>
                             <c:when test="${not empty errorMessage}">
                                 <div class="alert alert-danger alert-dismissible" role="alert">
@@ -43,21 +43,14 @@
                             <label for="email">Email</label>
                             <input type="text" class="form-control" id="email" name="email">
                         </div>
-                        <button type="submit" class="btn btn-default">Continua</button>
+                        <button type="submit" class="btn btn-default">Continua</button><span class="cancel">oppure <a href="javascript:history.back()">annulla</a></span>
                     </form>
                 </div>
             </div>
         </div>
         <div class="container">
-            <hr>
             <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-md-12" id="footer">
-                        Copyright &copy; BuyBuy 2017
-                    </div>
-                </div>
-            </footer>
+            <%@include file="footer.jsp"%>
         </div>
         <!-- /.container -->
         <!-- jQuery -->

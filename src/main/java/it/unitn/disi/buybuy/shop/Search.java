@@ -10,17 +10,15 @@ import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactor
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
 import it.unitn.disi.buybuy.dao.ItemDAO;
 import it.unitn.disi.buybuy.dao.entities.Item;
-import it.unitn.disi.buybuy.dao.entities.Retailer;
 import it.unitn.disi.buybuy.utils.Converter;
 import it.unitn.disi.buybuy.utils.ItemRetailerComparator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.util.Pair;
+import it.unitn.disi.buybuy.types.ItemRetailerPair;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -70,10 +68,10 @@ public class Search extends HttpServlet {
         try {
             // Choosing type of query
             if (latitude != null && longitude != null) {
-                List<Pair<Item, Retailer>> itemsWithPlace = itemDao.getWithRetailer(category_id, query);
+                List<ItemRetailerPair> itemsWithPlace = itemDao.getWithRetailer(category_id, query);
                 Collections.sort(itemsWithPlace, new ItemRetailerComparator(latitude, longitude));
                 res = new ArrayList<>();
-                for (Pair<Item, Retailer> pair : itemsWithPlace) {
+                for (ItemRetailerPair pair : itemsWithPlace) {
                     res.add(pair.getKey());
                 }
             } else if (query != null) {
@@ -89,6 +87,21 @@ public class Search extends HttpServlet {
             }
         } catch (DAOException ex) {
             Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Sort-by filter in results page
+        String sortBy = request.getParameter("sort");
+        if (res != null && sortBy != null) {
+            switch (sortBy) {
+                case "rating":
+                    res.sort(Item.Order.RATING);
+                    break;
+                case "price_desc":
+                    res.sort(Item.Order.PRICE_DESC);
+                    break;
+                case "price_asc":
+                    res.sort(Item.Order.PRICE_ASC);
+            }
         }
 
         request.setAttribute("results", res);

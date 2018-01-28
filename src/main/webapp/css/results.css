@@ -1,5 +1,6 @@
-/* Style for navabar */
-@import url("navbar.css");
+/* results.jsp */
+
+@import "navbar.css";
 
 .no-margin {
     margin-top: 0px;
@@ -17,4 +18,10 @@
 .search-result ul {
     list-style-type: none;
     -webkit-padding-start: 0px;
+}
+
+@media (max-width: 768px) {
+    #navbar-search {
+        margin-bottom: 10px;
+    }
 }

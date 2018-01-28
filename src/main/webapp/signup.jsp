@@ -13,11 +13,11 @@
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="css/signup.css" rel="stylesheet">
+        <link href="css/form_page.css" rel="stylesheet">
     </head>
 
     <body>
-        <div class="container" id="container-form">
+        <div class="container main">
             <!-- Logo -->
             <div class="row">
                 <div class="col-md-12"><img class="img-responsive center-block" src="img/logo.png" alt="BuyBuy"></div>
@@ -25,8 +25,8 @@
             <!-- Form -->
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <form action="signup" id="form-signup" method="post">
-                        <h3 id="h3-signup">Registrazione</h3>
+                    <form action="signup" method="post">
+                        <h3>Registrazione</h3>
                         <c:choose>
                             <c:when test="${not empty requestScope.errors}">
                                 <div class="alert alert-danger alert-dismissible" role="alert">
@@ -62,23 +62,22 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="privacy" value="privacy">Accetto la normativa sulla privacy</label>
+                                <input type="checkbox" name="seller">Sono un venditore
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-default">Registrati</button><span id="span-cancel">oppure <a href="javascript:history.back()">annulla</a></span>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="privacy" value="privacy">Accetto la normativa sulla privacy
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-default">Registrati</button><span class="cancel">oppure <a href="javascript:history.back()">annulla</a></span>
                     </form>
                 </div>
             </div>
         </div>
         <div class="container">
-            <hr>
             <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-md-12" id="footer">
-                        Copyright &copy; BuyBuy 2017
-                    </div>
-                </div>
-            </footer>
+            <%@include file="footer.jsp"%>
         </div>
         <!-- /.container -->
         <!-- jQuery -->

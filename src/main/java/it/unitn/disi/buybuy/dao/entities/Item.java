@@ -4,6 +4,7 @@
 package it.unitn.disi.buybuy.dao.entities;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * The bean that map a {@code item} entity.
@@ -152,21 +153,63 @@ public class Item implements Serializable {
     public void setSeller(Shop seller) {
         this.seller = seller;
     }
-    
+
     public Integer getRating() {
         return this.rating;
     }
-    
+
     public void setRating(Integer rating) {
         this.rating = rating;
     }
-    
+
     public Integer getReviewCount() {
         return this.reviewCount;
     }
-    
+
     public void setReviewCount(Integer count) {
         this.reviewCount = count;
     }
-    
+
+    public static interface Order {
+
+        public final static Comparator<Item> PRICE_ASC = new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if ( ((Item) o1).getPrice() < ((Item) o2).getPrice() ) {
+                    return -1;
+                }                           
+                if ( ((Item) o1).getPrice() > ((Item) o2).getPrice() ) {
+                    return 1;
+                }
+                return 0;
+            }
+        };
+        
+        public final static Comparator<Item> PRICE_DESC = new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if ( ((Item) o1).getPrice() < ((Item) o2).getPrice() ) {
+                    return 1;
+                }                           
+                if ( ((Item) o1).getPrice() > ((Item) o2).getPrice() ) {
+                    return -1;
+                }
+                return 0;
+            }
+        };
+        
+        public final static Comparator<Item> RATING = new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if ( ((Item) o1).getRating() < ((Item) o2).getRating()) {
+                    return 1;
+                }                           
+                if ( ((Item) o1).getRating() > ((Item) o2).getRating() ) {
+                    return -1;
+                }
+                return 0;
+            }
+        };
+    }
+
 }
