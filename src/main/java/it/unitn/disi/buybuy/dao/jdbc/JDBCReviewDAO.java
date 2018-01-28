@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO {
-    
+
     public JDBCReviewDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(ItemDAO.class, new JDBCItemDAO(CON));
@@ -91,17 +91,17 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
 
     @Override
     public List<Review> getByItemID(Integer id) throws DAOException {
-        
+
         // Get needed DAOs
         ItemDAO itemDAO;
-        UserDAO userDAO;        
+        UserDAO userDAO;
         try {
             itemDAO = getDAO(ItemDAO.class);
             userDAO = getDAO(UserDAO.class);
         } catch (DAOFactoryException ex) {
             throw new DAOException("Failed to get DAOs", ex);
         }
-        
+
         List<Review> reviews = new ArrayList<>();
         String query = "SELECT * FROM REVIEW WHERE ITEM_ID=?";
         try {
@@ -125,6 +125,46 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
             }
         } catch (SQLException ex) {
             throw new DAOException("Failed to query reviews with ITEM_ID = " + id, ex);
+        }
+        return reviews;
+    }
+
+    @Override
+    public List<Review> getByShopID(Integer id) throws DAOException {
+
+        // Get needed DAOs
+        ItemDAO itemDAO;
+        UserDAO userDAO;
+        try {
+            itemDAO = getDAO(ItemDAO.class);
+            userDAO = getDAO(UserDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new DAOException("Failed to get DAOs", ex);
+        }
+
+        List<Review> reviews = new ArrayList<>();
+        String query = "SELECT * FROM REVIEW WHERE ID=?";
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                // Add current result to list
+                Review review = new Review();
+                review.setId(resultSet.getInt("ID"));
+                review.setDescription(resultSet.getString("DESCRIPTION"));
+                review.setRating(resultSet.getInt("RATING"));
+                // Get Item from ITEM_ID
+                Item item = itemDAO.getByPrimaryKey(resultSet.getInt("ITEM_ID"));
+                review.setItem(item);
+                // Get User from USER_ID
+                User user = userDAO.getByPrimaryKey(resultSet.getInt("USER_ID"));
+                review.setUser(user);
+                // Add to list
+                reviews.add(review);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to query reviews with ID = " + id, ex);
         }
         return reviews;
     }
@@ -165,5 +205,5 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
         }
         return review;
     }
-    
+
 }

@@ -65,34 +65,56 @@
                             </a>
                         </div>
                         
-                        
                         <div class="caption">
                             <hr>
-                            <c:forEach var="i" begin="1" end="${retailer.shop.rating}">
-                                <span class="glyphicon glyphicon-star"></span>
-                            </c:forEach>
-                            <c:forEach var="i" begin="${retailer.shop.rating+1}" end="5">
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                            </c:forEach>
-                            (Valutazione Totale)
-                            <button type="button" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
+                            Mostra la posizione:
+                            <button type="button" class="btn btn-default btn-xs pull-right" onclick="Mappa()"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
+                            <div id="map" style="height:300px; width:100%; display: none"></div>
+                            <script>
+                                function Mappa(){
+                                    var mappa = document.getElementById("map");
+                                    if(mappa.style.display === "none"){
+                                        mappa.style.display = ""; 
+                                        initMap();
+                                    }
+                                    else{
+                                        mappa.style.display = "none"; 
+                                    }
+                                }
+                            </script>
+                            <script>
+                              function initMap() {
+                                var retailer_pos = {lat: ${retailer.latitude}, lng: ${retailer.longitude}};
+                                var map = new google.maps.Map(document.getElementById('map'), {
+                                  zoom: 16,
+                                  center: retailer_pos
+                                });
+                                var marker = new google.maps.Marker({
+                                  position: retailer_pos,
+                                  map: map
+                                });
+                              }
+                            </script>
+                            <script async defer
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD56DJzP0gVy_EbPuEJ8zDQIjVJsDi9DBQ">
+                            </script>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-5">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-8">
-                            <div class="panel panel-default price">
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="panel panel-default address">
                                 <div class="panel-body">
                                     <form class="form-inline">
                                         <table>
                                             <tr>
-                                                <td class="price-label">Indirizzo:</td>
-                                                <td class="price-val">${retailer.streetName} ${retailer.streetNumber}, ${retailer.postalCode}, ${retailer.city} ${retailer.province}</td>
+                                                <td class="address-label">Indirizzo:</td>
+                                                <td class="address-label2">${retailer.streetName} ${retailer.streetNumber}, ${retailer.postalCode}, ${retailer.city} ${retailer.province}</td>
                                             </tr>
                                             <tr>
-                                                <td class="price-label">Sito Web:</td>
-                                                <td class="price-val"><a href="${retailer.shop.website}">${retailer.shop.name}</a></td>
+                                                <td class="address-label">Sito Web:       </td>
+                                                <td class="address-label2"><a href="${retailer.shop.website}">${retailer.shop.name}</a></td>
                                             </tr>
                                         </table>
                                     </form>

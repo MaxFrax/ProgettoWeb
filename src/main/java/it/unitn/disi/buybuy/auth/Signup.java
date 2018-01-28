@@ -66,7 +66,7 @@ public class Signup extends HttpServlet {
         if (username == null || username.isEmpty()) {
             errors.add("Inserisci uno username");
         } else if (!isValidUsername(username)) {
-            errors.add("Lo username può essere lungo tra i 3 e i 10 caratteri e può contenere solo lettere, numeri, e i simboli . - _");
+            errors.add("Lo username può essere lungo tra i 3 e i 15 caratteri e può contenere solo lettere, numeri, e i simboli . - _");
         } else {
             try {
                 if (isDuplicateUsername(username)) {
@@ -155,7 +155,7 @@ public class Signup extends HttpServlet {
     private boolean isValidUsername(String username) {
         // Username between 3 and 10 characters long.
         // It contains characters, numbers and the ., -, _ symbols.
-        String USERNAME_PATTERN = "^[a-z0-9._-]{3,10}$";
+        String USERNAME_PATTERN = "^[a-z0-9._-]{3,15}$";
         Pattern pattern = Pattern.compile(USERNAME_PATTERN);
         Matcher matcher = pattern.matcher(username);
         return matcher.matches();

@@ -6,9 +6,12 @@ package it.unitn.disi.buybuy.dao.jdbc;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
 import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
+import it.unitn.disi.buybuy.dao.ItemDAO;
 import it.unitn.disi.buybuy.dao.RetailerDAO;
 import it.unitn.disi.buybuy.dao.ShopDAO;
 import it.unitn.disi.buybuy.dao.entities.Retailer;
+import it.unitn.disi.buybuy.dao.entities.Shop;
+import it.unitn.disi.buybuy.dao.entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -229,7 +232,39 @@ public class JDBCRetailerDAO extends JDBCDAO<Retailer,Integer> implements Retail
             throw new DAOException("Impossible to persist the new retailer", ex);
         }
     }
-
+    
+    @Override
+    public Retailer getPositionByItemID(Integer id) throws DAOException{
+        
+        // Get needed DAOs
+        ShopDAO shopDAO;     
+        try {
+            shopDAO = getDAO(ShopDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new DAOException("Failed to get DAOs", ex);
+        }
+        
+        Retailer retailer = new Retailer();
+        retailer.setLatitude(null);
+        String query = "SELECT RETAILER.LATITUDE, RETAILER.LONGITUDE FROM RETAILER, ITEM WHERE RETAILER.ID=ITEM.SELLER_ID AND ITEM.SELLER_ID = ?";
+        try {
+            PreparedStatement stmt = CON.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                retailer.setLatitude(resultSet.getFloat("LATITUDE"));
+                retailer.setLongitude(resultSet.getFloat("LONGITUDE"));
+    
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Failed to query retailer from item with ID = " + id, ex);
+        }
+        System.out.println(retailer);
+        System.out.println("id:" + retailer.getId());
+        System.out.println("LAT:" + retailer.getLatitude());
+        return retailer;
+    }
+   
     @Override
     public Retailer getByShopId(Integer id) throws DAOException {
         String query = "SELECT * FROM RETAILER WHERE SHOP_ID=?";
@@ -263,6 +298,5 @@ public class JDBCRetailerDAO extends JDBCDAO<Retailer,Integer> implements Retail
         }
         return retailer;
     }
-    
     
 }
