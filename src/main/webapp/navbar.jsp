@@ -158,10 +158,9 @@
                             <option value="${cat.id}" ${cat.id == param.category ? 'selected' : ''}>${cat.name}</option>
                         </c:forEach>
                     </select>
-                    <input type="text" class="form-control margin-top" placeholder="Dove?" id="location" name="location" value="${param.location}">
                     <input type="hidden" name="lat" id="lat" value="${param.lat}">
                     <input type="hidden" name="lng" id="lng" value="${param.lng}">
-                    <input type="text" class="form-control margin-top" placeholder="Dove?" name="location" value="${param.location}">
+                    <input type="text" class="form-control margin-top" placeholder="Dove?" id="location" name="location" value="${param.location}">
                     <button type="submit" class="btn btn-default margin-top">Cerca</button>
                 </form>
             </div>
