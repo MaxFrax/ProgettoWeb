@@ -259,9 +259,6 @@ public class JDBCRetailerDAO extends JDBCDAO<Retailer,Integer> implements Retail
         } catch (SQLException ex) {
             throw new DAOException("Failed to query retailer from item with ID = " + id, ex);
         }
-        System.out.println(retailer);
-        System.out.println("id:" + retailer.getId());
-        System.out.println("LAT:" + retailer.getLatitude());
         return retailer;
     }
    

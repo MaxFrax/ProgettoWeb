@@ -235,7 +235,6 @@ public class JDBCItemDAO extends JDBCDAO<Item, Integer> implements ItemDAO {
                 stm.setInt(i, category);
             }
             // iterate through the values
-            System.out.println(stm);
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     ItemRetailerPair p = new ItemRetailerPair(itemFactory(rs), getDAO(RetailerDAO.class).getByPrimaryKey(rs.getInt("RET_ID")));
