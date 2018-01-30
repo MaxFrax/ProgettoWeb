@@ -70,12 +70,12 @@
                                             <c:set var="quantity" value="${entry.value.quantity}"></c:set>
                                                 <tr>
                                                     <td class="thumb">
-                                                        <img src="img/thumbnail.jpg" class="thumbnail" alt="Immagine non disponibile">
+                                                        <a href="${pageContext.request.contextPath}/item?id=${item.id}"><img src="img/thumbnail.jpg" class="thumbnail" alt="Immagine non disponibile"></a>
                                                     </td>
                                                     <td>
                                                         <ul>
-                                                            <li>${item.name}</li>
-                                                        <li>di ${item.seller.name}</li>
+                                                            <li><a href="${pageContext.request.contextPath}/item?id=${item.id}">${item.name}</a></li>
+                                                        <li>di <a href="${pageContext.request.contextPath}/shop?id=${item.seller.id}">${item.seller.name}</a></li>
                                                         <li><input type="checkbox" name="pickup"> Ritiro in negozio</li>
                                                     </ul>
                                                 </td>

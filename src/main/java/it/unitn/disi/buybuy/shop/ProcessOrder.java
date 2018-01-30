@@ -113,7 +113,6 @@ public class ProcessOrder extends HttpServlet {
         params.add(securityCode);
         boolean emptyInput = false;
         for (String param : params) {
-            System.out.println(param);
             param = param.trim();
             if (isEmptyParam(param)) {
                 emptyInput = true;
@@ -132,10 +131,7 @@ public class ProcessOrder extends HttpServlet {
         Integer expYearNum = null;
         Integer securityCodeNum = null;
         try {
-            System.out.println("---");
-            System.out.println(cardNumber);
             cardNum = Long.valueOf(cardNumber);
-            System.out.println("alive");
             expMonthNum = Integer.valueOf(expMonth);
             expYearNum = Integer.valueOf(expYear);
             securityCodeNum = Integer.valueOf(securityCode);
@@ -148,7 +144,7 @@ public class ProcessOrder extends HttpServlet {
             // Add purchase to DB
             try {
                 for (Entry<Integer, CartItem> entry : cart.entrySet()) {
-                    // Create purchase fpr each item in cart
+                    // Create purchase for each item in cart
                     Purchase purchase = new Purchase();
                     purchase.setItem(entry.getValue().getItem());
                     purchase.setUser(user);
@@ -159,7 +155,8 @@ public class ProcessOrder extends HttpServlet {
                 clientRedirect("/error", response);
                 return;
             }
-
+            
+            session.removeAttribute("cart");
             // Client redirect to success page
             clientRedirect("/order_success", response);
             return;

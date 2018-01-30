@@ -59,10 +59,7 @@
                                             <div class="col-sm-8">
                                                 <h4><a href="${pageContext.request.contextPath}/item?id=${item.id}">${item.name}</a></h4>
                                                 <ul>
-                                                    <li>di <a href="${item.seller.website}">${item.seller.name}</a></li>
-                                                    <li>
-                                                        <a href="#"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;TODO: link mappa</a>
-                                                    </li>
+                                                    <li>di <a href="${pageContext.request.contextPath}/shop?id=${item.seller.id}">${item.seller.name}</a></li>
                                                 </ul>
                                             </div>
 

@@ -66,7 +66,7 @@
         });
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALUGh67rEnW78pYXegEI32DSMg-NFo2D4&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALUGh67rEnW78pYXegEI32DSMg-NFo2D4&libraries=places&callback=initMap&language=it" async defer></script>
 
 <nav class="navbar navbar-inverse" id="navbar-top">
     <div class="container-fluid">
@@ -114,7 +114,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span class="hidden-xs"> ${user.name} ${user.lastname}</span> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="${pageContext.servletContext.contextPath}/profile">Profilo</a></li>
-                                    <li><a href="#">Il mio negozio</a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}/myshop">Il mio negozio</a></li>
                                     <li><a href="${pageContext.servletContext.contextPath}/orders">I miei ordini</a></li>
                                     <li role="separator" class="divider hidden-xs"></li>
                                     <li><a href="logout">Esci</a></li>

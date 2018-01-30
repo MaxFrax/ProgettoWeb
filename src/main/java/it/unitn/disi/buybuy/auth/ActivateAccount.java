@@ -9,6 +9,8 @@ import it.unitn.disi.buybuy.dao.entities.Shop;
 import it.unitn.disi.buybuy.dao.entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +50,7 @@ public class ActivateAccount extends HttpServlet {
         // Retrieve id GET parameter
         String confirmationID = request.getParameter("id");
         if (confirmationID == null || confirmationID.isEmpty()) {
-            sendErrorResponse(response);
+            response.sendRedirect(request.getContextPath() + "/error");
             return;
         }
 
@@ -76,7 +78,8 @@ public class ActivateAccount extends HttpServlet {
             // Update user in DB
             userDAO.update(user);
         } catch (DAOException ex) {
-            sendErrorResponse(response);
+            Logger.getLogger(ActivateAccount.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            response.sendRedirect(request.getContextPath() + "/error");
             return;
         }
         
@@ -84,12 +87,6 @@ public class ActivateAccount extends HttpServlet {
         request.getSession().setAttribute("user", user);
         response.sendRedirect(request.getContextPath());
 
-    }
-
-    private void sendErrorResponse(HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println("<b>Impossibile attivare l'account. Si prega di contattare gli amministratori.</b>");
     }
 
 }

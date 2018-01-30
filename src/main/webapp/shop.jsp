@@ -67,7 +67,7 @@
                         
                         <div class="caption">
                             <hr>
-                            Mostra la posizione:
+                            <span style="visibility: hidden">Mostra la posizione:</span>
                             <button type="button" class="btn btn-default btn-xs pull-right" onclick="Mappa()"><span class="glyphicon glyphicon-map-marker"></span> Mappa</button>
                             <div id="map" style="height:300px; width:100%; display: none"></div>
                             <script>
