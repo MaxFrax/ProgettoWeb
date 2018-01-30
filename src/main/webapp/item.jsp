@@ -101,7 +101,9 @@
                                             <td class="price-label">Prezzo:</td>
                                             <td class="price-val">${item.price} &euro;</td>
                                         </tr>
-                                        <tr class="pickup-label"><td></td><td><span class="label label-info"><span class="glyphicon glyphicon-ok"></span> Ritiro in negozio</span></td></tr>
+                                        <c:if test="${!empty retailer}">
+                                            <tr class="pickup-label"><td></td><td><span class="label label-info"><span class="glyphicon glyphicon-ok"></span> Ritiro in negozio</span></td></tr>
+                                        </c:if>
                                         <tr>
                                             <td>Quantità:</td>
                                             <td>
