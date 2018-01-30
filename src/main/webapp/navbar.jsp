@@ -66,7 +66,7 @@
         });
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALUGh67rEnW78pYXegEI32DSMg-NFo2D4&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALUGh67rEnW78pYXegEI32DSMg-NFo2D4&libraries=places&callback=initMap&language=it" async defer></script>
 
 <nav class="navbar navbar-inverse" id="navbar-top">
     <div class="container-fluid">
