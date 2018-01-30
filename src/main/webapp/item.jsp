@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h4 class="seller">${item.name}</h4>
-                    <h5 class="seller">di <a href="${item.seller.website}">${item.seller.name}</a></h5>
+                    <h5 class="seller">di <a href="${pageContext.request.contextPath}/shop?id=${item.seller.id}">${item.seller.name}</a></h5>
                 </div>
             </div>
             <div class="row">
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-8">
+                        <div class="col-xs-12 col-sm-9">
                             <div class="panel panel-default price">
                                 <div class="panel-body">
                                     <table>
