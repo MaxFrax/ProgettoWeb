@@ -144,7 +144,7 @@ public class ProcessOrder extends HttpServlet {
             // Add purchase to DB
             try {
                 for (Entry<Integer, CartItem> entry : cart.entrySet()) {
-                    // Create purchase fpr each item in cart
+                    // Create purchase for each item in cart
                     Purchase purchase = new Purchase();
                     purchase.setItem(entry.getValue().getItem());
                     purchase.setUser(user);
@@ -155,7 +155,8 @@ public class ProcessOrder extends HttpServlet {
                 clientRedirect("/error", response);
                 return;
             }
-
+            
+            session.removeAttribute("cart");
             // Client redirect to success page
             clientRedirect("/order_success", response);
             return;
